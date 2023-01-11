@@ -5,30 +5,32 @@ from star_watch.models import User
 from star_watch import app, db
 
 
-@app.route("/")
+@app.route("/", methods=['GET','POST'])
 @login_required
 def index():
+    
     return render_template("index.html", user=current_user)
 
-@app.route("/planning")
+@app.route("/planning", methods=['GET','POST'])
 @login_required
 def planning():
     return render_template("planning.html", user=current_user)
 
-@app.route("/paused")
+@app.route("/paused", methods=['GET','POST'])
 @login_required
 def paused():
     return render_template("paused.html", user=current_user)   
 
-@app.route("/completed")
+@app.route("/completed", methods=['GET','POST'])
 @login_required
 def completed():
     return render_template("completed.html", user=current_user)
 
-@app.route("/account")
+@app.route("/account", methods=['GET','POST'])
 @login_required
 def account_profile():
     return render_template("account.html", user=current_user)
+    
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     

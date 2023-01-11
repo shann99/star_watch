@@ -14,5 +14,18 @@ acc.addEventListener('click', () => {
     acc_nav.classList.toggle('active');
 });
 
+const addItem = document.querySelector(".add-item");
+const body = document.getElementsByTagName('body')[0];
+addItem.addEventListener('click', () => {
+    addmediaForm.style.display="table";
+    body.classList.toggle('active');
+    addItem.style.display="none";
+});
+const closeForm = document.getElementById("mediaClose");
+closeForm.addEventListener("click", () => {
+    addmediaForm.style.display="none";
+    body.classList.remove('active');
+    addItem.style.display="inline-grid"
+});
 
-// document.querySelectorAll(".nav-item").forEach
+	// document.querySelectorAll(".nav-item").forEach
