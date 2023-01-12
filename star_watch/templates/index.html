@@ -8,8 +8,18 @@
 </div>
 <br>
 <!-- https://getbootstrap.com/docs/5.2/components/carousel/ -->
-
-  <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">
+{%set counter = namespace(value=0)%} 
+  {%for card in user.cards %} 
+   {%if card.status == 'watching' %}
+      {% set counter.value = counter.value + 1 %}
+    {%endif%} 
+  {%endfor%}  
+{%if counter.value == 0%}
+        <h3 class="no_media"> There doesn't seem to be anything on your watching list. </h3>
+          <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
+{%endif%} 
+{%if images|length > 4 %}  
+    <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -33,6 +43,31 @@
         <div class="carousel-item">
           <img src="{{images[4]}}" class="carousel-img" alt={{images[4]}}>
         </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="material-symbols-outlined">arrow_back</span> 
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+  </div>
+  {%else %}
+    {%if images|length > 2 and images|length < 4%}
+    <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div> 
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2000">
+          <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}}>
+        </div>
+        <div class="carousel-item">
+          <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}}>
+        </div>
+        <div class="carousel-item">
+          <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}}>
         </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
         <span class="material-symbols-outlined">arrow_back</span> 
@@ -41,12 +76,12 @@
         <span class="material-symbols-outlined">arrow_forward</span>
       </button>
   </div>
-
-
-
-
+  {%endif%}
+{%endif%}
+<br>
 <div class = "card-container">
   {%for card in user.cards %}
+  {%if card.status == 'watching' %}
          <div class="card-item">
        <img src = {{card.cover_image_src}} class="card-image" alt={{card.title}}>
        <div class="tag">
@@ -61,6 +96,7 @@
            <p id="ep-total">{{card.total_eps}}</p>
        </div>
      </div> 
+     {%endif%}
  {%endfor%}
  </div>
 {%endblock%}

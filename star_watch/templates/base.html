@@ -81,46 +81,66 @@
     <div class="addMediaFormHeader">
         <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
         <h1 class="addmediaHeader"> Add New Media</h1>
+    </div> 
+    <div class="form-group">
+      <label for="add_title" id="add-form-text" class="form-label"> Title</label>
+      <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="ex. Naruto" name = "add_title" required>
     </div>
     <div class="form-group">
-      <label for="add_image_form" id="add-form-text" class="form-label">Add media image</label>
+      <label for="add_image_form" id="add-form-text" class="form-label"> Media image</label>
       <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
     </div>
-      <label for="add_tags" id="add-form-text" class="form-label">Add tags</label>
+      <label for="add_tags" id="add-form-text" class="form-label">Tags</label>
       <input type="text" class="form-control" autocomplete="off" name = "add_tags" id="add-input"  aria-describedby="mediaHelp">
       <small id="mediaHelp" class="form-text text-muted">tags such as comedy, mystery, drama (separated by comma). leave blank if you have no tags</small>
     </div>  
     <br>
-    <div class="form-group">
-      <label for="add_title" id="add-form-text" class="form-label">Add media title</label>
-      <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="ex. Naruto" name = "add_title" required>
-    </div>
-    <div class="form-group">
+   
+    <div class="form-row">
+    <div class="form-group col-md-6">
         <label for="status" id="add-form-text" class="form-label">Status</label>
-        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="default is planning" name = "status" aria-describedby="mediaHelp" required>
-        <small id="mediaHelp" class="form-text text-muted">planning, watching, completed, paused</small>
+        <select class="form-select" aria-label="Default select example"name = "status">
+            <option selected>Status</option>
+            <option value="planning">Planning</option>
+            <option value="watching">Watching</option>
+            <option value="paused">Paused</option>
+            <option value="completed">Completed</option>
+          </select>
+        <small id="mediaHelp" class="form-text text-muted">default is planning</small>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="rating" id="add-form-text" class="form-label">Rating</label>
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+      </div>
       </div>
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
           <input type="text" class="form-control" autocomplete="off" id="add-input" name = "current_ep">
-          <small id="mediaHelp" class="form-text text-muted">leave blank if you have started it yet</small>
         </div>
         <div class="form-group col-md-6">
           <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
           <input type="text" class="form-control" autocomplete="off" id="add-input" name = "total_eps" aria-describedby="mediaHelp">
-          <small id="mediaHelp" class="form-text text-muted">If you are unsure of the total amount of episodes, feel free to write a "?" or write unknown or something else</small>
+          <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?" or write unknown or something else</small>
         </div>
     </div>
     <br>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" name="description" id="description" rows="3" placeholder="leave blank if you do not want to provide a description" ></textarea>
+        <textarea class="form-control" name="description" id="description" rows="2" placeholder="leave blank if you do not want to provide a description" ></textarea>
     </div>
-    <div class="form-group">
-        <label for="rating" id="add-form-text" class="form-label">Rating</label>
-        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="place any rating you'd like (ex. 1-10 or 1-100)" name = "rating">
-      </div>
     <br>
   <button type="submit" id= "add_media_button" class="btn btn-primary">Add media</button>
   </form>
@@ -128,7 +148,6 @@
 <section class = "content">
     {% block body %}
     {% endblock %}
-    <!-- <div class = "add-container"> -->
     {% if user.is_authenticated%}
     <div class="add-item">
         <button class="add_button">
@@ -136,6 +155,5 @@
         </button>
     </div>  
     {%endif%}
-  <!-- </div> -->
     <script src="{{url_for('static', filename='script.js')}}"></script>
 </section>

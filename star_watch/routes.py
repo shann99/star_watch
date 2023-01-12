@@ -10,11 +10,16 @@ from star_watch import app, db
 @app.route("/", methods=['GET','POST'])
 @login_required
 def index():
-    watching = 'watching'
-    item_list = Card.query.with_entities(Card.cover_image_src).all()
+    #querying images where watch status equals watching
+    item_list = Card.query.with_entities(Card.cover_image_src).filter(Card.status=='watching').all()
+    #retrieving the image itself without the extra parenthesis and commas from the query list
     images = [image[0] for image in item_list]
-    
+    #remove image if it equals default background image so it's not put into the carousel
+    for image in images:
+        if image == 'static/default-background.jpg':
+            images.remove(image)
 
+    print(len(images))
     random.shuffle(images)
    
     if request.method == "POST":
@@ -31,11 +36,10 @@ def index():
         db.session.add(card)
         db.session.commit()
 
-        flash('Your new media has sucessfully been created', category="success")
+        flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("index"))
 
-
-    return render_template("index.html", user=current_user,  watch_status=watching, images=images)
+    return render_template("index.html", user=current_user, images=images)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
@@ -54,10 +58,7 @@ def planning():
         db.session.add(card)
         db.session.commit()
         
-        
-        planning = 'planning'
-
-        flash('Your new media has sucessfully been created', category="success")
+        flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("planning"))
 
     return render_template("planning.html", user=current_user)
@@ -82,7 +83,7 @@ def paused():
         
         paused = 'paused'
 
-        flash('Your new media has sucessfully been created', category="success")
+        flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("paused"))
 
 
@@ -107,7 +108,7 @@ def completed():
         
         completed = 'completed'
 
-        flash('Your new media has sucessfully been created', category="success")
+        flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("completed"))
 
     return render_template("completed.html", user=current_user)
@@ -116,6 +117,10 @@ def completed():
 @login_required
 def account_profile():
     return render_template("account.html", user=current_user)
+
+
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

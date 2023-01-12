@@ -20,6 +20,7 @@ addItem.addEventListener('click', () => {
     addmediaForm.style.display="table";
     body.classList.toggle('active');
     addItem.style.display="none";
+    addmediaForm.scrollIntoView(true);
 });
 const closeForm = document.getElementById("mediaClose");
 closeForm.addEventListener("click", () => {

@@ -549,10 +549,9 @@ body {
     margin: 0 auto;
     background-color: #e3a6ff; 
     border-radius: 10px;
-    inline-size: 610px;
+    inline-size: 800px;
     overflow-wrap: break-word;
-    margin-top: 1em;
-    z-index: 2;
+    z-index: 5;
     transition: 0.7s ease;
 }
 #add-input {
@@ -617,7 +616,7 @@ body.active > *:not(#addmediaForm) {
     background-color: white;
     transform: scale(.6);
     position:fixed;
-    margin-top: -30%;
+    bottom: 0;
 }
 
 .add-item-image {
@@ -633,7 +632,7 @@ body.active > *:not(#addmediaForm) {
     margin: 0 auto;
     background-color: #e3a6ff; 
     border-radius: 10px;
-    inline-size: 550px;
+    inline-size: 750px;
     overflow-wrap: break-word;
 }
 .change_profile_pic {
@@ -642,4 +641,9 @@ body.active > *:not(#addmediaForm) {
     display: block;
     float: right;
     margin-top: -1em;
+}
+
+.no_media {
+    text-align: center;
+    margin-top: 3em;
 }
