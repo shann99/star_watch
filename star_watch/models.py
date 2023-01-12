@@ -27,9 +27,10 @@ class Card(db.Model):
     current_ep = db.Column(db.Integer, nullable=False, default=0)
     total_eps = db.Column(db.String(1000), nullable=False, default='0')
     description = db.Column(db.String(100000000))
-    review = db.Column(db.String(100000000))
+    rating = db.Column(db.String(100000000))
     date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    status = db.Column(db.String(1000), nullable=False, default="planning")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Card('{self.id}','{self.title}','{self.date_added}','{self.user_id}')"
+        return f"Card('{self.id}','{self.title}','{self.date_added}','{self.cover_image_src}''{self.user_id}')"

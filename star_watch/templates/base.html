@@ -76,7 +76,7 @@
         {%endfor%}
     {%endif%}
  {%endwith%}
- 
+ {% if user.is_authenticated%}
   <form method="POST" id="addmediaForm">
     <div class="addMediaFormHeader">
         <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
@@ -95,6 +95,11 @@
       <label for="add_title" id="add-form-text" class="form-label">Add media title</label>
       <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="ex. Naruto" name = "add_title" required>
     </div>
+    <div class="form-group">
+        <label for="status" id="add-form-text" class="form-label">Status</label>
+        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="default is planning" name = "status" aria-describedby="mediaHelp" required>
+        <small id="mediaHelp" class="form-text text-muted">planning, watching, completed, paused</small>
+      </div>
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
@@ -108,17 +113,29 @@
         </div>
     </div>
     <br>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" name="description" id="description" rows="3" placeholder="leave blank if you do not want to provide a description" ></textarea>
+    </div>
+    <div class="form-group">
+        <label for="rating" id="add-form-text" class="form-label">Rating</label>
+        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="place any rating you'd like (ex. 1-10 or 1-100)" name = "rating">
+      </div>
+    <br>
   <button type="submit" id= "add_media_button" class="btn btn-primary">Add media</button>
   </form>
+{%endif%}
 <section class = "content">
     {% block body %}
     {% endblock %}
     <!-- <div class = "add-container"> -->
+    {% if user.is_authenticated%}
     <div class="add-item">
         <button class="add_button">
             <img src = "static/plus.png" class="add-item-image" alt= "plus sign to add new item">
         </button>
     </div>  
+    {%endif%}
   <!-- </div> -->
     <script src="{{url_for('static', filename='script.js')}}"></script>
 </section>

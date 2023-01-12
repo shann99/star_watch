@@ -617,14 +617,14 @@ body.active > *:not(#addmediaForm) {
     background-color: white;
     transform: scale(.6);
     position:fixed;
-    margin-top: -2em;
+    margin-top: -30%;
 }
 
 .add-item-image {
     width: 75px;    
 }
 .add-item:hover {
-    transform: scale(.8);
+    transform: scale(.7);
 }
 #accountForm {
     outline-style: solid;

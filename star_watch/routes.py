@@ -1,43 +1,127 @@
 from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-from star_watch.models import User
+import random
+import re
+from star_watch.models import User, Card
 from star_watch import app, db
 
 
 @app.route("/", methods=['GET','POST'])
 @login_required
 def index():
+    watching = 'watching'
+    item_list = Card.query.with_entities(Card.cover_image_src).all()
+    images = [image[0] for image in item_list]
     
-    return render_template("index.html", user=current_user)
+
+    random.shuffle(images)
+   
+    if request.method == "POST":
+        media_image = request.form.get('add_image_form')
+        tags = request.form.get('add_tags')
+        title = request.form.get('add_title')
+        current_ep = request.form.get('current_ep')
+        total_eps = request.form.get('total_eps')
+        description = request.form.get('description')
+        rating = request.form.get('rating')
+        status = request.form.get('status')
+
+        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
+        db.session.add(card)
+        db.session.commit()
+
+        flash('Your new media has sucessfully been created', category="success")
+        return redirect(url_for("index"))
+
+
+    return render_template("index.html", user=current_user,  watch_status=watching, images=images)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
 def planning():
+    if request.method == "POST":
+        media_image = request.form.get('add_image_form')
+        tags = request.form.get('add_tags')
+        title = request.form.get('add_title')
+        current_ep = request.form.get('current_ep')
+        total_eps = request.form.get('total_eps')
+        description = request.form.get('description')
+        rating = request.form.get('rating')
+        status = request.form.get('status')
+        
+        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps,description=description, rating=rating, user=current_user)
+        db.session.add(card)
+        db.session.commit()
+        
+        
+        planning = 'planning'
+
+        flash('Your new media has sucessfully been created', category="success")
+        return redirect(url_for("planning"))
+
     return render_template("planning.html", user=current_user)
 
 @app.route("/paused", methods=['GET','POST'])
 @login_required
 def paused():
+    if request.method == "POST":
+        media_image = request.form.get('add_image_form')
+        tags = request.form.get('add_tags')
+        title = request.form.get('add_title')
+        current_ep = request.form.get('current_ep')
+        total_eps = request.form.get('total_eps')
+        description = request.form.get('description')
+        rating = request.form.get('rating')
+        status = request.form.get('status')
+
+        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
+        db.session.add(card)
+        db.session.commit()
+        
+        
+        paused = 'paused'
+
+        flash('Your new media has sucessfully been created', category="success")
+        return redirect(url_for("paused"))
+
+
     return render_template("paused.html", user=current_user)   
 
 @app.route("/completed", methods=['GET','POST'])
 @login_required
 def completed():
+    if request.method == "POST":
+        media_image = request.form.get('add_image_form')
+        tags = request.form.get('add_tags')
+        title = request.form.get('add_title')
+        current_ep = request.form.get('current_ep')
+        total_eps = request.form.get('total_eps')
+        description = request.form.get('description')
+        rating = request.form.get('rating')
+
+        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps,description=description, rating=rating, user=current_user)
+        db.session.add(card)
+        db.session.commit()
+        
+        
+        completed = 'completed'
+
+        flash('Your new media has sucessfully been created', category="success")
+        return redirect(url_for("completed"))
+
     return render_template("completed.html", user=current_user)
 
 @app.route("/account", methods=['GET','POST'])
 @login_required
 def account_profile():
     return render_template("account.html", user=current_user)
-    
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
     if request.method == 'POST':
         if current_user.is_authenticated:
             return redirect(url_for("index"))
-        
         else:
             email = request.form.get('login_address')
             password = request.form.get('login_pass')
