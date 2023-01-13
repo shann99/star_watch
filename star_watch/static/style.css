@@ -187,6 +187,26 @@ body {
     transition: 0.5s ease;
     cursor: pointer;
 }
+#edit_button {
+    grid-area: image;
+    width: 8%;
+    z-index: 3;
+    margin-left: 92%;
+    margin-top: 0em;
+    height: 13%;
+    background-color: transparent;
+    border: transparent;
+    display:none;
+}
+#edit_button:hover {
+    transform: scale(1.4);
+}
+#edit_button:focus, #edit_button:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+
 .card-image {
     width: 100%;
     grid-area: image;
@@ -264,10 +284,12 @@ body {
     transform: scale(1.1);
     box-shadow: 5px 5px 15px rgb(47, 47, 47); 
 }
-.card-item:hover #upcount{
+.card-item:hover #upcount {
     display:block;
 }
-
+.card-item:hover #edit_button {
+    display:block;
+}
 @media screen and (max-width: 767px){
     .logged-out {
         display: flex;
@@ -646,4 +668,19 @@ body.active > *:not(#addmediaForm) {
 .no_media {
     text-align: center;
     margin-top: 3em;
+}
+#editmediaForm {
+    outline-style: solid;
+    display: table;
+    padding: 3em 4em 2em 3em;
+    margin: 0 auto;
+    background-color: #e3a6ff; 
+    border-radius: 10px;
+    inline-size: 800px;
+    overflow-wrap: break-word;
+    transition: 0.7s ease;
+}
+#cancel_button {
+    float:right;
+    margin-top: -1em;
 }

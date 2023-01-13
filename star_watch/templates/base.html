@@ -35,7 +35,7 @@
         </div> 
         <div class="account-access">
             <button type="button" class="profile-button">
-                <img class = "profile-pic" src={{user.profile_pic}} alt="cute profile pic">
+                <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
                 <span class="material-symbols-outlined">arrow_drop_down</span>
             </button> 
              <div class="login-nav">
@@ -67,17 +67,22 @@
                     {{message}}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            {%else%}
+            {%elif category == 'success'%}
                 <div class = "alert alert-success alert-dismissable fade show" role="alert">
                     {{message}}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            {%else%}
+            <div class = "alert alert-info alert-dismissable fade show" role="alert">
+                {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             {%endif%}
         {%endfor%}
     {%endif%}
  {%endwith%}
  {% if user.is_authenticated%}
-  <form method="POST" id="addmediaForm">
+  <form method="POST" id="addmediaForm" action="">
     <div class="addMediaFormHeader">
         <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
         <h1 class="addmediaHeader"> Add New Media</h1>
@@ -100,17 +105,15 @@
     <div class="form-group col-md-6">
         <label for="status" id="add-form-text" class="form-label">Status</label>
         <select class="form-select" aria-label="Default select example"name = "status">
-            <option selected>Status</option>
-            <option value="planning">Planning</option>
-            <option value="watching">Watching</option>
-            <option value="paused">Paused</option>
-            <option value="completed">Completed</option>
+            <option selected value="Planning">Planning</option>
+            <option value="Watching">Watching</option>
+            <option value="Paused">Paused</option>
+            <option value="Completed">Completed</option>
           </select>
-        <small id="mediaHelp" class="form-text text-muted">default is planning</small>
       </div>
       <div class="form-group col-md-6">
         <label for="rating" id="add-form-text" class="form-label">Rating</label>
-        <select class="form-select" aria-label="Default select example">
+        <select class="form-select" name="rating" aria-label="Default select example">
             <option selected>Rating</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -151,7 +154,7 @@
     {% if user.is_authenticated%}
     <div class="add-item">
         <button class="add_button">
-            <img src = "static/plus.png" class="add-item-image" alt= "plus sign to add new item">
+            <img src = "/plus.png" class="add-item-image" alt= "plus sign to add new item">
         </button>
     </div>  
     {%endif%}

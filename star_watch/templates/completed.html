@@ -9,7 +9,7 @@
 <br>
 {%set counter = namespace(value=0)%} 
   {%for card in user.cards %} 
-   {%if card.status == 'completed' %}
+   {%if card.status == 'Completed' %}
       {% set counter.value = counter.value + 1 %}
     {%endif%} 
   {%endfor%}  
@@ -17,23 +17,28 @@
         <h3 class="no_media"> There doesn't seem to be anything on your completed list. </h3>
           <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
 {%endif%} 
+
 <div class = "card-container">
-{%for card in user.cards %} 
-  {%if card.status == 'completed' %}
-    <div class="card-item">
-      <img src = {{card.cover_image_src}} class="card-image" alt={{card.title}}>
-    <div class="tag">
-      <!-- <span class="tag-name">{{card.item_tag}}</span> -->
-    </div>  
-      <p id="name">{{card.title}}</p>
-      <p id="status">#{{card.status}}</p>
-    <div class="ep-tracker">
-      <p id="ep-on">{{card.current_ep}}</p>
-      <p id="divider"> / </p>
-      <p id="ep-total">{{card.total_eps}}</p>
+  {%for card in user.cards %} 
+    {%if card.status == 'Completed' %}
+      <div class="card-item">
+        <button type="button" id="edit_button" class="btn btn-secondary" onclick="location.href='/edit/{{card.id}}/{{card.title}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg></button>
+        <img src = {{card.image}} class="card-image" alt={{card.title}}>
+      <div class="tag">
+        <!-- <span class="tag-name">{{card.item_tag}}</span> -->
+      </div>  
+        <p id="name">{{card.title}}</p>
+        <p id="status">#{{card.status}}</p>
+        <div class="ep-tracker">
+          <p id="ep-on">{{card.current_ep}}</p>
+          <p id="divider"> / </p>
+          <p id="ep-total">{{card.total_eps}}</p>
+    </div>
   </div>
-</div>
-  {%endif%} 
-{%endfor%}  
-</div> 
+    {%endif%} 
+  {%endfor%}  
+  </div> 
 {%endblock%}

@@ -11,7 +11,7 @@ from star_watch import app, db
 @login_required
 def index():
     #querying images where watch status equals watching
-    item_list = Card.query.with_entities(Card.cover_image_src).filter(Card.status=='watching').all()
+    item_list = Card.query.with_entities(Card.image).filter(Card.status=='Watching').all()
     #retrieving the image itself without the extra parenthesis and commas from the query list
     images = [image[0] for image in item_list]
     #remove image if it equals default background image so it's not put into the carousel
@@ -19,20 +19,28 @@ def index():
         if image == 'static/default-background.jpg':
             images.remove(image)
 
-    print(len(images))
     random.shuffle(images)
    
     if request.method == "POST":
-        media_image = request.form.get('add_image_form')
+        if request.form.get('add_image_form') != "":
+            image = request.form.get('add_image_form')
+        else:
+            image = (url_for("static", filename="background.jpg"))
         tags = request.form.get('add_tags')
         title = request.form.get('add_title')
-        current_ep = request.form.get('current_ep')
-        total_eps = request.form.get('total_eps')
+        if request.form.get('current_ep') != "":
+            current_ep = request.form.get('current_ep')
+        else: 
+            current_ep = 0;
+        if request.form.get('total_eps') != "":
+            total_eps = request.form.get('total_eps')
+        else: 
+            total_eps = '?'
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
 
-        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
+        card = Card(title=title, image=image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
         db.session.add(card)
         db.session.commit()
 
@@ -45,19 +53,28 @@ def index():
 @login_required
 def planning():
     if request.method == "POST":
-        media_image = request.form.get('add_image_form')
+        if request.form.get('add_image_form') != "":
+            image = request.form.get('add_image_form')
+        else:
+            image = (url_for("static", filename="background.jpg"))
         tags = request.form.get('add_tags')
         title = request.form.get('add_title')
-        current_ep = request.form.get('current_ep')
-        total_eps = request.form.get('total_eps')
+        if request.form.get('current_ep') != "":
+            current_ep = request.form.get('current_ep')
+        else: 
+            current_ep = 0;
+        if request.form.get('total_eps') != "":
+            total_eps = request.form.get('total_eps')
+        else: 
+            total_eps = '?'
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
-        
-        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps,description=description, rating=rating, user=current_user)
+
+        card = Card(title=title, image=image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
         db.session.add(card)
         db.session.commit()
-        
+  
         flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("planning"))
 
@@ -67,22 +84,28 @@ def planning():
 @login_required
 def paused():
     if request.method == "POST":
-        media_image = request.form.get('add_image_form')
+        if request.form.get('add_image_form') != "":
+            image = request.form.get('add_image_form')
+        else:
+            image = (url_for("static", filename="background.jpg"))
         tags = request.form.get('add_tags')
         title = request.form.get('add_title')
-        current_ep = request.form.get('current_ep')
-        total_eps = request.form.get('total_eps')
+        if request.form.get('current_ep') != "":
+            current_ep = request.form.get('current_ep')
+        else: 
+            current_ep = 0;
+        if request.form.get('total_eps') != "":
+            total_eps = request.form.get('total_eps')
+        else: 
+            total_eps = '?'
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
 
-        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
+        card = Card(title=title, image=image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
         db.session.add(card)
         db.session.commit()
-        
-        
-        paused = 'paused'
-
+  
         flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("paused"))
 
@@ -93,23 +116,31 @@ def paused():
 @login_required
 def completed():
     if request.method == "POST":
-        media_image = request.form.get('add_image_form')
+        if request.form.get('add_image_form') != "":
+            image = request.form.get('add_image_form')
+        else:
+            image = (url_for("static", filename="background.jpg"))
         tags = request.form.get('add_tags')
         title = request.form.get('add_title')
-        current_ep = request.form.get('current_ep')
-        total_eps = request.form.get('total_eps')
+        if request.form.get('current_ep') != "":
+            current_ep = request.form.get('current_ep')
+        else: 
+            current_ep = 0;
+        if request.form.get('total_eps') != "":
+            total_eps = request.form.get('total_eps')
+        else: 
+            total_eps = '?'
         description = request.form.get('description')
         rating = request.form.get('rating')
+        status = request.form.get('status')
 
-        card = Card(title=title, cover_image_src=media_image, item_tags=tags, current_ep=current_ep, total_eps=total_eps,description=description, rating=rating, user=current_user)
+        card = Card(title=title, image=image, item_tags=tags, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, user=current_user)
         db.session.add(card)
         db.session.commit()
-        
-        
-        completed = 'completed'
-
+  
         flash('Your new media has sucessfully been added', category="success")
         return redirect(url_for("completed"))
+
 
     return render_template("completed.html", user=current_user)
 
@@ -118,9 +149,35 @@ def completed():
 def account_profile():
     return render_template("account.html", user=current_user)
 
+@app.route("/edit/<int:card_id>/<card_title>", methods=['GET','POST'], strict_slashes=False)
+@login_required
+def editMedia(card_id, card_title):
+    card = Card.query.get(card_id)
+    if request.method == "POST":
+        if request.form.get('edit_image_form') != "":
+            card.cover_image_src = request.form.get('edit_image_form')
+        if request.form.get('edit_tags') != "":
+            card.item_tags = request.form.get('edit_tags')
+        if request.form.get('edit_title') != "":
+            card.title = request.form.get('edit_title')
+        if request.form.get('edit_current_ep') != "":
+            card.current_ep = request.form.get('edit_current_ep')
+        if request.form.get('edit_total_eps') != "":
+            card.total_eps = request.form.get('edit_total_eps')
+        if request.form.get('edit_description') != "":
+            card.description = request.form.get('edit_description')
+        if request.form.get('edit_rating') != "":
+            card.rating = request.form.get('edit_rating')
+        if request.form.get('edit_status') != "":
+            card.status = request.form.get('edit_status')
 
+        card.id = card_id 
+        db.session.commit()
+        success_message = f"{card.title} has successfully been updated!"
+        flash(success_message, category="info")
+        return redirect(url_for("index"))
 
-
+    return render_template("edit.html",  user=current_user, card_id=card.id)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

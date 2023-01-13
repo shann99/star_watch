@@ -1,0 +1,82 @@
+{%extends "base.html"%}
+{%block body%}
+{%for card in user.cards%} 
+{%if card.id == card_id%}
+<div id = "editMedia">
+    <form action="/edit/{{card.id}}/{{card.title}}" method="POST" id="editmediaForm" >
+      <div class="addMediaFormHeader">
+        <button type="button" id="cancel_button" class="btn btn-outline-danger" onclick="location.href='/';">Cancel</button>
+          <h1 class="addmediaHeader"> {{card.title}}</h1>
+      </div> 
+      <div class="form-group">
+        <label for="edit_title" id="add-form-text" class="form-label"> Edit Title</label>
+        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="{{card.title}}" name = "edit_title">
+      </div>
+      <div class="form-group">
+        <label for="edit_image_form" id="add-form-text" class="form-label"> Edit Media image</label>
+        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
+      </div>
+        <label for="edit_tags" id="add-form-text" class="form-label">Edit Tags</label>
+        <input type="text" class="form-control" autocomplete="off" name = "edit_tags" id="add-input" aria-describedby="mediaHelp">
+        <small id="mediaHelp" class="form-text text-muted">tags such as comedy, mystery, drama (separated by comma). leave blank if you have no tags</small>
+      
+      <br>
+     
+      <div class="form-row">
+      <div class="form-group col-md-6">
+          <label for="edit_status" id="add-form-text" class="form-label">Update Status</label>
+          <select class="form-select" aria-label="Default select example"name = "edit_status">
+              <option selected>{{card.status}}</option>
+              <option value="Planning">Planning</option>
+              <option value="Watching">Watching</option>
+              <option value="Paused">Paused</option>
+              <option value="Completed">Completed</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="edit_rating" id="add-form-text" class="form-label">Update Rating</label>
+          <select class="form-select" name="edit_rating" aria-label="Default select example">
+              <option selected>{{card.rating}}</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+        </div>
+        </div>
+      <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="edit_current_ep" id="add-form-text" class="form-label">Update Episode Count</label>
+            {%if card.current_ep == ""%}
+            <input type="text" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" placeholder="0">
+            {%else%}
+            <input type="text" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" placeholder= {{card.current_ep}}>
+            {%endif%}
+          </div>
+          <div class="form-group col-md-6">
+            <label for="edit_total_eps" id="add-form-text" class="form-label">Update Total Episode Count</label>
+            {%if card.total_eps == ""%}
+            <input type="text" class="form-control" autocomplete="off" id="add-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
+            {%else%}
+            <input type="text" class="form-control" autocomplete="off" id="add-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
+            {%endif%}
+          </div>
+      </div>
+      <br>
+      <div class="mb-3">
+          <label for="edit_description" class="form-label">Update Description</label>
+          <textarea class="form-control" name="edit_description" id="description" rows="3"></textarea>
+      </div>
+      <br>
+      <button type="submit" id= "add_media_button" class="btn btn-primary">Update</button>
+      </form>
+  </div>
+  {%endif%}
+  {%endfor%}
+  {%endblock%}
