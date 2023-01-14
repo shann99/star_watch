@@ -30,12 +30,30 @@ closeForm.addEventListener("click", () => {
 const heart = document.getElementById('heart');
 const fav = document.getElementById('fav');
 const filled = document.getElementById('heart_filled');
-const heart_buttons = document.querySelector('heart_buttons');
-heart.addEventListener("click", () => {
+if (heart){
+    heart.addEventListener("click", () => {
     filled.style.display="inline";
     heart.style.visibility='hidden';
-});
-filled.addEventListener("click", () => {
+    });
+}
+if (filled) {
+    filled.addEventListener("click", () => {
     filled.style.display='none';
     heart.style.visibility='visible';
-});
+    });
+}
+const delete_button = document.getElementById('delete_button');
+const check = document.querySelector(".check_delete");
+if(delete_button) {
+    delete_button.addEventListener('click', () => {
+    check.style.display='table';
+    editmediaForm.style.display='none';
+    });
+}
+const cancel_delete = document.getElementById('cancel_check');
+if(cancel_delete) {
+    cancel_delete.addEventListener("click", () => {
+    check.style.display='none';
+    editmediaForm.style.display='table';
+    });
+}

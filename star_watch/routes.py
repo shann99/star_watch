@@ -206,6 +206,18 @@ def editMedia(card_id, card_title):
 
     return render_template("edit.html",  user=current_user, card_id=card.id)
 
+@app.route('/delete/<int:card_id>/<card_title>', methods=['POST'])
+@login_required
+def delete(card_id, card_title):
+    card = Card.query.get(card_id)
+    db.session.delete(card)
+    db.session.commit()
+    flash('Your media has been deleted', category="info")
+    return redirect(url_for("index"))
+
+
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

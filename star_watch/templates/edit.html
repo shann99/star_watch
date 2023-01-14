@@ -2,10 +2,16 @@
 {%block body%}
 {%for card in user.cards%} 
 {%if card.id == card_id%}
-<div id = "editMedia">
+<div class="check_delete"> 
+    <h4 class = "delete_text"> Are you sure you'd like to delete "{{card.title}}"?</h4>
+    <br>
+    <form action="{{url_for('delete', card_id=card.id, card_title=card.title)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info">Yes, delete it</button></form>
+    <button id="cancel_check" class="btn btn-secondary" type="button">No, cancel</button>
+</div>
+<div id = "editMedia">    
     <form action="/edit/{{card.id}}/{{card.title}}" method="POST" id="editmediaForm" >
       <div class="addMediaFormHeader">
-        <button type="button" id="cancel_button" class="btn btn-outline-danger" onclick="history.back()">Cancel</button>
+        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.back()"></button>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div> 
       <div class="form-group">
@@ -19,9 +25,7 @@
         <label for="edit_tags" id="add-form-text" class="form-label">Edit Tags</label>
         <input type="text" class="form-control" autocomplete="off" name = "edit_tags" id="add-input" aria-describedby="mediaHelp">
         <small id="mediaHelp" class="form-text text-muted">tags such as comedy, mystery, drama (separated by comma). leave blank if you have no tags</small>
-      
       <br>
-     
       <div class="form-row">
       <div class="form-group col-md-6">
           <label for="edit_status" id="add-form-text" class="form-label">Update Status</label>
@@ -75,8 +79,9 @@
       </div>
       <br>
       <button type="submit" id= "add_media_button" class="btn btn-primary">Update</button>
+      <button type="button" id="delete_button" aria-label="delete" class="btn btn-danger">Delete</button>
       </form>
-  </div>
+    </div>
   {%endif%}
   {%endfor%}
   {%endblock%}

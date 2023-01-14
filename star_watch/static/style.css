@@ -187,6 +187,7 @@ body {
     transition: 0.5s ease;
     cursor: pointer;
 }
+
 #edit_button {
     grid-area: image;
     width: 8%;
@@ -723,3 +724,67 @@ body.active > *:not(#addmediaForm) {
     margin-top: 2.55em;
     margin-left: -3.4em;
 }
+
+#delete_button {
+    width: 15%;
+    height: 11%;
+    background:gray;
+    border:none;
+}
+#delete_button:focus, #delete_button:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+
+ #delete_button:hover {
+    background: #E85F5F;   
+}
+
+.check_delete {
+    outline-style: solid;
+    padding: 3em 4em 2em 3em;
+    margin: 0 auto;
+    background-color: #e3a6ff; 
+    border-radius: 10px;
+    inline-size: 800px;
+    overflow-wrap: break-word;
+    z-index: 3;
+    text-align: center;
+    margin-top: 0%;
+    display:none;
+    margin-bottom: 4em;
+}
+/* editMedia.active > *:not(.check_detele) {
+    filter:blur(4px);
+    /* display:block; */
+ 
+#confirm_check {
+   margin-right: 10em;
+   border:none;
+   background: #50BFF3 ;
+}
+#cancel_check {
+    /* background:gray; */
+    border:none;
+    margin-top: -4em;
+    margin-left: 10em;
+    height: 10%
+}
+#confirm_check:hover {
+    transform: scale(1.1);
+    background: #80CDF1 ;
+    
+}
+#cancel_check:hover {
+    transform: scale(1.1);
+    background: #95A5A6;
+    
+}
+#confirm_check:focus, #confirm_check:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+ #cancel_check:focus, #cancel_check:active {
+    outline: none !important;
+    box-shadow: none;
+ }
