@@ -279,6 +279,11 @@ body {
     float: left;
     padding: 0px 2px 0px 3px;
     display: none;
+    background-color:transparent;
+    border: none;
+}
+#upcount:hover {
+    transform: scale(1.1);
 }
 /* https://www.youtube.com/watch?v=cwC1qdPWBKo */
 .card-item:hover {
@@ -620,9 +625,7 @@ body.active > *:not(#addmediaForm) {
 .addmediaHeader {
     font-family: 'Poppins', sans-serif;
     text-align: center !important;
-    margin-top: 0em;
     margin-bottom: -.3em;
- 
 }
 .add_button {
     background-color: transparent;
@@ -788,3 +791,15 @@ body.active > *:not(#addmediaForm) {
     outline: none !important;
     box-shadow: none;
  }
+#see_more {
+    background-color: #FC928F;
+    border: none;
+    display:none;
+}
+#see_more:focus, #see_more:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+ .card-item:hover #see_more {
+    display:inline;
+}

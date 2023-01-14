@@ -215,7 +215,15 @@ def delete(card_id, card_title):
     flash('Your media has been deleted', category="info")
     return redirect(url_for("index"))
 
-
+#updating count with click of a button
+@app.route('/update/<int:card_id>/<card_title>/<int:card_current_ep>', methods=['POST'])
+@login_required
+def update(card_id,card_title,card_current_ep):
+    card = Card.query.get(card_id)
+    print(card.current_ep)
+    card.current_ep += 1;
+    db.session.commit()
+    return redirect(url_for("index"))
 
 
 @app.route('/login', methods=['GET', 'POST'])

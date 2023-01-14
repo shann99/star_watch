@@ -103,13 +103,14 @@
             <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
           </svg></button>
          </div> 
-        <p id="status" class="status_watching">#{{card.status}}</p>
-      <div class="ep-tracker">
+          <p id="status" class="status_watching">#{{card.status}}</p>
+         <div class="ep-tracker">
           <p id="ep-on">{{card.current_ep}}</p>
-          <button type="submit" id="upcount">+</button>
-        <p id="divider"> / </p>
-        <p id="ep-total">{{card.total_eps}}</p>
-      </div>
+          <form action="{{url_for('update', card_id=card.id, card_title=card.title, card_current_ep=card.current_ep)}}", method="POST"><button type="submit" id="upcount">+</button> </form> 
+          <p id="divider"> / </p>
+          <p id="ep-total">{{card.total_eps}}</p>
+        </div>
+        <button id="see_more" class="btn btn-primary" type="button"> See More </button>
     </div>
     {%endif%} 
   {%endfor%}  

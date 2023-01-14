@@ -8,10 +8,11 @@
     <form action="{{url_for('delete', card_id=card.id, card_title=card.title)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info">Yes, delete it</button></form>
     <button id="cancel_check" class="btn btn-secondary" type="button">No, cancel</button>
 </div>
-<div id = "editMedia">    
+<div id = "editMedia">  
     <form action="/edit/{{card.id}}/{{card.title}}" method="POST" id="editmediaForm" >
       <div class="addMediaFormHeader">
         <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.back()"></button>
+        <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div> 
       <div class="form-group">
