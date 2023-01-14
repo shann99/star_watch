@@ -27,15 +27,15 @@ closeForm.addEventListener("click", () => {
     body.classList.remove('active');
     addItem.style.display="inline-grid"
 });
-const editor = document.getElementById('edit_button');
-const card_container = document.querySelector('.card-container');
-
-// editor.addEventListener('click', () => {
-
-//     card_container.classList.toggle('active');
-// });
-// const closeEdit = document.getElementById("cancel_button");
-// closeEdit.addEventListener('click', () => {
-//     editmediaForm.style.display="none";
-//     card_container.classList.remove('active');
-// });
+const heart = document.getElementById('heart');
+const fav = document.getElementById('fav');
+const filled = document.getElementById('heart_filled');
+const heart_buttons = document.querySelector('heart_buttons');
+heart.addEventListener("click", () => {
+    filled.style.display="inline";
+    heart.style.visibility='hidden';
+});
+filled.addEventListener("click", () => {
+    filled.style.display='none';
+    heart.style.visibility='visible';
+});

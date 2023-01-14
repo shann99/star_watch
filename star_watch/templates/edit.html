@@ -5,7 +5,7 @@
 <div id = "editMedia">
     <form action="/edit/{{card.id}}/{{card.title}}" method="POST" id="editmediaForm" >
       <div class="addMediaFormHeader">
-        <button type="button" id="cancel_button" class="btn btn-outline-danger" onclick="location.href='/';">Cancel</button>
+        <button type="button" id="cancel_button" class="btn btn-outline-danger" onclick="history.back()">Cancel</button>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div> 
       <div class="form-group">

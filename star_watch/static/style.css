@@ -290,6 +290,7 @@ body {
 .card-item:hover #edit_button {
     display:block;
 }
+
 @media screen and (max-width: 767px){
     .logged-out {
         display: flex;
@@ -539,7 +540,6 @@ body {
     margin-bottom: 2em;
     font-family: 'Poppins', sans-serif;
 }
-
 .account {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
@@ -557,12 +557,9 @@ body {
     color: black;
     transition: 0.7s ease;
 }
-
 .header-name:hover, focus{
     color:#e54ed0;
 }
-
-
 
 #addmediaForm {
     outline-style: solid;
@@ -678,9 +675,51 @@ body.active > *:not(#addmediaForm) {
     border-radius: 10px;
     inline-size: 800px;
     overflow-wrap: break-word;
-    transition: 0.7s ease;
 }
 #cancel_button {
     float:right;
     margin-top: -1em;
+}
+.status_completed {
+    color: #8FC26C !important;
+}
+.status_paused {
+    color: #E36464 !important;
+}
+.status_planning {
+    color: #E3B564 !important;
+}
+#heart {
+    width: 10%;
+    grid-area:name;
+    margin-top: 2.55em;
+    margin-left: -.5em;
+    background: transparent;
+    border:none;
+    height: 30%;
+    color: red;
+    display:none;
+}
+#heart:hover {
+   transform: scale(1.2);
+}
+
+#heart_filled {
+    width: 10%;
+    grid-area:name;
+    margin-top: 2.55em;
+    margin-left: -0.5em;
+    background: transparent;
+    border:none;
+    height: 20%;
+    color: red;
+    display:none;
+}
+
+.card-item:hover #heart {
+    display:inline;
+}
+.card-item:hover #heart_filled {
+    margin-top: 2.55em;
+    margin-left: -3.4em;
 }

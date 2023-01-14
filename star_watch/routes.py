@@ -144,10 +144,37 @@ def completed():
 
     return render_template("completed.html", user=current_user)
 
+
+
 @app.route("/account", methods=['GET','POST'])
 @login_required
 def account_profile():
+    if request.method == "POST":
+        user = current_user;
+        print(user.id)
+        update_user = User.query.get(user.id)
+
+        password = request.form.get("update_password")
+        pass_confirm = request.form.get("update_password_confirm")
+        
+        if password != pass_confirm:
+                flash('Passwords must match, please try again', category='error') 
+
+        if request.form.get('update_profile_pic') != "":
+            update_user.profile_pic = request.form.get('update_profile_pic')
+        if request.form.get('update_email') != "":
+            update_user.email = request.form.get('update_email')
+        if request.form.get('update_name') != "":
+            update_user.name = request.form.get('update_name')
+        if request.form.get('update_password') != "":
+            update_user.password = request.form.get('update_password')
+
+        db.session.commit()
+        success_message = "Your account has successfully been updated!"
+        flash(success_message, category="info")
+        return redirect(url_for("index"))
     return render_template("account.html", user=current_user)
+
 
 @app.route("/edit/<int:card_id>/<card_title>", methods=['GET','POST'], strict_slashes=False)
 @login_required
@@ -155,7 +182,7 @@ def editMedia(card_id, card_title):
     card = Card.query.get(card_id)
     if request.method == "POST":
         if request.form.get('edit_image_form') != "":
-            card.cover_image_src = request.form.get('edit_image_form')
+            card.image = request.form.get('edit_image_form')
         if request.form.get('edit_tags') != "":
             card.item_tags = request.form.get('edit_tags')
         if request.form.get('edit_title') != "":
