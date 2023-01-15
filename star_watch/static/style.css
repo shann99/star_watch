@@ -172,6 +172,7 @@ body {
     max-height:300px;
     column-gap: 2em;
     justify-content: center;
+    margin-bottom: 35em;
 }
 
 .card-item {
@@ -183,7 +184,7 @@ body {
     display: grid;
     grid-template-columns: 500px;
     grid-template-rows: auto;
-    grid-template-areas: "image" "tag" "name" "status" ;    
+    grid-template-areas: "image" "tag" "add_tag" "name" "status" "see_more";    
     transition: 0.5s ease;
     cursor: pointer;
 }
@@ -460,6 +461,8 @@ body {
     margin: 0 auto;
     background-color: #e3a6ff; 
     border-radius: 10px;
+    inline-size: 550px;
+    overflow-wrap: break-word;
 }
 
 .login-header {
@@ -549,6 +552,8 @@ body {
 .account {
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
+    display:block;
+    text-align: center;
 }
 .alert{
     margin-top: -2em;
@@ -601,16 +606,14 @@ body {
     margin-top: 2em;
 }
 #add_media_button {
-    display:flex;
     padding: 0.375rem 0.75rem;
     margin-bottom:2em;
-    width: 30%;
+    width: 15%;
     background-color: #ffc1ef;
     border-radius: 0.5em;
     margin-top: 1em;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
+    float:left;
+    border:none;
 }
 
 #mediaClose {
@@ -663,7 +666,9 @@ body.active > *:not(#addmediaForm) {
     width: 75px;
     display: block;
     float: right;
-    margin-top: -1em;
+    margin-top: 2em;
+    margin-left:-1em;
+
 }
 
 .no_media {
@@ -697,7 +702,7 @@ body.active > *:not(#addmediaForm) {
     width: 10%;
     grid-area:name;
     margin-top: 2.55em;
-    margin-left: -.5em;
+    margin-left: -0.5em;
     background: transparent;
     border:none;
     height: 30%;
@@ -717,7 +722,6 @@ body.active > *:not(#addmediaForm) {
     border:none;
     height: 20%;
     color: red;
-    display:none;
 }
 
 .card-item:hover #heart {
@@ -725,14 +729,18 @@ body.active > *:not(#addmediaForm) {
 }
 .card-item:hover #heart_filled {
     margin-top: 2.55em;
-    margin-left: -3.4em;
+    margin-left: -0.5em;
 }
 
 #delete_button {
-    width: 15%;
+    width: 12%;
     height: 11%;
     background:gray;
     border:none;
+    float:right;
+    margin-top: -.5em;
+    margin-bottom:2em;
+    border-radius:.5em;
 }
 #delete_button:focus, #delete_button:active {
     outline: none !important;
@@ -756,11 +764,10 @@ body.active > *:not(#addmediaForm) {
     margin-top: 0%;
     display:none;
     margin-bottom: 4em;
+    scroll-margin: 10em;
+    margin-top: 10%;
 }
-/* editMedia.active > *:not(.check_detele) {
-    filter:blur(4px);
-    /* display:block; */
- 
+
 #confirm_check {
    margin-right: 10em;
    border:none;
@@ -795,6 +802,7 @@ body.active > *:not(#addmediaForm) {
     background-color: #FC928F;
     border: none;
     display:none;
+    grid-area:see_more;
 }
 #see_more:focus, #see_more:active {
     outline: none !important;
@@ -802,4 +810,91 @@ body.active > *:not(#addmediaForm) {
  }
  .card-item:hover #see_more {
     display:inline;
+
+    width:100%;
+}
+
+.check_acc_delete {
+    outline-style: solid;
+    padding: 3em 4em 2em 3em;
+    margin: 0 auto;
+    background-color: #e3a6ff; 
+    border-radius: 10px;
+    inline-size: 800px;
+    overflow-wrap: break-word;
+    z-index: 3;
+    text-align: center;
+    margin-top: 10%;
+    display:none;
+    margin-bottom: 4em;
+    scroll-margin: 10em;
+}
+
+#confirm_acc_delete {
+   margin-right: 10em;
+   border:none;
+   background: #50BFF3 ;
+}
+#cancel_delete {
+    /* background:gray; */
+    border:none;
+    margin-top: -4em;
+    margin-left: 14em;
+    height: 10%
+}
+#confirm_acc_delete:hover {
+    transform: scale(1.1);
+    background: #80CDF1 ;
+    
+}
+#cancel_delete:hover {
+    transform: scale(1.1);
+    background: #95A5A6;
+    
+}
+#confirm_acc_delete:focus, #confirm_acc_delete:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+ #cancel_delete:focus, #cancel_delete:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+ #delete_acc_button {
+    float:right;
+    margin-top: -2em;
+    border-radius: .5em;
+ }
+ #addTagsButton {
+    background-color:transparent;
+    border:none;
+    display:none;
+    grid-area:tag;
+    
+ }
+ .card-item:hover #addTagsButton {
+    display:inline;
+}
+#addTagsButton:hover {
+    transform: scale(1.2);
+}
+#addTagInput {
+    width: 15%;
+    grid-area:add-tag;
+    font-size: 80%;
+    border-radius: 50px;
+    display:none;
+    margin-top: .5em;
+    border: 1px solid #fbc6d1;
+}
+.card-item:hover #addTagInput {
+    display:inline;
+}
+.page_numbers {
+    margin-bottom: 1em;
+    display:inline-flex;
+    justify-content: center;
+    gap: 1em;
+    margin-left: 48.5%;
+    font-size: 20px;
 }
