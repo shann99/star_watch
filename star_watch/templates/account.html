@@ -27,7 +27,7 @@
     </div>
     <div class="mb-3">
         <label for="update_email" id="signup-text" class="form-label">Update Email</label>
-        <input type="text" class="form-control" autocomplete="off" id="signup-input"  name = "update_email">
+        <input type="email" class="form-control" autocomplete="off" id="signup-input"  name = "update_email">
     </div>
     <div class="mb-3">
         <label for="update_name" id="signup-text" class="form-label">Change Name</label>
@@ -35,11 +35,11 @@
     </div>
     <div class="mb-3">
         <label for="update_password" id="signup-text" class="form-label">Change Password</label>
-        <input type="password" class="form-control" autocomplete="off" id="signup-input"  placeholder="new password" name = "update_password">
+        <input type="password" class="form-control" autocomplete="off" id="signup-input"  placeholder="new password" minlength="8" maxlength="20" name = "update_password">
     </div>
     <div class="mb-3">
         <label for="update_password_confirm" id="signup-text" class="form-label">Confirm New Password</label>
-        <input type="password" class="form-control" autocomplete="off" id="signup-input" placeholder="confirm new password" name = "update_password_confirm">
+        <input type="password" class="form-control" autocomplete="off" id="signup-input" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
     </div>
     <button type="submit" id= "add_media_button" class="btn btn-primary">Update</button>
     <br>

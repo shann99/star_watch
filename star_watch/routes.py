@@ -1,7 +1,7 @@
-from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages
+from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
-import random
+import random, json
 from star_watch.models import User, Card, Tags
 from star_watch import app, db
 
@@ -154,11 +154,6 @@ def completed():
         completed_list = Card.query.filter(Card.status=='Completed').order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
         return render_template("completed.html", user=current_user, cards=completed_list)
 
-
-    
-
-
-
 @app.route("/account", methods=['GET','POST'])
 @login_required
 def account_profile():
@@ -188,10 +183,30 @@ def account_profile():
             return redirect(url_for("index"))
     return render_template("account.html", user=current_user)
 
-
-@app.route("/edit/<int:card_id>/<card_title>", methods=['GET','POST'], strict_slashes=False)
+@app.route("/delete_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
 @login_required
-def editMedia(card_id, card_title):
+def delete_tag(tag_id, card_id):
+    card_id = card_id
+    tag = Tags.query.get(tag_id)
+    db.session.delete(tag)
+    db.session.commit()
+    flash('Your tag has been deleted', category="info")
+    return redirect(request.referrer)
+
+@app.route("/update_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
+@login_required
+def update_tag(tag_id, card_id):
+    card_id = card_id
+    tag = Tags.query.get(tag_id)
+    if request.form.get('tag_update') != "":
+        tag.name = request.form.get('tag_update')
+        db.session.commit()
+        flash('Your tag has been updated', category="info")
+        return redirect(request.referrer)
+
+@app.route("/edit/card/<int:card_id>", methods=['GET','POST'], strict_slashes=False)
+@login_required
+def editMedia(card_id):
     card = Card.query.get(card_id)
     if request.method == "POST":
         if request.form.get('edit_image_form') != "":
@@ -211,15 +226,14 @@ def editMedia(card_id, card_title):
 
         card.id = card_id 
         db.session.commit()
-        success_message = f"{card.title} has successfully been updated!"
-        flash(success_message, category="info")
-        return redirect(url_for("index"))
+
+        return redirect(request.referrer)
 
     return render_template("edit.html",  user=current_user, card_id=card.id)
 
-@app.route('/delete/<int:card_id>/<card_title>', methods=['POST'])
+@app.route('/delete/<int:card_id>', methods=['POST'])
 @login_required
-def delete(card_id, card_title):
+def delete(card_id):
     card = Card.query.get(card_id)
     db.session.delete(card)
     db.session.commit()
@@ -227,13 +241,13 @@ def delete(card_id, card_title):
     return redirect(url_for("index"))
 
 #updating count with click of a button
-@app.route('/update/<int:card_id>/<card_title>/<int:card_current_ep>', methods=['POST'])
+@app.route('/update/<int:card_id>/<int:card_current_ep>', methods=['POST'])
 @login_required
-def update(card_id, card_title, card_current_ep):
+def update(card_id, card_current_ep):
     card = Card.query.get(card_id)
     card.current_ep += 1;
     db.session.commit() 
-    return redirect(url_for("index"))
+    return redirect(request.referrer)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -294,65 +308,65 @@ def logout():
     flash("You've been logged out!", category="success")
     return redirect(url_for("login"))
     
-@app.route('/fav/<int:card_id>/<card_title>/<int:card_fav>',  methods=['POST'])
+@app.route('/fav/<int:card_id>/<int:card_fav>',  methods=['POST'])
 @login_required
-def fav(card_id, card_title, card_fav):
+def fav(card_id, card_fav):
     card = Card.query.get(card_id)
     card.fav = True
     db.session.commit()
     return redirect(url_for("index"))
-     
-@app.route('/unfav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+    
+@app.route('/unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def unfav(card_id, card_title, card_fav):    
+def unfav(card_id, card_fav):    
     card = Card.query.get(card_id)
     card.fav = False
     db.session.commit()
     return redirect(url_for("index"))
 
-@app.route('/plan_fav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/plan_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def plan_fav(card_id, card_title, card_fav):
+def plan_fav(card_id, card_fav):
     card = Card.query.get(card_id)
     card.fav = True
     db.session.commit()
     return redirect(url_for("planning"))
      
-@app.route('/plan_unfav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/plan_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def plan_unfav(card_id, card_title, card_fav):    
+def plan_unfav(card_id, card_fav):    
     card = Card.query.get(card_id)
     card.fav = False
     db.session.commit()
     return redirect(url_for("planning"))
 
-@app.route('/paused_fav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/paused_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def paused_fav(card_id, card_title, card_fav):
+def paused_fav(card_id, card_fav):
     card = Card.query.get(card_id)
     card.fav = True
     db.session.commit()
     return redirect(url_for("paused"))
      
-@app.route('/paused_unfav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/paused_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def paused_unfav(card_id, card_title, card_fav):    
+def paused_unfav(card_id, card_fav):    
     card = Card.query.get(card_id)
     card.fav = False
     db.session.commit()
     return redirect(url_for("paused"))
 
-@app.route('/completed_fav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/completed_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def completed_fav(card_id, card_title, card_fav):
+def completed_fav(card_id, card_fav):
     card = Card.query.get(card_id)
     card.fav = True
     db.session.commit()
     return redirect(url_for("completed"))
      
-@app.route('/completed_unfav/<int:card_id>/<card_title>/<int:card_fav>', methods=['POST'])
+@app.route('/completed_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
 @login_required
-def completed_unfav(card_id, card_title, card_fav):    
+def completed_unfav(card_id, card_fav):    
     card = Card.query.get(card_id)
     card.fav = False
     db.session.commit()

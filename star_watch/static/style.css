@@ -100,7 +100,9 @@ body {
     display:block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: contain; 
+    z-index:1;
+    position:relative;
 }
 
 .carousel-item {
@@ -172,7 +174,7 @@ body {
     max-height:300px;
     column-gap: 2em;
     justify-content: center;
-    margin-bottom: 35em;
+    margin-bottom: 55em;
 }
 
 .card-item {
@@ -184,15 +186,16 @@ body {
     display: grid;
     grid-template-columns: 500px;
     grid-template-rows: auto;
-    grid-template-areas: "image" "tag" "add_tag" "name" "status" "see_more";    
+    grid-template-areas: "image" "tag" "name" "status" "more" "less";    
     transition: 0.5s ease;
     cursor: pointer;
+    z-index: 0;
 }
 
 #edit_button {
     grid-area: image;
     width: 8%;
-    z-index: 3;
+    z-index: 1;
     margin-left: 92%;
     margin-top: 0em;
     height: 13%;
@@ -218,9 +221,7 @@ body {
 }
 .tag {
     padding: 5px;
-    float: left;
     grid-area: tag;
-    float:left;
 }
 .tag-name {
     padding: 1px 8px;
@@ -230,6 +231,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     color: rgb(0, 0, 0);
+    
 }
 
 #name  {
@@ -581,8 +583,6 @@ body {
     border-radius: 10px;
     inline-size: 800px;
     overflow-wrap: break-word;
-    z-index: 5;
-    transition: 0.7s ease;
 }
 #add-input {
     margin-bottom: 0em;
@@ -630,26 +630,38 @@ body.active > *:not(#addmediaForm) {
     text-align: center !important;
     margin-bottom: -.3em;
 }
+
+
+
 .add_button {
     background-color: transparent;
     border-radius: 75%;
     box-shadow: 0em 0em 1.5em -1em;
-}
-.add-item {
-    cursor: pointer;
-    margin-left: 95%;
-    border-radius: 75%;
-    background-color: white;
-    transform: scale(.6);
-    position:fixed;
-    bottom: 0;
+    border:none;
 }
 
+
+
+.add-item {
+    cursor: pointer;
+    margin-left: 97%;
+    border-radius: 75%;
+    transform: scale(3.4);
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 2em;
+    z-index: 1;
+}
+
+
 .add-item-image {
-    width: 75px;    
+    width: 100%;  
+    background-color: transparent;
+    border:none;
+    color: pink;
 }
 .add-item:hover {
-    transform: scale(.7);
+    transform: scale(4.4);
 }
 #accountForm {
     outline-style: solid;
@@ -798,19 +810,19 @@ body.active > *:not(#addmediaForm) {
     outline: none !important;
     box-shadow: none;
  }
-#see_more {
+.see_more {
     background-color: #FC928F;
     border: none;
     display:none;
-    grid-area:see_more;
+    border-radius: 7px;
+    grid-area:more;
 }
-#see_more:focus, #see_more:active {
+.see_more:focus, .see_more:active {
     outline: none !important;
     box-shadow: none;
  }
- .card-item:hover #see_more {
+ .card-item:hover .see_more {
     display:inline;
-
     width:100%;
 }
 
@@ -836,15 +848,14 @@ body.active > *:not(#addmediaForm) {
    background: #50BFF3 ;
 }
 #cancel_delete {
-    /* background:gray; */
     border:none;
     margin-top: -4em;
     margin-left: 14em;
-    height: 10%
+    height: 10%;
 }
 #confirm_acc_delete:hover {
     transform: scale(1.1);
-    background: #80CDF1 ;
+    background: #80CDF1;
     
 }
 #cancel_delete:hover {
@@ -880,11 +891,12 @@ body.active > *:not(#addmediaForm) {
 }
 #addTagInput {
     width: 15%;
-    grid-area:add-tag;
+    grid-area:tag;
     font-size: 80%;
     border-radius: 50px;
     display:none;
     margin-top: .5em;
+    float:left;
     border: 1px solid #fbc6d1;
 }
 .card-item:hover #addTagInput {
@@ -898,3 +910,93 @@ body.active > *:not(#addmediaForm) {
     margin-left: 48.5%;
     font-size: 20px;
 }
+#editTagButton {
+    background-color: transparent;
+    border:none;
+    transform: scale(.8);
+    color: black;
+    /* grid-area: add_tag; */
+    float: right;
+    display:none;
+}
+
+.card-item:hover #editTagButton {
+    display:block;
+}
+#editTagButton:hover {
+    transform: scale(.9);
+}
+#editTagsDiv {
+    outline-style: solid;
+    display: table;
+    padding: 3em 2em 2em 2em;
+    margin: 0 auto;
+    background-color: #eedff6; 
+    border-radius: 10px;
+    inline-size: 392px;
+    margin-top: -53.9em;
+    overflow-wrap: break-word;
+    float: right;
+    margin-right: 2em;
+    
+}
+#editButton{
+    background-color: transparent;
+    color:red;
+    border:none;
+    margin-left: 16em;
+    margin-top: -2.6em;
+    position: absolute;
+}
+#tag_input{
+    width: 50%;
+    text-align: center;
+    
+}
+#cancelTagButton {
+    margin-top: 1em;
+    height: 10%;
+}
+#cancelTagButton:focus, #cancelTagButton:active {
+    outline: none !important;
+    box-shadow: none;
+ }
+ #add_new_tag{
+    background-color: transparent;
+    border: none;
+    display: none;
+ }
+ .card-item:hover #add_new_tag {
+    display:inline;
+}
+#add_new_tag:hover{
+    transform: scale(1.2);
+}
+#addTagForm {
+    grid-area:tag;
+}
+#editTagForm {
+    text-align:center;
+    margin-bottom: 1em;
+}
+.tag_text {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 2.5em;
+    margin-bottom: -2em;
+}
+.more {
+    display:none;
+}
+.see_less {
+    background-color: #FC928F;
+    border: none;
+    display:none;
+    grid-area:less;
+    width:100%;
+    border-radius: 7px;
+}
+.see_less:focus, .see_less:active {
+    outline: none !important;
+    box-shadow: none;
+ }
