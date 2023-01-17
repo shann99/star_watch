@@ -127,12 +127,12 @@
     <div class="form-row">
         <div class="form-group col-md-6">
           <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
-          <input type="text" class="form-control" autocomplete="off" id="add-input" name = "current_ep">
+          <input type="number" step="1" min="0" class="form-control" autocomplete="off" id="add-input" name = "current_ep">
         </div>
         <div class="form-group col-md-6">
           <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
           <input type="text" class="form-control" autocomplete="off" id="add-input" name = "total_eps" aria-describedby="mediaHelp">
-          <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?" or write unknown or something else</small>
+          <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?", leave this blank or write unknown if you don't know the total episode count</small>
         </div>
     </div>
     <br>

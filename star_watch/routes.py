@@ -9,7 +9,9 @@ from star_watch import app, db
 @app.route("/",  methods=['GET','POST'])
 @login_required
 def index():
+    user = current_user;
     if request.method == "POST":
+        
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
         else:
@@ -32,12 +34,13 @@ def index():
         
         db.session.add(card)
         db.session.commit()
+        
 
         flash('Your new media has sucessfully been added!', category="success")
         return redirect(url_for("index"))
 
      #querying images where watch status equals watching
-    item_list = Card.query.with_entities(Card.image).filter(Card.status=='Watching').all()
+    item_list = Card.query.with_entities(Card.image).filter(Card.status=='Watching').join(User).filter(User.id==user.id).all()
     #retrieving the image itself without the extra parenthesis and commas from the query list
     images = [image[0] for image in item_list]
     #remove image if it equals default background image so it's not put into the carousel
@@ -48,12 +51,13 @@ def index():
     random.shuffle(images)
 
     page = request.args.get('page', 1, type=int)
-    watching_list = Card.query.filter(Card.status=='Watching').order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
     return render_template("index.html", user=current_user, cards=watching_list, images=images)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
 def planning():
+    user = current_user
     if request.method == "POST":
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
@@ -81,12 +85,13 @@ def planning():
         return redirect(url_for("planning"))
     
     page = request.args.get('page', 1, type=int)
-    planning_list = Card.query.filter(Card.status=='Planning').order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
     return render_template("planning.html", user=current_user, cards=planning_list)
 
 @app.route("/paused", methods=['GET','POST'])
 @login_required
 def paused():
+    user = current_user
     if request.method == "POST":
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
@@ -115,13 +120,14 @@ def paused():
 
 
     page = request.args.get('page', 1, type=int)
-    paused_list = Card.query.filter(Card.status=='Paused').order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    paused_list = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
     return render_template("paused.html", user=current_user, cards=paused_list)
 
 
 @app.route("/completed", methods=['GET','POST'])
 @login_required
 def completed():
+    user = current_user
     if request.method == "POST":
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
@@ -151,7 +157,7 @@ def completed():
 
     else:
         page = request.args.get('page', 1, type=int)
-        completed_list = Card.query.filter(Card.status=='Completed').order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+        completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
         return render_template("completed.html", user=current_user, cards=completed_list)
 
 @app.route("/account", methods=['GET','POST'])
@@ -159,7 +165,6 @@ def completed():
 def account_profile():
     if request.method == "POST":
         user = current_user;
-        print(user.id)
         update_user = User.query.get(user.id)
 
         password = request.form.get("update_password")
@@ -175,8 +180,8 @@ def account_profile():
             if request.form.get('update_name') != "":
                 update_user.name = request.form.get('update_name')
             if request.form.get('update_password') != "":
-                update_user.password = request.form.get('update_password')
-
+                password = generate_password_hash(password, method='sha256')
+                update_user.password = password
             db.session.commit()
             success_message = "Your account has successfully been updated!"
             flash(success_message, category="success")
