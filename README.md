@@ -25,3 +25,5 @@ it will definitely get tedious to go through multiple pages to find a show or mo
 ## Images:
 
 ![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_screenshot.png)
+Example of an edit/update media page
+![Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/8766394374b33a826926f5a1dbeedb591be890b8/star_watch/static/star_watch_images/edit_media.png)
