@@ -1244,7 +1244,7 @@ body.active > *:not(#addmediaForm) {
         grid-template-columns: 379px;
     }
 }
-@media screen and (min-width: 1512px) {
+@media screen and (width: 1512px) {
     .card-item { 
         margin: 1em 3em 1em 4em;
         grid-template-columns: 330px;
@@ -1253,4 +1253,15 @@ body.active > *:not(#addmediaForm) {
         margin-left: 88%;
     }
 }
-
+@media screen and (width: 1920px) {
+    .card-item { 
+        margin: 1em 3em 1em 4em;
+        grid-template-columns: 500px;
+    }
+    #editmediaForm {
+        margin-left: 29%;
+    }
+    #editTagsDiv {
+        margin-right: 7em;
+    }
+}

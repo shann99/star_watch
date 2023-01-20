@@ -11,7 +11,7 @@
 <div id = "editMedia">  
     <form action="/edit/card/{{card.id}}" method="POST" id="editmediaForm" >
       <div class="addMediaFormHeader">
-        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
+        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-1)"></button>
         <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div> 
@@ -58,7 +58,7 @@
             {%if card.current_ep == ""%}
             <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" placeholder="0">
             {%else%}
-            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" placeholder= {{card.current_ep}}>
+            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" placeholder={{card.current_ep}}>
             {%endif%}
           </div>
           <div class="form-group col-md-6">

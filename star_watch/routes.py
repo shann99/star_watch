@@ -45,7 +45,7 @@ def index():
     images = [image[0] for image in item_list]
     #remove image if it equals default background image so it's not put into the carousel
     for image in images:
-        if image == 'static/default-background.jpg':
+        if image == '/background.jpg':
             images.remove(image)
 
     random.shuffle(images)
@@ -232,9 +232,9 @@ def editMedia(card_id):
         card.id = card_id 
         db.session.commit()
 
-        return redirect(request.referrer)
+        return redirect(url_for("index"))
 
-    return render_template("edit.html",  user=current_user, card_id=card.id)
+    return render_template("edit.html",  user=current_user, card_id = card_id)
 
 @app.route('/delete/<int:card_id>', methods=['POST'])
 @login_required
