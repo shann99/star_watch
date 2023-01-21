@@ -186,13 +186,14 @@ body {
     display: grid;
     grid-template-columns: 500px;
     grid-template-rows: auto;
-    grid-template-areas: "image" "tag" "name" "status" "more" "less";    
+    grid-template-areas: "image" "tag" "name" "status" "flip";   
     transition: 0.5s ease;
     cursor: pointer;
     z-index: 0;
+    /* background:linear-gradient(160deg, #e94462 0%, #5900ff 100%) */
 }
 
-#edit_button {
+.edit_button {
     grid-area: image;
     width: 8%;
     z-index: 1;
@@ -202,14 +203,11 @@ body {
     background-color: transparent;
     border: transparent;
     display:none;
+    color: white;
 }
-#edit_button:hover {
+.edit_button:hover {
     transform: scale(1.4);
 }
-#edit_button:focus, #edit_button:active {
-    outline: none !important;
-    box-shadow: none;
- }
 
 
 .card-image {
@@ -219,7 +217,7 @@ body {
     height: 100%;
     object-fit: cover;
 }
-.tag {
+#tag {
     padding: 5px;
     grid-area: tag;
 }
@@ -244,18 +242,14 @@ body {
 
 }
 
-#status{
-    padding: 20px 11px 1px 0px;
+#status {
     color:rgb(105, 161, 229);
     grid-area: status;
-    margin-top:auto;
-    display:flex;
-    justify-content: end;
+    float: right;
 }
 
 .ep-tracker {
     grid-area: status;
-    padding: 20px 0px 1px 14px;
 }
 #ep-on {
     grid-area: status;
@@ -295,7 +289,7 @@ body {
 .card-item:hover #upcount {
     display:block;
 }
-.card-item:hover #edit_button {
+.card-item:hover .edit_button {
     display:block;
 }
 
@@ -670,21 +664,6 @@ body.active > *:not(#addmediaForm) {
     outline: none !important;
     box-shadow: none;
  }
-.see_more {
-    background-color: #FC928F;
-    border: none;
-    display:none;
-    border-radius: 7px;
-    grid-area:more;
-}
-.see_more:focus, .see_more:active {
-    outline: none !important;
-    box-shadow: none;
- }
- .card-item:hover .see_more {
-    display:inline;
-    width:100%;
-}
 
 .check_acc_delete {
     outline-style: solid;
@@ -736,7 +715,7 @@ body.active > *:not(#addmediaForm) {
     margin-top: -2em;
     border-radius: .5em;
  }
- #addTagsButton {
+ /* #addTagsButton {
     background-color:transparent;
     border:none;
     display:none;
@@ -748,16 +727,18 @@ body.active > *:not(#addmediaForm) {
 }
 #addTagsButton:hover {
     transform: scale(1.2);
-}
+} */
 #addTagInput {
     width: 15%;
     grid-area:tag;
     font-size: 80%;
     border-radius: 50px;
     display:none;
-    margin-top: .5em;
+    margin-top: .4em;
     float:left;
     border: 1px solid #fbc6d1;
+    margin-right: 0.5em;
+    text-align: center;
 }
 .card-item:hover #addTagInput {
     display:inline;
@@ -831,9 +812,6 @@ body.active > *:not(#addmediaForm) {
 #add_new_tag:hover{
     transform: scale(1.2);
 }
-#addTagForm {
-    grid-area:tag;
-}
 #editTagForm {
     text-align:center;
     margin-bottom: 1em;
@@ -844,21 +822,8 @@ body.active > *:not(#addmediaForm) {
     margin-top: 2.5em;
     margin-bottom: -2em;
 }
-.more {
-    display:none;
-}
-.see_less {
-    background-color: #FC928F;
-    border: none;
-    display:none;
-    grid-area:less;
-    width:100%;
-    border-radius: 7px;
-}
-.see_less:focus, .see_less:active {
-    outline: none !important;
-    box-shadow: none;
- }
+
+
 
 @media screen and (min-width: 320px) and (max-width: 425px){
     #editmediaForm {
@@ -984,7 +949,7 @@ body.active > *:not(#addmediaForm) {
         cursor: pointer;
         margin-left: 86%;
     }
-    #edit_button {
+    .edit_button {
         margin-left: 88%;
     }
     #heart {
@@ -1221,7 +1186,7 @@ body.active > *:not(#addmediaForm) {
     .add-item {
         margin-left: 93%;
     }
-    #edit_button {
+    .edit_button {
         margin-left: 88%;
     }
     #heart {
@@ -1249,7 +1214,7 @@ body.active > *:not(#addmediaForm) {
         margin: 1em 3em 1em 4em;
         grid-template-columns: 330px;
     }
-    #edit_button {
+    .edit_button {
         margin-left: 88%;
     }
 }
@@ -1264,4 +1229,122 @@ body.active > *:not(#addmediaForm) {
     #editTagsDiv {
         margin-right: 7em;
     }
+}
+.plus_tag_button {
+    background-color: transparent;
+    border:none;
+    display: none;    
+    cursor: pointer;
+}
+
+.divtag{
+    display: initial;
+    grid-area: tag;
+}
+.card-item:hover .plus_tag_button {
+    display: initial;
+}
+.plus_tag_button:hover {
+    transform: scale(1.2);
+}
+.addTagForm {
+    display: none;
+    cursor: pointer;
+}
+
+.bottom_row {
+    margin: 1em 1em 0em 1em; 
+    display: block;
+    grid-area:status;
+}
+.cancel_tag_button {
+    border:none;
+    background: transparent;
+    color:#E1241E;
+    display:none;
+
+}
+.cancel_tag_button.active {
+    display:none;
+}
+.card-item:hover .cancel_tag_button.active {
+    display: initial;
+}
+.cancel_tag_button:hover {
+    transform: scale(1.2);
+}
+.flip_card_more {
+    border: none;
+    float:right;
+    background:transparent;
+    /* margin-bottom: 0; */
+}
+.flip_card_less {
+    border: none;
+    float:left;
+    background:transparent;
+    transition: 0.7s ease;      
+    /* margin-bottom: 0; */
+}
+.flip_card_less:hover, focus {
+    color: #e54ed0;
+    transition: all 0.5s ease-out;
+}
+.see_more {
+    visibility:hidden;
+    grid-area:flip;
+
+}
+
+.card-item.active {
+    background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
+}
+
+.card-item.active:hover {
+    transform: scale(1.1);
+    box-shadow: 5px 5px 15px rgb(47, 47, 47); 
+    
+}
+.see_less {
+    display:none;
+    position:relative;
+}
+
+.description {
+    font-size: 14px;
+    display:none;
+}
+.rating {
+    display:none;
+}
+.mediaTitle {
+    text-align: center;
+    text-decoration: underline;
+
+}
+.editButtonB {
+    width: 8%;
+    z-index: 1;
+    margin-left: 92%;
+    margin-top: 0em;
+    background-color: transparent;
+    border: transparent ;
+    display:none;
+    color:black;
+}
+.editButtonB:hover {
+    transform: scale(1.4);
+}
+ .card-item.active:hover .editButtonB {
+    display:inline;
+}
+/* .flip_card_more {
+    display: none;
+} */
+.flip_card_more:hover, focus {
+    color: #ff00dd;
+    transition: all 0.5s ease-out;
+}
+.card-item:hover .see_more {
+    visibility: visible;
 }

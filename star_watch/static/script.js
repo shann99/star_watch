@@ -34,7 +34,6 @@ if(closeForm) {
     });
 }
 const heart = document.getElementById('heart');
-const fav = document.getElementById('fav');
 const filled = document.getElementById('heart_filled');
 if (heart){
     heart.addEventListener("click", () => {
@@ -80,4 +79,58 @@ if(cancel_acc_delete) {
         check_delete.style.display='none';
         accountForm.style.display='table';
     });
+}
+const addTag = document.getElementsByClassName("addTagForm");
+const add_button = document.getElementsByClassName("plus_tag_button");
+const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
+var item = "{{counter.count}}";
+function openTag(item){
+    addTag[item].style.display="inline";
+    add_button[item].style.display="none";
+    cancel_tag__button[item].classList.toggle("active");
+}
+function closeTag(item) {
+    addTag[item].style.display="none";
+    add_button[item].style.display="inline";
+    cancel_tag__button[item].classList.remove("active");
+}
+
+const cardIMG = document.getElementsByClassName("card-image");
+const tagDiv = document.getElementsByClassName("tag");
+const heartsDiv = document.getElementsByClassName("heart_buttons");
+const stats = document.getElementsByClassName("bottom_row");
+const more = document.getElementsByClassName("see_more");
+const less = document.getElementsByClassName("see_less");
+const rating = document.getElementsByClassName("rating");
+const desc = document.getElementsByClassName("description");
+const card = document.getElementsByClassName("card-item");
+const edit_button = document.getElementsByClassName("edit_button");
+const edit_buttonB = document.getElementsByClassName("editButtonB");
+
+function flipCardB(item) {
+    cardIMG[item].style.display="none";
+    tagDiv[item].style.display="none";
+    heartsDiv[item].style.display="none";
+    stats[item].style.display="none";
+    more[item].style.display="none";
+    edit_button[item].style.display="none";
+    edit_buttonB[item].style.display="inline";
+    less[item].style.display="inline";
+    rating[item].style.display="inline";
+    desc[item].style.display="inline";
+    card[item].classList.toggle("active");
+    
+}
+function flipCardA(item) {
+    cardIMG[item].style.display="inline";
+    tagDiv[item].style.display="inline";
+    heartsDiv[item].style.display="inline";
+    stats[item].style.display="inline";
+    more[item].style.display="inline";
+    edit_button[item].style.display="inline";
+    less[item].style.display="none";
+    rating[item].style.display="none";
+    desc[item].style.display="none";
+    edit_buttonB[item].style.display="none";
+    card[item].classList.remove("active");
 }

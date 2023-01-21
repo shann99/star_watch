@@ -29,22 +29,32 @@
         <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
 {%endif%} 
 
+{%set counter = namespace(count=0)%}
 <div class = "card-container">
 {%for card in cards.items %} 
     <div class="card-item">
-      <button type="button" id="edit_button" class="btn btn-secondary" onclick="location.href='/edit/card/{{card.id}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+      <button type="button" class="edit_button" onclick="location.href='/edit/card/{{card.id}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
       </svg></button>
       <img src={{card.image}} class="card-image" alt={{card.title}}>
       <div class="tag">
         {%for tag in card.tags %} 
-        <span class="tag-name">{{tag.name}}</span>
+              <span class="tag-name" >{{tag.name}}</span>
         {%endfor%}
-        <form action="{{url_for('planning_tag', card_id=card.id)}}", method="POST">
-          <input type="text" id="addTagInput" name="add_tag">
-        </form>
+        <div class="divtag">
+              <button class="plus_tag_button" onclick="openTag({{counter.count}})" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+              </svg></button>
         </div>
+          <form action="{{url_for('planning_tag', card_id=card.id)}}", method="POST" class="addTagForm">
+            <input type="text" id="addTagInput" autofocus placeholder="add tag" name="add_tag">
+          </form>
+          <button class="cancel_tag_button" onclick="closeTag({{counter.count}})" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+            </svg>
+        </button>
+        </div> 
     <div class="heart_buttons" >
       <p id="name">{{card.title}}</p> 
       {%if card.fav == False %}
@@ -65,6 +75,7 @@
         </form>
       {%endif%}
     </div>
+    <div class="bottom_row">
       <p id="status" class="status_planning">#{{card.status}}</p>
       <div class="ep-tracker">
         <p id="ep-on">{{card.current_ep}}</p>
@@ -72,7 +83,46 @@
         <p id="divider"> / </p>
         <p id="ep-total">{{card.total_eps}}</p>
   </div>
+  </div>
+
+  <div class="see_more">
+    <button class="flip_card_more" onclick="flipCardB({{counter.count}})" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+      </svg> see more
+    </button>
 </div>
+
+
+<div class="see_less">
+  <button type="button" class ="editButtonB" onclick="location.href='/edit/card/{{card.id}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+  </svg>
+</button>
+  <br>
+  <h3 class="mediaTitle"> {{card.title}} </h3> <br>
+  {% if card.rating == "Rating"%}
+  <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
+  {%else%}
+    <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
+  {%endif%}
+  {%if card.description == "" %}
+  <p class="description">No current description, click on the edit button in the top right to add one!</p> 
+  {%else%}
+  <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
+  {%endif%}
+  <br> <br> <button class="flip_card_less" onclick="flipCardA({{counter.count}})"> see less
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+    </svg> 
+  </button>
+</div>
+
+
+</div>
+{% set counter.count = counter.count + 1 %}
+
 {%endfor%}  
 </div> 
 {%endblock%}
