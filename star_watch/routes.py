@@ -11,7 +11,7 @@ from star_watch import app, db
 def index():
     user = current_user;
     if request.method == "POST":
-        
+        print("testing index call")
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
         else:

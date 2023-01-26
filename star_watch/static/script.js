@@ -121,14 +121,12 @@ const cardIMG = document.getElementsByClassName("card-image");
 const tagDiv = document.getElementsByClassName("tag");
 const heartsDiv = document.getElementsByClassName("heart_buttons");
 const stats = document.getElementsByClassName("bottom_row");
-// const more = document.getElementsByClassName("flip_card_more");
 const seemore = document.getElementsByClassName("see_more");
 const less = document.getElementsByClassName("see_less");
 const rating = document.getElementsByClassName("rating");
 const desc = document.getElementsByClassName("description");
 const card = document.getElementsByClassName("card-item");
 const edit_button = document.getElementsByClassName("toggleEdit");
-// const edit_buttonB = document.getElementsByClassName("editButtonB");
 
 function flipCardB(item) {
     card[item].classList.toggle("active"); 
@@ -137,12 +135,10 @@ function flipCardB(item) {
     tagDiv[item].style.display="none";
     heartsDiv[item].style.display="none";
     stats[item].style.display="none";
-    // more[item].style.display="none";
     edit_button[item].style.display="none";
     seemore[item].style.display="none";
     less[item].style.display="grid";
     rating[item].style.display="inline";
-    // edit_buttonB[item].style.display="inline";
     desc[item].style.display="inline";
     
 }
@@ -153,20 +149,18 @@ function flipCardA(item) {
     tagDiv[item].style.display="inline";
     heartsDiv[item].style.display="inline";
     stats[item].style.display="inline";
-    // more[item].style.display="inline";
     edit_button[item].style.display="inline";
     seemore[item].style.display="inline";
     less[item].style.display="none";
     rating[item].style.display="none";
     desc[item].style.display="none";
-    // edit_buttonB[item].style.display="none";
 }
 const newT = document.getElementsByClassName('addTagInput');
 const newC = document.getElementsByClassName('cardID');
 const newCount = document.getElementsByClassName('tagCount');
 
 $(document).ready(function() {
-    $(".addTagForm").on('submit', function(event) {
+    $(".tagForm").on('submit', function(event) {
         var tagItem = $(this).find(newCount).val();
         $.ajax({
                 type: "POST",
