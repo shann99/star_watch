@@ -169,10 +169,10 @@ body {
     display:grid;
     margin-left: auto;
     margin-right: auto; 
-    grid-gap: 2em;
+    grid-gap: 5em;
     grid-template-columns: auto auto auto;
     max-height:300px;
-    column-gap: 2em;
+    column-gap: 3em;
     justify-content: center;
     margin-bottom: 55em;
 }
@@ -186,29 +186,33 @@ body {
     display: grid;
     grid-template-columns: 500px;
     grid-template-rows: auto;
-    grid-template-areas: "image" "tag" "name" "status" "flip";   
+    grid-template-areas: "image" "tag" "name" "status";   
     transition: 0.5s ease;
     cursor: pointer;
     z-index: 0;
-    /* background:linear-gradient(160deg, #e94462 0%, #5900ff 100%) */
+    background:linear-gradient(160deg, #e94462 0%, #5900ff 100%)
 }
-
-.edit_button {
+.toggleEdit {
     grid-area: image;
-    width: 8%;
-    z-index: 1;
-    margin-left: 92%;
-    margin-top: 0em;
-    height: 13%;
+    z-index: 1; 
+    width: 0%;
+    margin-left: 94%; 
+}
+.edit_button {
+    height: 1%;
     background-color: transparent;
     border: transparent;
     display:none;
     color: white;
 }
 .edit_button:hover {
-    transform: scale(1.4);
+    transform: scale(1.1);
+    color: #e54ed0;
+    transition: all 0.3s ease-out;
 }
-
+.card-item:hover .edit_button {
+    display:block;
+}
 
 .card-image {
     width: 100%;
@@ -228,7 +232,7 @@ body {
     border-radius: 50px;
     font-size: 12px;
     font-weight: 600;
-    color: rgb(0, 0, 0);
+    color: #98cfff;
 }
 
 #name  {
@@ -236,16 +240,17 @@ body {
     font-weight: 600;
     text-align: left;
     float:left;
-    padding: 35px 1px 1px 8px;
+    padding: 12px 1px 1px 8px;
     text-decoration: underline;
     grid-area: name;
+    color: aliceblue;
 
 }
 
 #status {
-    color:rgb(105, 161, 229);
     grid-area: status;
     float: right;
+    color: powderblue;
 }
 
 .ep-tracker {
@@ -255,6 +260,7 @@ body {
     grid-area: status;
     font-weight:20;
     float: left;
+    color: aliceblue;
 }
 
 #divider {
@@ -262,12 +268,14 @@ body {
     font-weight:20;
     float: left;
     padding: 0px 0px 0px 3px;
+    color: aliceblue;
 }
 #ep-total {
     grid-area: status;
     font-weight:20;
     float: left;
     padding: 0px 0px 0px 3px;
+    color:aliceblue;
 }
 #upcount {
     grid-area: status;
@@ -277,6 +285,7 @@ body {
     display: none;
     background-color:transparent;
     border: none;
+    color:aliceblue;
 }
 #upcount:hover {
     transform: scale(1.1);
@@ -289,10 +298,6 @@ body {
 .card-item:hover #upcount {
     display:block;
 }
-.card-item:hover .edit_button {
-    display:block;
-}
-
 
 #user-welcome {
     font-family: "Poppins", sans-serif;
@@ -556,45 +561,44 @@ body.active > *:not(#addmediaForm) {
     margin-top: -1em;
 }
 .status_completed {
-    color: #8FC26C !important;
+    color: #68ff00 !important;
 }
 .status_paused {
-    color: #E36464 !important;
+    color: #ff76fd !important;
 }
 .status_planning {
-    color: #E3B564 !important;
+    color: #ffa832 !important;
 }
-#heart {
+.heart {
     width: 10%;
     grid-area:name;
-    margin-top: 2.55em;
+    margin-top: 1.1em;
     margin-left: -0.5em;
     background: transparent;
     border:none;
     height: 30%;
     color: red;
-    display:none;
 }
-#heart:hover {
+.heart:hover {
    transform: scale(1.2);
 }
 
-#heart_filled {
+.heart_filled {
     width: 10%;
     grid-area:name;
-    margin-top: 2.55em;
+    margin-top: 1.1em;
     margin-left: -0.5em;
     background: transparent;
-    border:none;
     height: 20%;
-    color: red;
+    color: white;
+    border:red;
 }
 
-.card-item:hover #heart {
+.card-item:hover .heart {
     display:inline;
 }
-.card-item:hover #heart_filled {
-    margin-top: 2.55em;
+.card-item:hover .heart_filled {
+    margin-top: 1.1em;
     margin-left: -0.5em;
 }
 
@@ -728,7 +732,7 @@ body.active > *:not(#addmediaForm) {
 #addTagsButton:hover {
     transform: scale(1.2);
 } */
-#addTagInput {
+.addTagInput {
     width: 15%;
     grid-area:tag;
     font-size: 80%;
@@ -740,7 +744,7 @@ body.active > *:not(#addmediaForm) {
     margin-right: 0.5em;
     text-align: center;
 }
-.card-item:hover #addTagInput {
+.card-item:hover .addTagInput {
     display:inline;
 }
 .page_numbers {
@@ -1275,76 +1279,114 @@ body.active > *:not(#addmediaForm) {
 }
 .flip_card_more {
     border: none;
-    float:right;
+    float:left;
     background:transparent;
+    color: white;
     /* margin-bottom: 0; */
 }
 .flip_card_less {
     border: none;
-    float:left;
+    margin-right:94%;
     background:transparent;
+    grid-area: buttons;
     transition: 0.7s ease;      
-    /* margin-bottom: 0; */
+    display:none;
 }
 .flip_card_less:hover, focus {
-    color: #e54ed0;
+    color: #ff7ded;
     transition: all 0.5s ease-out;
 }
-.see_more {
-    visibility:hidden;
-    grid-area:flip;
+.card-item:hover .flip_card_less {
+    display: inline;
+}
 
+.see_more {
+    display:none; 
+    grid-area:image;
 }
 
 .card-item.active {
+    animation: flipB 0.5s;
     background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
 }
 
-.card-item.active:hover {
-    transform: scale(1.1);
-    box-shadow: 5px 5px 15px rgb(47, 47, 47); 
-    
-}
+
 .see_less {
     display:none;
     position:relative;
+    grid-template-areas: "buttons" "title" "rating" "desc";
 }
 
 .description {
     font-size: 14px;
     display:none;
+    grid-area: desc;
+    
 }
 .rating {
     display:none;
+    grid-area: rating;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
 }
 .mediaTitle {
     text-align: center;
     text-decoration: underline;
+    grid-area: title;
+    margin-top: .5em;
 
 }
 .editButtonB {
-    width: 8%;
+    width: 0%;
     z-index: 1;
-    margin-left: 92%;
-    margin-top: 0em;
+    margin-left: 94%;
     background-color: transparent;
-    border: transparent ;
+    border:transparent;
     display:none;
     color:black;
+    grid-area: buttons;
 }
 .editButtonB:hover {
-    transform: scale(1.4);
+    transform: scale(1.1);
+    color: #ff7ded;
+    transition: all 0.3s ease-out;
 }
- .card-item.active:hover .editButtonB {
-    display:inline;
+ .card-item:hover .editButtonB {
+    display:block;
 }
-/* .flip_card_more {
+.flip_card_more {
     display: none;
-} */
+}
 .flip_card_more:hover, focus {
     color: #ff00dd;
     transition: all 0.5s ease-out;
 }
+.card-item:hover .flip_card_more {
+    display: inline;
+}
 .card-item:hover .see_more {
-    visibility: visible;
+    display: inline;
+}
+
+.card-item.unactive {
+    animation: flipA  0.5s;
+}
+
+@keyframes flipB {
+    0% {
+        transform: rotateY(180deg)
+   }
+   100% {
+       transform: rotateY(0deg)
+   }
+ 
+}
+@keyframes flipA {
+    0% {
+         transform: rotateY(180deg)
+    }
+    100% {
+        transform: rotateY(0deg)
+    }
+ 
 }

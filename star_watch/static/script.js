@@ -1,3 +1,5 @@
+var item = "{{counter.count}}";
+
 const hamburger = document.querySelector('.hamburger');
 const navUL = document.querySelector('.nav-ul');
 if(hamburger) {
@@ -30,23 +32,42 @@ if(closeForm) {
     closeForm.addEventListener("click", () => {
         addmediaForm.style.display="none";
         body.classList.remove('active');
-        addItem.style.display="inline-grid"
+        addItem.style.display="inline-grid";
     });
 }
-const heart = document.getElementById('heart');
-const filled = document.getElementById('heart_filled');
-if (heart){
-    heart.addEventListener("click", () => {
-    filled.style.display="inline";
-    heart.style.display='none';
+const heart = document.getElementsByClassName('heart');
+const filled = document.getElementsByClassName('heart_filled');
+const heart_btns = document.getElementsByClassName('heart_buttons');
+var card_id = '{{card.id}}';
+var card_fav = "{{card.fav}}";
+var heartItem = "{{counter.count}}";
+function hearted(card_id, heartItem) {
+    $(document).ready(function() {
+        console.log(heartItem);
+        $.ajax({
+            type: "POST",
+            url: "/fav",
+            data: {"card_id": card_id, "card_fav": true},
+            success: function() {
+                $(heart_btns[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+            }
+        });
     });
 }
-if (filled) {
-    filled.addEventListener("click", () => {
-    filled.style.display='none';
-    heart.style.visibility='visible';
+function unhearted(card_id, heartItem) {
+    $(document).ready(function() {
+        console.log(heartItem);
+        $.ajax({
+            type: "POST",
+            url: "/unfav",
+            data: {"card_id": card_id, "card_fav": false},
+            success: function() {
+                $(heart_btns[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+            }
+        });
     });
 }
+
 const delete_button = document.getElementById('delete_button');
 const check = document.querySelector(".check_delete");
 if(delete_button) {
@@ -83,11 +104,12 @@ if(cancel_acc_delete) {
 const addTag = document.getElementsByClassName("addTagForm");
 const add_button = document.getElementsByClassName("plus_tag_button");
 const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
-var item = "{{counter.count}}";
+const tag_input = document.getElementsByClassName("addTagInput");
 function openTag(item){
     addTag[item].style.display="inline";
     add_button[item].style.display="none";
     cancel_tag__button[item].classList.toggle("active");
+    tag_input[item].focus();
 }
 function closeTag(item) {
     addTag[item].style.display="none";
@@ -99,38 +121,64 @@ const cardIMG = document.getElementsByClassName("card-image");
 const tagDiv = document.getElementsByClassName("tag");
 const heartsDiv = document.getElementsByClassName("heart_buttons");
 const stats = document.getElementsByClassName("bottom_row");
-const more = document.getElementsByClassName("see_more");
+// const more = document.getElementsByClassName("flip_card_more");
+const seemore = document.getElementsByClassName("see_more");
 const less = document.getElementsByClassName("see_less");
 const rating = document.getElementsByClassName("rating");
 const desc = document.getElementsByClassName("description");
 const card = document.getElementsByClassName("card-item");
-const edit_button = document.getElementsByClassName("edit_button");
-const edit_buttonB = document.getElementsByClassName("editButtonB");
+const edit_button = document.getElementsByClassName("toggleEdit");
+// const edit_buttonB = document.getElementsByClassName("editButtonB");
 
 function flipCardB(item) {
+    card[item].classList.toggle("active"); 
+    card[item].classList.remove("unactive");
     cardIMG[item].style.display="none";
     tagDiv[item].style.display="none";
     heartsDiv[item].style.display="none";
     stats[item].style.display="none";
-    more[item].style.display="none";
+    // more[item].style.display="none";
     edit_button[item].style.display="none";
-    edit_buttonB[item].style.display="inline";
-    less[item].style.display="inline";
+    seemore[item].style.display="none";
+    less[item].style.display="grid";
     rating[item].style.display="inline";
+    // edit_buttonB[item].style.display="inline";
     desc[item].style.display="inline";
-    card[item].classList.toggle("active");
     
 }
 function flipCardA(item) {
+    card[item].classList.toggle("unactive");
+    card[item].classList.remove("active");
     cardIMG[item].style.display="inline";
     tagDiv[item].style.display="inline";
     heartsDiv[item].style.display="inline";
     stats[item].style.display="inline";
-    more[item].style.display="inline";
+    // more[item].style.display="inline";
     edit_button[item].style.display="inline";
+    seemore[item].style.display="inline";
     less[item].style.display="none";
     rating[item].style.display="none";
     desc[item].style.display="none";
-    edit_buttonB[item].style.display="none";
-    card[item].classList.remove("active");
+    // edit_buttonB[item].style.display="none";
 }
+const newT = document.getElementsByClassName('addTagInput');
+const newC = document.getElementsByClassName('cardID');
+const newCount = document.getElementsByClassName('tagCount');
+
+$(document).ready(function() {
+    $(".addTagForm").on('submit', function(event) {
+        var tagItem = $(this).find(newCount).val();
+        $.ajax({
+                type: "POST",
+                url: "/tag",
+                data: {
+                    "card_id": $(this).find(newC).val(), 
+                    "new_tag": $(this).find(newT).val() 
+                },
+                success: function() {
+                    $(tagDiv[tagItem]).load(' .tag:eq('+ tagItem +')');
+                }
+        });
+        event.preventDefault();
+    });
+});

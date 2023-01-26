@@ -35,7 +35,6 @@ def index():
         db.session.add(card)
         db.session.commit()
         
-
         flash('Your new media has sucessfully been added!', category="success")
         return redirect(url_for("index"))
 
@@ -75,7 +74,7 @@ def planning():
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
-        fav= False
+        fav = False
 
         card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
         db.session.add(card)
@@ -313,69 +312,25 @@ def logout():
     flash("You've been logged out!", category="success")
     return redirect(url_for("login"))
     
-@app.route('/fav/<int:card_id>/<int:card_fav>',  methods=['POST'])
+@app.route('/fav/',  methods=['POST'])
 @login_required
-def fav(card_id, card_fav):
-    card = Card.query.get(card_id)
-    card.fav = True
-    db.session.commit()
-    return redirect(url_for("index"))
+def fav():
+    if request.method == "POST":
+        card = Card.query.get(request.form["card_id"])
+        if request.form['card_fav'] =='true':
+            card.fav = True
+        db.session.commit()
+        return '', 204
     
-@app.route('/unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
+@app.route('/unfav', methods=['POST'])
 @login_required
-def unfav(card_id, card_fav):    
-    card = Card.query.get(card_id)
-    card.fav = False
-    db.session.commit()
-    return redirect(url_for("index"))
-
-@app.route('/plan_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def plan_fav(card_id, card_fav):
-    card = Card.query.get(card_id)
-    card.fav = True
-    db.session.commit()
-    return redirect(url_for("planning"))
-     
-@app.route('/plan_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def plan_unfav(card_id, card_fav):    
-    card = Card.query.get(card_id)
-    card.fav = False
-    db.session.commit()
-    return redirect(url_for("planning"))
-
-@app.route('/paused_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def paused_fav(card_id, card_fav):
-    card = Card.query.get(card_id)
-    card.fav = True
-    db.session.commit()
-    return redirect(url_for("paused"))
-     
-@app.route('/paused_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def paused_unfav(card_id, card_fav):    
-    card = Card.query.get(card_id)
-    card.fav = False
-    db.session.commit()
-    return redirect(url_for("paused"))
-
-@app.route('/completed_fav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def completed_fav(card_id, card_fav):
-    card = Card.query.get(card_id)
-    card.fav = True
-    db.session.commit()
-    return redirect(url_for("completed"))
-     
-@app.route('/completed_unfav/<int:card_id>/<int:card_fav>', methods=['POST'])
-@login_required
-def completed_unfav(card_id, card_fav):    
-    card = Card.query.get(card_id)
-    card.fav = False
-    db.session.commit()
-    return redirect(url_for("completed"))
+def unfav():    
+    if request.method == "POST":
+        card = Card.query.get(request.form["card_id"])
+        if request.form['card_fav'] =='false':
+            card.fav = False
+        db.session.commit()
+        return '', 204
 
 @app.route('/delete_account/', methods=['POST'])
 @login_required
@@ -391,20 +346,42 @@ def delete_account():
         return redirect(url_for("login"))
 
 
-@app.route("/index_tag/<int:card_id>", methods=['POST'])
-@login_required
-def index_tag(card_id):
-    if request.method == 'POST':
-        if request.form.get('add_tag') != "":
-            tag = request.form.get('add_tag')
-            new_tag = Tags(name=tag, card_id=card_id)
-            db.session.add(new_tag)
-            db.session.commit()
-            return redirect(url_for("index"))
 
+
+
+
+
+
+@app.route("/tag", methods=['POST'])
+@login_required
+def tags():
+    if request.method == 'POST':
+        card = Card.query.get(request.form["card_id"])
+        # print(card.id)
+        test_tag = request.form.get('new_tag')
+        if test_tag != "":
+            if not (test_tag is None):
+                print(test_tag)
+                new_tag = Tags(name=test_tag, card_id=card.id)
+                db.session.add(new_tag)
+                db.session.commit()
+                return '', 204
+            else:
+                print('bad1')
+                flash('Something went wrong with adding a  tag, please try again', category="error")
+                return '', 404
         else:
-            return redirect(url_for("index"))
+            print('bad2')
+            flash ('Something went wrong with adding a  tag, please try again', category="error")
+            return '', 404
     
+
+
+
+
+
+
+
 
 @app.route("/planning_tag/<int:card_id>", methods=['POST'])
 @login_required

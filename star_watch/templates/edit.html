@@ -11,7 +11,7 @@
 <div id = "editMedia">  
     <form action="/edit/card/{{card.id}}" method="POST" id="editmediaForm" >
       <div class="addMediaFormHeader">
-        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-1)"></button>
+        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
         <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div> 
@@ -83,7 +83,7 @@
     </div>
     <div id="editTagsDiv">
         <div class="addMediaFormHeader">
-          <button type="button" id="cancel_button" class="btn-close" aria-label="Close"  onclick="window.location.reload(history.back(-2));"></button>
+          <button type="button" id="cancel_button" class="btn-close" aria-label="Close"  onclick="history.back(-2);"></button>
           <br>
             <h4 class="addmediaHeader"> Tags </h4>
             <p class="tag_text">Tags associated with "{{card.title}}" will appear here. <br> <br> Click on the red x button to delete tags. <br><br>
