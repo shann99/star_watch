@@ -42,6 +42,7 @@
        </button>
 </div>
         <img src = {{card.image}} class="card-image" alt={{card.title}}>
+        <form action="" method="POST" class="tagForm">
         <div class="tag">
           {%for tag in card.tags %} 
                 <span class="tag-name" >{{tag.name}}</span>
@@ -51,14 +52,16 @@
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                 </svg></button>
           </div>
-            <form action="{{url_for('completed_tag', card_id=card.id)}}", method="POST" class="addTagForm">
-              <input type="text" class="addTagInput" autofocus placeholder="add tag" name="add_tag">
-            </form>
+          <div class="addTagForm">
+            <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
+            <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
+            <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
+        </div>
             <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
               </svg>
           </button>
-          </div> 
+          </div> </form>
       <div class="heart_buttons" >
         <p id="name">{{card.title}}</p> 
         {%if card.fav == False%}

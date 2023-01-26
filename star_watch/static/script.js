@@ -176,3 +176,19 @@ $(document).ready(function() {
         event.preventDefault();
     });
 });
+var upcount_card_id = '{{card.id}}';
+var upcountItem = "{{counter.count}}";
+const ep_on = document.getElementsByClassName("ep-on");
+function upcountFunc(upcount_card_id, upcountItem) {
+    $(document).ready(function() {
+        console.log(upcountItem);
+        $.ajax({
+            type: "POST",
+            url: "/upcount",
+            data: {"card_id": upcount_card_id},
+            success: function() {
+                $(ep_on[upcountItem]).load(' .ep-on:eq('+ upcountItem +')');
+            }
+        });
+    });
+}

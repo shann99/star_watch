@@ -244,14 +244,7 @@ def delete(card_id):
     flash('Your media has been deleted', category="info")
     return redirect(url_for("index"))
 
-#updating count with click of a button
-@app.route('/update/<int:card_id>/<int:card_current_ep>', methods=['POST'])
-@login_required
-def update(card_id, card_current_ep):
-    card = Card.query.get(card_id)
-    card.current_ep += 1;
-    db.session.commit() 
-    return redirect(request.referrer)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -312,6 +305,21 @@ def logout():
     flash("You've been logged out!", category="success")
     return redirect(url_for("login"))
     
+
+@app.route('/delete_account/', methods=['POST'])
+@login_required
+def delete_account():
+    if request.method == "POST":
+        user = current_user;
+        delete_user = User.query.get(user.id)
+
+        db.session.delete(delete_user)
+        db.session.commit()
+        
+        flash('Your account has been deleted', category="success")
+        return redirect(url_for("login"))
+
+# misc stuff
 @app.route('/fav/',  methods=['POST'])
 @login_required
 def fav():
@@ -331,23 +339,6 @@ def unfav():
             card.fav = False
         db.session.commit()
         return '', 204
-
-@app.route('/delete_account/', methods=['POST'])
-@login_required
-def delete_account():
-    if request.method == "POST":
-        user = current_user;
-        delete_user = User.query.get(user.id)
-
-        db.session.delete(delete_user)
-        db.session.commit()
-        
-        flash('Your account has been deleted', category="success")
-        return redirect(url_for("login"))
-
-
-
-
 
 
 
@@ -374,56 +365,12 @@ def tags():
             print('bad2')
             flash ('Something went wrong with adding a  tag, please try again', category="error")
             return '', 404
-    
 
-
-
-
-
-
-
-
-@app.route("/planning_tag/<int:card_id>", methods=['POST'])
+#updating count with click of a button
+@app.route('/upcount', methods=['POST'])
 @login_required
-def planning_tag(card_id):
-    if request.method == 'POST':
-        if request.form.get('add_tag') != "":
-            tag = request.form.get('add_tag')
-            new_tag = Tags(name=tag, card_id=card_id)
-            db.session.add(new_tag)
-            db.session.commit()
-            return redirect(url_for("planning"))
-
-        else:
-            return redirect(url_for("planning"))
-    
-
-@app.route("/paused_tag/<int:card_id>", methods=['POST'])
-@login_required
-def paused_tag(card_id):
-    if request.method == 'POST':
-        if request.form.get('add_tag') != "":
-            tag = request.form.get('add_tag')
-            new_tag = Tags(name=tag, card_id=card_id)
-            db.session.add(new_tag)
-            db.session.commit()
-            return redirect(url_for("paused"))
-        else:
-            return redirect(url_for("paused"))
-            
-
-@app.route("/completed_tag/<int:card_id>", methods=['POST'])
-@login_required
-def completed_tag(card_id):
-    if request.method == 'POST':
-        if request.form.get('add_tag') != "":
-            tag = request.form.get('add_tag')
-            new_tag = Tags(name=tag, card_id=card_id)
-            db.session.add(new_tag)
-            db.session.commit()
-            return redirect(url_for("completed"))
-
-        else:
-            return redirect(url_for("completed"))
-    
-
+def upcount():
+    card = Card.query.get(request.form["card_id"])
+    card.current_ep += 1;
+    db.session.commit() 
+    return '', 204  

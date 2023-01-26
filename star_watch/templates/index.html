@@ -146,8 +146,8 @@
         <div class="bottom_row">
           <p id="status" class="status_watching">#{{card.status}}</p>
           <div class="ep-tracker">
-            <p id="ep-on">{{card.current_ep}}</p>
-            <form action="{{url_for('update', card_id=card.id, card_current_ep=card.current_ep)}}", method="POST"><button type="submit" id="upcount">+</button> </form> 
+            <p class="ep-on">{{card.current_ep}}</p>
+            <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}')" id="upcount">+</button> 
             <p id="divider"> / </p>
             <p id="ep-total">{{card.total_eps}}</p>
           </div>

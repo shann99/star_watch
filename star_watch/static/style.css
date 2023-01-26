@@ -256,7 +256,7 @@ body {
 .ep-tracker {
     grid-area: status;
 }
-#ep-on {
+.ep-on {
     grid-area: status;
     font-weight:20;
     float: left;
