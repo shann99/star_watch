@@ -5,9 +5,7 @@
 {%block body%}
   <div class = "page-header">
     <h2> Planning </h2>
-</div>
-<br>
-<div class="page_numbers">
+    <div class="page_numbers">
 {%for page_num in cards.iter_pages() %}
 {%if page_num%}
     {%if cards.page == page_num %}
@@ -18,6 +16,9 @@
 {%endif%}
 {%endfor%}
 </div>
+</div>
+<br>
+
 {%set counter = namespace(value=0)%} 
   {%for card in user.cards %} 
    {%if card.status == 'Planning' %}
@@ -81,7 +82,7 @@
     <div class="bottom_row">
       <p id="status" class="status_planning">#{{card.status}}</p>
       <div class="ep-tracker">
-        <p id="ep-on">{{card.current_ep}}</p>
+        <p class="ep-on">{{card.current_ep}}</p>
         <!-- <p id="upcount">+</p> -->
         <p id="divider"> / </p>
         <p id="ep-total">{{card.total_eps}}</p>
@@ -104,28 +105,25 @@
   </svg>
 </button>
   <br>
-  <h3 class="mediaTitle"> {{card.title}} </h3> <br>
-  {% if card.rating == "Rating"%}
-  <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
-  {%else%}
-    <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
-  {%endif%}
-  {%if card.description == "" %}
-  <p class="description">No current description, click on the edit button in the top right to add one!</p> 
-  {%else%}
-  <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
-  {%endif%}
-  <br> <br> <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
+    <h3 class="mediaTitle"> {{card.title}} </h3> <br>
+    {% if card.rating == "Rating"%}
+    <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
+    {%else%}
+      <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
+    {%endif%}
+    {%if card.description == "" %}
+    <p class="description">No current description, click on the edit button in the top right to add one!</p> 
+    {%else%}
+    <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
+    {%endif%}
+    <br> <br> <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
       <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm8.096 10.803L6 6.707v2.768a.5.5 0 0 1-1 0V5.5a.5.5 0 0 1 .5-.5h3.975a.5.5 0 1 1 0 1H6.707l4.096 4.096a.5.5 0 1 1-.707.707z"/>
     </svg>
   </button>
 </div>
-
-
 </div>
 {% set counter.count = counter.count + 1 %}
-
 {%endfor%}  
 </div> 
 {%endblock%}

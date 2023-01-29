@@ -118,7 +118,7 @@ function closeTag(item) {
 }
 
 const cardIMG = document.getElementsByClassName("card-image");
-const tagDiv = document.getElementsByClassName("tag");
+const tagDiv = document.getElementsByClassName("tagForm");
 const heartsDiv = document.getElementsByClassName("heart_buttons");
 const stats = document.getElementsByClassName("bottom_row");
 const seemore = document.getElementsByClassName("see_more");
@@ -179,15 +179,16 @@ $(document).ready(function() {
 var upcount_card_id = '{{card.id}}';
 var upcountItem = "{{counter.count}}";
 const ep_on = document.getElementsByClassName("ep-on");
+
 function upcountFunc(upcount_card_id, upcountItem) {
     $(document).ready(function() {
-        console.log(upcountItem);
+        // console.log(upcountItem);
         $.ajax({
             type: "POST",
             url: "/upcount",
             data: {"card_id": upcount_card_id},
             success: function() {
-                $(ep_on[upcountItem]).load(' .ep-on:eq('+ upcountItem +')');
+                $('.ep-on:eq('+upcountItem+')').load(' .ep-on:eq('+upcountItem+')');
             }
         });
     });

@@ -75,6 +75,7 @@
   {%endif%}
 {%endif%}
 <br><br>
+<div class="pagenum_header">
 <div class="page_numbers">
   {%for page_num in cards.iter_pages() %}
   {%if page_num%}
@@ -85,7 +86,7 @@
       {%endif%}
   {%endif%}
   {%endfor%}
-  </div>
+  </div></div>
 <div class = "card-container">
   {%for card in cards.items %} 
       <div class="card-item">
@@ -96,10 +97,9 @@
             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
           </svg>
         </button>
-</div>
+      </div>
         <!-- card image -->
-          <img src = {{card.image}} class="card-image" alt={{card.title}}>
-
+      <img src = {{card.image}} class="card-image" alt={{card.title}}>
         <!-- tags div   -->
        <form action="" method="POST" class="tagForm">
        <div class="tag">
@@ -140,8 +140,6 @@
           </button>
           {%endif%}
         </div>
-
-
         <!-- bottom row with status and ep count -->
         <div class="bottom_row">
           <p id="status" class="status_watching">#{{card.status}}</p>
@@ -152,7 +150,6 @@
             <p id="ep-total">{{card.total_eps}}</p>
           </div>
         </div>
-
         <div class="see_more">
               <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
@@ -162,12 +159,10 @@
         </div>
           <div class="see_less">
             <button type="button" class ="editButtonB" onclick="location.href='/edit/card/{{card.id}}';">
-              
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
               <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
               <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
             </svg>
-
           </button>
             <br>
             <h3 class="mediaTitle"> {{card.title}} </h3> <br>
@@ -182,11 +177,9 @@
             <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
             {%endif%}
             <br> <br> <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
-
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
                 <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm8.096 10.803L6 6.707v2.768a.5.5 0 0 1-1 0V5.5a.5.5 0 0 1 .5-.5h3.975a.5.5 0 1 1 0 1H6.707l4.096 4.096a.5.5 0 1 1-.707.707z"/>
               </svg>
-              
             </button>
           </div>
     </div>

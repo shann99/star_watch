@@ -169,10 +169,9 @@ body {
     display:grid;
     margin-left: auto;
     margin-right: auto; 
-    grid-gap: 5em;
     grid-template-columns: auto auto auto;
     max-height:300px;
-    column-gap: 3em;
+    row-gap: 3em;
     justify-content: center;
     margin-bottom: 55em;
 }
@@ -190,8 +189,10 @@ body {
     transition: 0.5s ease;
     cursor: pointer;
     z-index: 0;
-    background:linear-gradient(160deg, #e94462 0%, #5900ff 100%)
+    background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
+    /* position: absolute; */
 }
+
 .toggleEdit {
     grid-area: image;
     z-index: 1; 
@@ -520,6 +521,7 @@ body.active > *:not(#addmediaForm) {
 }
 .add-item:hover {
     transform: scale(4.4);
+    transition: .3s ease;
 }
 #accountForm {
     outline-style: solid;
@@ -578,6 +580,7 @@ body.active > *:not(#addmediaForm) {
     border:none;
     height: 30%;
     color: red;
+    display:none;
 }
 .heart:hover {
    transform: scale(1.2);
@@ -590,8 +593,8 @@ body.active > *:not(#addmediaForm) {
     margin-left: -0.5em;
     background: transparent;
     height: 20%;
-    color: white;
-    border:red;
+    color: red;
+    border: none;
 }
 
 .card-item:hover .heart {
@@ -752,7 +755,8 @@ body.active > *:not(#addmediaForm) {
     display:inline-flex;
     justify-content: center;
     gap: 1em;
-    margin-left: 48.5%;
+    margin-top: 1em;
+    /* margin-left: 48.5%; */
     font-size: 20px;
 }
 #editTagButton {
@@ -969,7 +973,18 @@ body.active > *:not(#addmediaForm) {
         margin-left: 0em;
     }
 }
-
+@media screen and (max-width: 767px) and (min-width: 620px){
+    .nav-ul.active {
+        margin-top: 9em;
+        z-index: 2;
+    }
+}
+@media screen and (max-width: 619px) and (min-width: 426px){
+        .nav-ul.active {
+            margin-top: 3em;
+            z-index: 2;
+        }
+}
  @media screen and (max-width: 767px) and (min-width: 426px){
     .logged-out {
         display: flex;
@@ -981,7 +996,7 @@ body.active > *:not(#addmediaForm) {
     .login-nav.active {
         display: flex; 
         position:absolute;
-        margin-top: 16em;
+        margin-top: 17em;
     }
     .navigation {
         display:flex;
@@ -1058,24 +1073,13 @@ body.active > *:not(#addmediaForm) {
         margin-top: -4em;
     }
     .card-item {
-        margin: 1em 3em 1em 4em;
-        grid-template-columns: 280px;
+        grid-template-columns: 430px;
     }
     .add-item {
         margin-left: 85%;
     }
     .card-container {
-        max-width: 600px;
-        margin-top: 30px;
-        display: grid;
-        margin-left: auto;
-        margin-right: auto;
-        grid-gap: 2em;
         grid-template-columns: auto;
-        max-height: 300px;
-        column-gap: 2em;
-        justify-content: center;
-        margin-bottom: 55em;
     }
     #heart {
         margin-left: 0em;
@@ -1100,54 +1104,96 @@ body.active > *:not(#addmediaForm) {
         margin-top: 1em;
     }
 }
-/* 
-@media screen and (max-width: 786px) {
+
+@media screen and (width: 1920px) {
+    .card-item { 
+        margin: 1em 3em 1em 4em;
+        grid-template-columns: 500px;
+    }
+    #editmediaForm {
+        margin-left: 29%;
+    }
     #editTagsDiv {
-        outline-style: solid;
-        display: table;
-        padding: 3em 2em 2em 2em;
-        margin: 0 auto;
-        background-color: #eedff6;
-        border-radius: 10px;
-        inline-size: 389px;
-        margin-top: 2.1em;
-        overflow-wrap: break-word;
-        margin-right: 25%;
+        margin-right: 7em;
+    }
+}
+@media screen and (max-width: 1810px) and (min-width: 1693px){
+    .card-item {
+        grid-template-columns: 460px;
+    }
+}
+@media screen and (max-width: 1692px) and (min-width: 1530px){
+    .card-item {
+        grid-template-columns: 400px;
+    }
+}
+@media screen and (max-width: 1529px) and (min-width: 1441px){
+    .card-item {
+        grid-template-columns: 370px;
+    }
+}
+@media screen and (max-width: 1440px) and (min-width: 1350px){
+    .card-item {
+        grid-template-columns: 350px;
+    }
+    .heart_filled {
+        margin-left: 0.3em;
+    }
+    .card-item:hover .heart {
+        display: inline;
+        margin-left: 0.3em;
+    }
+    .card-item:hover .heart_filled {
+        display: inline;
+        margin-left: 0.3em;
+    }
+    .card-item:hover .edit_button {
+        margin-left: -0.5em;
+    }
+    .card-item:hover .editButtonB {
+        margin-left: 20em;
+    }
+}
+
+@media screen and (max-width: 1349px) and (min-width: 1262px){
+    .card-item {
+        margin: 1em 3em 1em 2em;
+        grid-template-columns: 339px;
+    }
+    .heart_filled {
+        margin-left: 0em;
+    }
+    .card-item:hover .heart {
+        display: inline;
+        margin-left: 0em;
+    }
+    .card-item:hover .heart_filled {
+        display: inline;
+        margin-left: 0em;
+    }
+    .card-item:hover .edit_button {
+        margin-left: -0.5em;
+    }
+    .card-item:hover .editButtonB {
+        margin-left: 19.5em;
+    }
+    .add-item {
+        margin-left: 96%;
+    }
+}
+@media screen and (max-width: 1261px) and (min-width: 1123px){
+    .card-item {
+        grid-template-columns: 450px;
     }
     .card-container {
-        max-width: 600px;
-        margin-top: 30px;
-        display: grid;
-        margin-left: auto;
-        margin-right: auto;
         grid-gap: 2em;
         grid-template-columns: auto auto;
-        max-height: 300px;
-        column-gap: 2em;
+    }
+    .nav {
         justify-content: center;
-        margin-bottom: 55em;
     }
-    .card-item {
-        background-color: white;
-        padding: 3px;
-        border-radius: 10px;
-        border: 1px solid #d6c5f2;
-        margin: 1em 2em 1em 2em;
-        display: grid;
-        grid-template-columns: 300px;
-        grid-template-rows: auto;
-        grid-template-areas:
-            "image"
-            "tag"
-            "name"
-            "status"
-            "more"
-            "less";
-        transition: 0.5s ease;
-        cursor: pointer;
-    }
-} */
-@media screen and (max-width: 1024px) and (min-width: 768px) {
+}
+@media screen and (max-width: 1122px) and (min-width: 1040px) {
     .nav-ul {
         display:flex;
         width: 100%;
@@ -1162,21 +1208,14 @@ body.active > *:not(#addmediaForm) {
         width: 100%;
         height: 500px;
     }
-    .nav-item {
-        display: flex;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0em;
-    }
-    .site-name {
-        margin: 0 auto;
-    }
-    .navigation {
-        display:flex;
-        
+    .login-nav.active {
+        z-index: 2;
     }
     .nav {
-        display:flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
     }
     .card-container {
         grid-gap: 2em;
@@ -1184,8 +1223,7 @@ body.active > *:not(#addmediaForm) {
     }
     
     .card-item {
-        margin: 1em 0em 1em 0em;
-        grid-template-columns: 330px;
+        grid-template-columns: 410px;
     }
     .add-item {
         margin-left: 93%;
@@ -1206,34 +1244,59 @@ body.active > *:not(#addmediaForm) {
         margin-left: 0em;
     }
 }
-
-@media screen and (max-width: 1440px) and (min-width: 1262px){
-    .card-item {
-        margin: 1em 3em 1em 2em;
-        grid-template-columns: 379px;
-    }
-}
-@media screen and (width: 1512px) {
+@media screen and (max-width: 1039px) and (min-width: 950px) {
     .card-item { 
         margin: 1em 3em 1em 4em;
-        grid-template-columns: 330px;
+        grid-template-columns: 370px;
     }
-    .edit_button {
-        margin-left: 88%;
+    .card-container {
+        grid-gap: 2em;
+        grid-template-columns: auto auto;
+    }
+    .nav {
+        justify-content: space-evenly;
+    }
+    .add-item {
+        margin-left: 93%;
+    }
+    .heart_filled {
+        margin-left: 0em;
+    }
+    .card-item:hover .heart {
+        display: inline;
+        margin-left: 0em;
+    }
+    .card-item:hover .heart_filled {
+        display: inline;
+        margin-left: 0em;
+    }
+    .card-item:hover .edit_button {
+        margin-left: -0.5em;
+    }
+    .card-item:hover .editButtonB {
+        margin-left: 21em;
+    }
+    .add-item {
+        margin-left: 96%;
     }
 }
-@media screen and (width: 1920px) {
+@media screen and (max-width: 949px) and (min-width: 768px) {
     .card-item { 
         margin: 1em 3em 1em 4em;
         grid-template-columns: 500px;
     }
-    #editmediaForm {
-        margin-left: 29%;
+    .card-container {
+        grid-gap: 2em;
+        grid-template-columns: auto;
     }
-    #editTagsDiv {
-        margin-right: 7em;
+    .nav {
+        justify-content: space-evenly;
+    }
+    .add-item {
+        margin-left: 93%;
     }
 }
+
 .plus_tag_button {
     background-color: transparent;
     border:none;
@@ -1389,4 +1452,7 @@ body.active > *:not(#addmediaForm) {
         transform: rotateY(0deg)
     }
  
+}
+.pagenum_header {
+    text-align: center;
 }
