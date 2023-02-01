@@ -9,7 +9,6 @@ body {
     height: auto;
     display:flex;
     font-family: 'Lexend Deca';
-    /* justify-content: space-evenly; */
     justify-content: space-between;
     background: linear-gradient(15deg, #e94462 0%, #5900ff 100%);
     box-shadow: 0px 1px 1px 1px;
@@ -190,7 +189,6 @@ body {
     cursor: pointer;
     z-index: 0;
     background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
-    /* position: absolute; */
 }
 
 .toggleEdit {
@@ -722,19 +720,7 @@ body.active > *:not(#addmediaForm) {
     margin-top: -2em;
     border-radius: .5em;
  }
- /* #addTagsButton {
-    background-color:transparent;
-    border:none;
-    display:none;
-    grid-area:tag;
-    
- }
- .card-item:hover #addTagsButton {
-    display:inline;
-}
-#addTagsButton:hover {
-    transform: scale(1.2);
-} */
+
 .addTagInput {
     width: 15%;
     grid-area:tag;
@@ -756,7 +742,6 @@ body.active > *:not(#addmediaForm) {
     justify-content: center;
     gap: 1em;
     margin-top: 1em;
-    /* margin-left: 48.5%; */
     font-size: 20px;
 }
 #editTagButton {
@@ -764,7 +749,6 @@ body.active > *:not(#addmediaForm) {
     border:none;
     transform: scale(.8);
     color: black;
-    /* grid-area: add_tag; */
     float: right;
     display:none;
 }
