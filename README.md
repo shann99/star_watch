@@ -24,11 +24,11 @@ it will definitely get tedious to go through multiple pages to find a show or mo
 
 ## Images:
 
-![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_screenshot.png)
+![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning-page.png)
 <br/><br/><br/>
 
 Example of an edit/update media page. You can see the current information associated with the media, which in this case is a move, and choose to update if you wish to or exit out. 
 <br/> You can also see at the right, the tags that are associated with the movie. Here you can delete the tags or rewrite over the tags that are currently there to update them.
 <br/> For example, maybe I wanted to change "Movie" to "movie" I could change that here and it would still be the same tag in the same location, just updated.
 <br/><br/>
-![Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/8766394374b33a826926f5a1dbeedb591be890b8/star_watch/static/star_watch_images/edit_media.png)
+![Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/edit-media.png)
