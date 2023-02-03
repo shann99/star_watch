@@ -32,6 +32,15 @@
                 <span class="bar"></span>
             </div>
         </div> 
+    <div class = "search">
+        <input type="text" id="search_box" placeholder="start typing to search" autofocus></input>
+        <button id="search_button" onclick="open_search()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+        </button>
+        
+    </div>
         <div class="account-access">
             <button type="button" class="profile-button">
                 <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
@@ -48,7 +57,7 @@
     {%else%}
         <div class="nav">
         <div class = "account-header"> 
-            <a class = "header-name" href="/">star &#9733; watch</a>    
+            <a class = "header-name" href="/">star <i class="bi bi-stars"></i> watch</a>    
         </div>
         <div class = "logged-out">
             <a class="account-item" id ="acc-item-login" href="/login">Login</a>
