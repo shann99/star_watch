@@ -12,7 +12,12 @@ body {
     justify-content: space-between;
     background: linear-gradient(15deg, #e94462 0%, #5900ff 100%);
     box-shadow: 0px 1px 1px 1px;
-    padding: 2.5em 1em 1em 1em;
+    padding-top: 2.5em;
+    padding-bottom:1em;
+}
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
 }
 .nav-ul {
     list-style: none;
@@ -24,7 +29,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 5em;
+    gap: 9em;
     text-decoration: none !important;
     transition: 0.7s ease;
     color: #00d4ff;
@@ -34,7 +39,7 @@ body {
     color: rgb(170, 93, 226);
 }
 .nav a:before {
-    display:block;
+    display:flex;
     content: "";
 }
 
@@ -126,9 +131,13 @@ body {
     position:relative;
 
 }
+.site-header {
+    display:flex;
+}
 .site-name {
     font-family: 'Monoton', cursive;
     font-size: 55px;
+    margin-left: 0.5em;
     float:left;
     text-decoration: none;
     color: black;
@@ -140,7 +149,7 @@ body {
 }
 
 .page-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Lexend Deca';
     padding: 2em;
     text-align: center;
 }
@@ -229,9 +238,10 @@ body {
     display: inline-block;
     border: 1px solid #fbc6d1;
     border-radius: 50px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #98cfff;
+    font-family: 'Lexend Deca';
 }
 
 #name  {
@@ -243,6 +253,8 @@ body {
     text-decoration: underline;
     grid-area: name;
     color: aliceblue;
+    font-family: 'Lexend Deca';
+
 
 }
 
@@ -250,6 +262,8 @@ body {
     grid-area: status;
     float: right;
     color: powderblue;
+    font-family: 'Lexend Deca';
+
 }
 
 .ep-tracker {
@@ -260,6 +274,7 @@ body {
     font-weight:20;
     float: left;
     color: aliceblue;
+    font-family: 'Lexend Deca';
 }
 
 #divider {
@@ -268,6 +283,7 @@ body {
     float: left;
     padding: 0px 0px 0px 3px;
     color: aliceblue;
+    font-family: 'Lexend Deca';
 }
 #ep-total {
     grid-area: status;
@@ -275,6 +291,7 @@ body {
     float: left;
     padding: 0px 0px 0px 3px;
     color:aliceblue;
+    font-family: 'Lexend Deca';
 }
 #upcount {
     grid-area: status;
@@ -1368,6 +1385,7 @@ body.active > *:not(#addmediaForm) {
     font-size: 14px;
     display:none;
     grid-area: desc;
+    font-family: 'Lexend Deca';
     
 }
 .rating {
@@ -1375,11 +1393,13 @@ body.active > *:not(#addmediaForm) {
     grid-area: rating;
     margin-top: 1em;
     margin-bottom: 1.5em;
+    font-family: 'Lexend Deca';
 }
 .mediaTitle {
     text-align: center;
     text-decoration: underline;
     grid-area: title;
+    font-family: 'Lexend Deca';
     margin-top: .5em;
 
 }
@@ -1441,16 +1461,23 @@ body.active > *:not(#addmediaForm) {
     text-align: center;
 }
 .search { 
-    margin-top: 2.8em;
-    margin-left: 22em;
+    margin-top: 2.2em;
 }
+
 #search_button {
     background-color: transparent;
     border:none;
-    transform: scale(1.3);
-    margin-left: 0.5em;
+    transform: scale(1.1);
+    margin-left: 14.5em;
+    float:right;
+    margin-top: -1.9em;
+    
 }
 #search_box {
     border-radius: 12px;
     visibility:hidden;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+    float:left;
 }

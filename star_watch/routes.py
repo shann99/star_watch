@@ -9,35 +9,7 @@ from star_watch import app, db
 @app.route("/",  methods=['GET','POST'])
 @login_required
 def index():
-    user = current_user;
-    if request.method == "POST":
-        print("testing index call")
-        if request.form.get('add_image_form') != "":
-            image = request.form.get('add_image_form')
-        else:
-            image = (url_for("static", filename="background.jpg"))
-        title = request.form.get('add_title')
-        if request.form.get('current_ep') != "":
-            current_ep = request.form.get('current_ep')
-        else: 
-            current_ep = 0;
-        if request.form.get('total_eps') != "":
-            total_eps = request.form.get('total_eps')
-        else: 
-            total_eps = '?'
-        description = request.form.get('description')
-        rating = request.form.get('rating')
-        status = request.form.get('status')
-        fav = False
-        
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
-        
-        db.session.add(card)
-        db.session.commit()
-        
-        flash('Your new media has sucessfully been added!', category="success")
-        return redirect(url_for("index"))
-
+    user=current_user
      #querying images where watch status equals watching
     item_list = Card.query.with_entities(Card.image).filter(Card.status=='Watching').join(User).filter(User.id==user.id).all()
     #retrieving the image itself without the extra parenthesis and commas from the query list
@@ -57,32 +29,6 @@ def index():
 @login_required
 def planning():
     user = current_user
-    if request.method == "POST":
-        if request.form.get('add_image_form') != "":
-            image = request.form.get('add_image_form')
-        else:
-            image = (url_for("static", filename="background.jpg"))
-        title = request.form.get('add_title')
-        if request.form.get('current_ep') != "":
-            current_ep = request.form.get('current_ep')
-        else: 
-            current_ep = 0;
-        if request.form.get('total_eps') != "":
-            total_eps = request.form.get('total_eps')
-        else: 
-            total_eps = '?'
-        description = request.form.get('description')
-        rating = request.form.get('rating')
-        status = request.form.get('status')
-        fav = False
-
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
-        db.session.add(card)
-        db.session.commit()
-  
-        flash('Your new media has sucessfully been added!', category="success")
-        return redirect(url_for("planning"))
-    
     page = request.args.get('page', 1, type=int)
     planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
     return render_template("planning.html", user=current_user, cards=planning_list)
@@ -91,33 +37,6 @@ def planning():
 @login_required
 def paused():
     user = current_user
-    if request.method == "POST":
-        if request.form.get('add_image_form') != "":
-            image = request.form.get('add_image_form')
-        else:
-            image = (url_for("static", filename="background.jpg"))
-        title = request.form.get('add_title')
-        if request.form.get('current_ep') != "":
-            current_ep = request.form.get('current_ep')
-        else: 
-            current_ep = 0;
-        if request.form.get('total_eps') != "":
-            total_eps = request.form.get('total_eps')
-        else: 
-            total_eps = '?'
-        description = request.form.get('description')
-        rating = request.form.get('rating')
-        status = request.form.get('status')
-        fav = False;
-
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
-        db.session.add(card)
-        db.session.commit()
-  
-        flash('Your new media has sucessfully been added!', category="success")
-        return redirect(url_for("paused"))
-
-
     page = request.args.get('page', 1, type=int)
     paused_list = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
     return render_template("paused.html", user=current_user, cards=paused_list)
@@ -127,37 +46,9 @@ def paused():
 @login_required
 def completed():
     user = current_user
-    if request.method == "POST":
-        if request.form.get('add_image_form') != "":
-            image = request.form.get('add_image_form')
-        else:
-            image = (url_for("static", filename="background.jpg"))
-        title = request.form.get('add_title')
-        if request.form.get('current_ep') != "":
-            current_ep = request.form.get('current_ep')
-        else: 
-            current_ep = 0;
-        if request.form.get('total_eps') != "":
-            total_eps = request.form.get('total_eps')
-        else: 
-            total_eps = '?'
-        description = request.form.get('description')
-        rating = request.form.get('rating')
-        status = request.form.get('status')
-        fav= False
-
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
-        
-        db.session.add(card)
-        db.session.commit()
-        
-        flash('Your new media has sucessfully been added!', category="success")
-        return redirect(url_for("completed"))
-
-    else:
-        page = request.args.get('page', 1, type=int)
-        completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
-        return render_template("completed.html", user=current_user, cards=completed_list)
+    page = request.args.get('page', 1, type=int)
+    completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    return render_template("completed.html", user=current_user, cards=completed_list)
 
 @app.route("/account", methods=['GET','POST'])
 @login_required
@@ -208,6 +99,38 @@ def update_tag(tag_id, card_id):
         flash('Your tag has been updated', category="info")
         return redirect(request.referrer)
 
+
+@app.route("/add_media", methods=['POST'])
+@login_required
+def add_media(): 
+    user = current_user;
+    if request.method == "POST":
+        if request.form.get('add_image_form') != "":
+            image = request.form.get('add_image_form')
+        else:
+            image = (url_for("static", filename="background.jpg"))
+        title = request.form.get('add_title')
+        if request.form.get('current_ep') != "":
+            current_ep = request.form.get('current_ep')
+        else: 
+            current_ep = 0;
+        if request.form.get('total_eps') != "":
+            total_eps = request.form.get('total_eps')
+        else: 
+            total_eps = '?'
+        description = request.form.get('description')
+        rating = request.form.get('rating')
+        status = request.form.get('status')
+        fav = False
+        
+        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
+        
+        db.session.add(card)
+        db.session.commit()
+        
+        flash('Your new media has sucessfully been added!', category="success")
+        return redirect(url_for("index"))
+    
 @app.route("/edit/card/<int:card_id>", methods=['GET','POST'], strict_slashes=False)
 @login_required
 def editMedia(card_id):
@@ -359,11 +282,11 @@ def tags():
                 return '', 204
             else:
                 print('bad1')
-                flash('Something went wrong with adding a  tag, please try again', category="error")
+                flash('Something went wrong with adding a tag, please try again', category="error")
                 return '', 404
         else:
             print('bad2')
-            flash ('Something went wrong with adding a  tag, please try again', category="error")
+            flash ('Something went wrong with adding a tag, please try again', category="error")
             return '', 404
 
 #updating count with click of a button
@@ -374,3 +297,17 @@ def upcount():
     card.current_ep += 1;
     db.session.commit() 
     return '', 204  
+
+
+
+@app.route('/search/', methods=['GET'])
+@login_required
+def search(): 
+    user = current_user
+    if request.method == 'GET':
+        title = request.args.get("search_title")
+        page = request.args.get('page', 1, type=int)
+        search_cards = Card.query.filter(Card.title.like(f'%{title}%')).join(User).filter(User.id==user.id).all()
+        print(search_cards)
+        search_cards_pgs = Card.query.filter(Card.title.like(f'%{title}%')).join(User).filter(User.id==user.id).order_by(Card.title.desc()).paginate(page=page, per_page=9)
+        return render_template("search.html", user=current_user, search_cards=search_cards_pgs, cards=search_cards)
