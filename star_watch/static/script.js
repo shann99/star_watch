@@ -199,6 +199,7 @@ const search_box = document.getElementById("search_box");
 function open_search() {
     if (search_box.style.visibility!="visible") {
         search_box.style.visibility="visible";
+        search_box.focus();
     }
     else {
         search_box.style.visibility="hidden";

@@ -7,28 +7,14 @@
     <h2> Search Results </h2>
 </div>
 <br>
-<div class="pagenum_header">
-    <div class="page_numbers">
-      {%for page_num in search_cards.iter_pages() %}
-      {%if page_num%}
-          {%if search_cards.page == page_num %}
-            <a class="btn btn-primary" href="{{url_for('search', page=page_num)}}" style="background-color:#e64364;border:none;">{{page_num}}</a>
-          {%else%}
-          <a class="btn btn-outline-primary" href="{{url_for('search', page=page_num)}}" style="color:#e64364;border:none;" onmouseover="this.style='background-color:#fff; border:none; color:#e64364;';" onmouseout="this.style='background-color:transparent; border:none;color:#e64364;';">{{page_num}}</a>
-          {%endif%}
-      {%endif%}
-      {%endfor%}
-    </div>
-</div>
+
 {%set counter = namespace(count=0)%}  
 {%if cards|length == 0 %}
 <h3> No items found matching search, please try again</h3>
 {%endif%}
 <div class = "card-container"> 
-  
-  {%for card in search_cards.items %} 
-   
-      <div class="card-item">
+{%for card in cards %} 
+    <div class="card-item">
         <div class="toggleEdit">
           <button type="button" class="edit_button" onclick="location.href='/edit/card/{{card.id}}';">
            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -36,7 +22,7 @@
            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
          </svg>
        </button>
-</div>
+    </div>
         <img src = {{card.image}} class="card-image" alt={{card.title}}>
         <form action="" method="POST" class="tagForm">
         <div class="tag">

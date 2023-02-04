@@ -271,8 +271,8 @@ def unfav():
 def tags():
     if request.method == 'POST':
         card = Card.query.get(request.form["card_id"])
-        # print(card.id)
         test_tag = request.form.get('new_tag')
+        print(len(test_tag))
         if test_tag != "":
             if not (test_tag is None):
                 print(test_tag)
@@ -280,14 +280,6 @@ def tags():
                 db.session.add(new_tag)
                 db.session.commit()
                 return '', 204
-            else:
-                print('bad1')
-                flash('Something went wrong with adding a tag, please try again', category="error")
-                return '', 404
-        else:
-            print('bad2')
-            flash ('Something went wrong with adding a tag, please try again', category="error")
-            return '', 404
 
 #updating count with click of a button
 @app.route('/upcount', methods=['POST'])
@@ -299,15 +291,12 @@ def upcount():
     return '', 204  
 
 
-
-@app.route('/search/', methods=['GET'])
+#search results
+@app.route('/search', methods=['GET'])
 @login_required
 def search(): 
     user = current_user
     if request.method == 'GET':
-        title = request.args.get("search_title")
-        page = request.args.get('page', 1, type=int)
-        search_cards = Card.query.filter(Card.title.like(f'%{title}%')).join(User).filter(User.id==user.id).all()
-        print(search_cards)
-        search_cards_pgs = Card.query.filter(Card.title.like(f'%{title}%')).join(User).filter(User.id==user.id).order_by(Card.title.desc()).paginate(page=page, per_page=9)
-        return render_template("search.html", user=current_user, search_cards=search_cards_pgs, cards=search_cards)
+        name = request.args.get("q")
+        search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.desc()).all()
+        return render_template("search.html", user=current_user, cards=search_cards)
