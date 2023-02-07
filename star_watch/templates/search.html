@@ -6,11 +6,9 @@
 <div class = "page-title">
     <h2> Search Results </h2>
 </div>
-<br>
-
 {%set counter = namespace(count=0)%}  
 {%if cards|length == 0 %}
-<h3> No items found matching search, please try again</h3>
+<h3 class="search_text"> No items found matching search, please try again</h3>
 {%endif%}
 <div class = "card-container"> 
 {%for card in cards %} 

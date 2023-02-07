@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(245 205 213);
+    background-color:rgb(42 41 41);
     margin: -2em 0 0 0em;
     padding-bottom: 800px;
     
@@ -152,11 +152,13 @@ body {
     font-family: 'Lexend Deca';
     padding: 2em;
     text-align: center;
+    color: #e5e5e5;
 }
 .page-header {
     font-family: 'Poppins', sans-serif;
     padding: 4em 2em 0em 2em;
     text-align: center;
+    color: #e5e5e5;
 }
 /* hamburger menu  */
 .hamburger {
@@ -1501,19 +1503,22 @@ body.active > *:not(#addmediaForm) {
     color:rgb(238, 171, 94);
 }
 .pagenum_button {
-    color:#fa003152;
+    color: #dd8092;
     border:none;
 }
 #currentpage_btn {
     color:white;
     border:none;
-    background-color: #fa003152;
+    background-color: #dd8092;
+    /* #dd8092 */
 }
 .pagenum_button:hover {
     color: white;
-    background-color: #fa003227;
+    background-color: #dd8092a8;
     /* background-color: rgb(255 190 190); */
 }
+
+
 
 .pagenum_button:focus, .pagenum_button:active {
     outline: none !important;

@@ -212,7 +212,8 @@ def signup():
                     flash("Email already exists", category="error")
 
                 else:
-                    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+                    #mode=0 -> default light mode, mode = 1 -> means user has dark mode enabled
+                    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), mode=True)
                     db.session.add(new_user)
                     db.session.commit()
                     login_user(new_user, remember=True)
@@ -298,5 +299,25 @@ def search():
     user = current_user
     if request.method == 'GET':
         name = request.args.get("q")
-        search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.desc()).all()
+        search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.asc()).all()
         return render_template("search.html", user=current_user, cards=search_cards)
+
+@app.route("/dark-mode", methods=['POST'])
+@login_required
+def dark_mode():
+    if request.method == 'POST':
+        user = User.query.get(request.form["user_id"])
+        user.mode = False;
+        print(user.mode)
+        db.session.commit() 
+        return '', 204  
+    
+@app.route("/light-mode", methods=['POST'])
+@login_required
+def light_mode():
+    if request.method == 'POST':
+        user = User.query.get(request.form["user_id"])
+        user.mode = True;
+        print(user.mode)
+        db.session.commit() 
+        return '', 204  

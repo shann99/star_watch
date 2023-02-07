@@ -4,13 +4,15 @@
  {%endblock%}
 {%block body%}
   <div class = "page-header">
-    <h2> Completed </h2><div class="page_numbers">
+    <h2> Completed </h2>
+    <br>
+<div class="page_numbers">
   {%for page_num in cards.iter_pages() %}
   {%if page_num%}
       {%if cards.page == page_num %}
-        <a class="btn btn-primary" href="{{url_for('completed', page=page_num)}}" style="background-color:#e64364;border:none;">{{page_num}}</a>
+        <a class="btn btn-primary" href="{{url_for('completed', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
       {%else%}
-      <a class="btn btn-outline-primary" href="{{url_for('completed', page=page_num)}}" style="color:#e64364;border:none;" onmouseover="this.style='background-color:#fff; border:none; color:#e64364;';" onmouseout="this.style='background-color:transparent; border:none;color:#e64364;';">{{page_num}}</a>
+      <a class="btn btn-outline-primary pagenum_button" href="{{url_for('completed', page=page_num)}}">{{page_num}}</a>
       {%endif%}
   {%endif%}
   {%endfor%}
@@ -86,7 +88,6 @@
           <p id="ep-total">{{card.total_eps}}</p>
         </div> 
         </div>
-
         <div class="see_more">
           <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
@@ -94,8 +95,6 @@
             </svg>
           </button>
     </div>
-
-    
       <div class="see_less">
         <button type="button" class ="editButtonB" onclick="location.href='/edit/card/{{card.id}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -120,9 +119,6 @@
           </svg>
         </button>
       </div>
-
-
-
     </div>
     {% set counter.count = counter.count + 1 %}
   {%endfor%}  

@@ -5,13 +5,14 @@
 {%block body%}
 <div class = "page-header">
   <h2> Paused </h2>
-  <div class="page_numbers">
+  <br>
+<div class="page_numbers">
   {%for page_num in cards.iter_pages() %}
   {%if page_num%}
       {%if cards.page == page_num %}
-        <a class="btn btn-primary" href="{{url_for('paused', page=page_num)}}" style="background-color:#e64364;border:none;">{{page_num}}</a>
+        <a class="btn btn-primary" href="{{url_for('paused', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
       {%else%}
-      <a class="btn btn-outline-primary" href="{{url_for('paused', page=page_num)}}" style="color:#e64364;border:none;" onmouseover="this.style='background-color:#fff; border:none; color:#e64364;';" onmouseout="this.style='background-color:transparent; border:none;color:#e64364;';">{{page_num}}</a>
+      <a class="btn btn-outline-primary pagenum_button" href="{{url_for('paused', page=page_num)}}">{{page_num}}</a>
       {%endif%}
   {%endif%}
   {%endfor%}
@@ -120,8 +121,6 @@
         </svg>
       </button>
     </div>
-
-
     </div>
     {% set counter.count = counter.count + 1 %}
 {%endfor%}  

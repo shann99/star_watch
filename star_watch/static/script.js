@@ -205,3 +205,36 @@ function open_search() {
         search_box.style.visibility="hidden";
     }
 }
+const dark_mode = document.getElementById("dark_mode");
+const light_mode = document.getAnimations("light_mode");
+const mode = document.getElementById("mode");
+const current_pg = document.getElementById("currentpage_btn");
+const pg_header = document.getElementsByClassName("page-header");
+const pg_title = document.getElementsByClassName("page-title");
+const page_btn = document.getElementsByClassName("pagenum_button");
+var user_id = '{{user.id}}';
+function switch_modes_light(user_id) {
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "/light-mode",
+            data: {"user_id": user_id},
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+
+}
+function switch_modes_dark(user_id) {   
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "/dark-mode",
+            data: {"user_id": user_id},
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+}

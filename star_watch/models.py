@@ -13,7 +13,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150),nullable=False)
     password = db.Column(db.String(150),nullable=False)
     profile_pic = db.Column(db.String(20), nullable=False, server_default='/default.png')
+    mode = db.Column(db.Boolean,nullable=False, default=0)
     cards = db.relationship('Card', backref='user', cascade="all, delete", lazy=True)
+
     
     def __repr__(self):
         return f"User('{self.id}','{self.name}','{self.email}','{self.profile_pic}')"
@@ -28,7 +30,7 @@ class Card(db.Model):
     rating = db.Column(db.Integer)
     date_added = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     status = db.Column(db.String(1000), nullable=False, server_default="Planning")
-    fav = db.Column(db.Boolean, nullable=False, default=False);
+    fav = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship('Tags', backref='card', cascade="all, delete", lazy=True)
 
