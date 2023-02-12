@@ -7,6 +7,11 @@
     <h2> Completed </h2>
     <br>
 <div class="page_numbers">
+  {% if prev_page != '/completed' %}
+  <a class='prev-btns' href="{{prev_page}}"> 
+    <i class="bi bi-arrow-left-square"></i>
+  </a>
+{%endif%}
   {%for page_num in cards.iter_pages() %}
   {%if page_num%}
       {%if cards.page == page_num %}
@@ -16,6 +21,11 @@
       {%endif%}
   {%endif%}
   {%endfor%}
+  {% if page != total_pgs %}
+    <a class='next-btns' href="{{next_page}}"> 
+      <i class="bi bi-arrow-right-square"></i>
+    </a>
+  {%endif%}
   </div>
 </div>
 <br>
@@ -46,13 +56,15 @@
         <img src = {{card.image}} class="card-image" alt={{card.title}}>
         <form action="" method="POST" class="tagForm">
         <div class="tag">
+          <div class="tags">
           {%for tag in card.tags %} 
-                <span class="tag-name" >{{tag.name}}</span>
-          {%endfor%}
+              <span class="tag-name">{{tag.name}}</span>
+          {%endfor%} </div>
           <div class="divtag">
                 <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg></button>
+                </svg>
+            </button>
           </div>
           <div class="addTagForm">
             <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">

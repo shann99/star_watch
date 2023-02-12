@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -12,77 +11,77 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<!-- selecting which stylesheet to show (whether in dark mode or light mode) -->
 {%if user.mode == True%}
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='light.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
 {%else%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='dark.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
 {%endif%}
 <nav>
+    <!-- navigation for logged in user -->
     {% if user.is_authenticated %}
     <div class = "nav">
         <div class = "site-header"> 
-        <a class = "site-name" href="/">star <i class="bi bi-stars"></i> watch</a>    
-    </div>
-    <div class = "nav-menu">
-        <ul class = "nav-ul">
-            <li><a class="nav-item" href="/">Home</a></li>
-            <li><a class="nav-item" href="/planning">Planning</a></li>
-            <li><a class="nav-item" href="/paused">Paused</a></li>
-            <li><a class="nav-item" href="/completed">Completed</a></li>
-        </ul>
-    </div>
-    <div class="navigation">    
-            <div class ="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div> 
-            
-    <div class = "search">
-        <form action={{url_for('search', page=page_num)}}" method="GET">
-            <input type="text" id="search_box" placeholder="start typing to search" autofocus name="q"></input>
-        </form>
-        <button id="search_button" onclick="open_search()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
-        </button>
-    </div>
-    
-    <div id="mode">
-    {%if user.mode == True%}
-        <button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')">
-            <i class="bi bi-moon-stars-fill"></i>
-        </button>
-        <!-- <script>
-            document.body.style.backgroundColor = 'rgb(42 41 41)';
-        </script> -->
-    {%else%}
-        <button id="light_mode" onclick="switch_modes_light('{{user.id}}')">
-            <i class="bi bi-sun-fill"></i>
-        </button>
-        <!-- <script>                
-            document.body.style.backgroundColor = 'rgb(245 205 213)'; 
-        </script> -->
-    {%endif%}
-    </div>
-    
-        <div class="account-access">
-            <button type="button" class="profile-button">
-                <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
-                <span class="material-symbols-outlined">arrow_drop_down</span>
-            </button> 
-             <div class="login-nav">
-                <a class="user-welcome">Hi &#128075; , {{user.name}} </a>
-                <a class="account-item" id="acc-item-logout" href="/account">Account</a>
-                <a class="account-item" id="acc-item-logout" href="/logout">Logout</a>
-            </div>  
+            <a class = "site-name" href="/">star <i class="bi bi-stars"></i> watch</a>    
         </div>
-    </div>
+        <div class = "nav-menu">
+            <ul class = "nav-ul">
+                <li><a class="nav-item" href="/">Home</a></li>
+                <li><a class="nav-item" href="/planning">Planning</a></li>
+                <li><a class="nav-item" href="/paused">Paused</a></li>
+                <li><a class="nav-item" href="/completed">Completed</a></li>
+            </ul>
+        </div>
+        <div class="navigation">    
+                <div class ="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+        </div> 
+        <div class="right-nav">    
+            <div class = "search">
+                <form action='/search' method="GET">
+                    <input type="text" id="search_box" placeholder="Search..." autofocus name="q"></input>
+                </form>
+                <button id="search_button" onclick="open_search()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+            <div id="mode">
+            {%if user.mode == True%}
+                <button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')">
+                    <i class="bi bi-moon-stars-fill"></i>
+                </button>
+            {%else%}
+                <button id="light_mode" onclick="switch_modes_light('{{user.id}}')">
+                    <i class="bi bi-sun-fill"></i>
+                </button>
+            {%endif%}
+            </div>
+            <div class="account-access">
+                <button type="button" class="profile-button">
+                    <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                </button> 
+                <div class="login-nav">
+                    <a class="user-welcome">Hi <img class="hand_wave" src='https://i.pinimg.com/originals/51/12/5d/51125d9904b0aab078e2f7d0cbf37d8a.gif'> , {{user.name}} </a>
+                    <a class="account-item" id="acc-item-logout" href="/account">Account</a>
+                    <a class="account-item" id="acc-item-logout" href="/logout">Logout</a>
+                </div>  
+            </div>
+        </div>
+    </div>  
 </nav>
+<!-- navigation for a user that's not signed in -->
     {%else%}
-        <div class="nav">
+    <div class="nav">
         <div class = "account-header"> 
             <a class = "header-name" href="/">star <i class="bi bi-stars"></i> watch</a>    
         </div>
@@ -93,7 +92,7 @@
     </div>
     {%endif%}        
     <br>
-     
+<!-- flash messages -->
  {% with messages = get_flashed_messages(with_categories=true) %}
     {%if messages%}
         {%for category, message in messages%}
@@ -116,73 +115,76 @@
         {%endfor%}
     {%endif%}
  {%endwith%}
- {% if user.is_authenticated%}
-  <form method="POST" id="addmediaForm" action="/add_media">
-    <div class="addMediaFormHeader">
-        <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
-        <h1 class="addmediaHeader"> Add New Media</h1>
-    </div> 
-    <div class="form-group">
-      <label for="add_title" id="add-form-text" class="form-label"> Title</label>
-      <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="ex. Naruto" name = "add_title" required>
-    </div>
-    <div class="form-group">
-      <label for="add_image_form" id="add-form-text" class="form-label"> Add image</label>
-      <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
-    </div>
-    <br>
-    <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="status" id="add-form-text" class="form-label">Status</label>
-        <select class="form-select" aria-label="Default select example"name = "status">
-            <option selected value="Planning">Planning</option>
-            <option value="Watching">Watching</option>
-            <option value="Paused">Paused</option>
-            <option value="Completed">Completed</option>
-          </select>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="rating" id="add-form-text" class="form-label">Rating</label>
-        <select class="form-select" name="rating" aria-label="Default select example">
-            <option selected>Rating</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-      </div>
-      </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
-          <input type="number" step="1" min="0" class="form-control" autocomplete="off" id="add-input" name = "current_ep">
+ <!-- add media form -->
+{% if user.is_authenticated%}
+<div id="addmediaForm">
+    <form method="POST"  action="/add_media">
+        <div class="addMediaFormHeader">
+            <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
+            <h1 class="addmediaHeader"> Add New Media</h1>
+        </div> 
+        <div class="form-group">
+            <label for="add_title" id="add-form-text" class="form-label"> Title</label>
+            <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="ex. Naruto" name = "add_title" required>
         </div>
-        <div class="form-group col-md-6">
-          <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
-          <input type="text" class="form-control" autocomplete="off" id="add-input" name = "total_eps" aria-describedby="mediaHelp">
-          <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?", leave this blank or write unknown if you don't know the total episode count</small>
+        <div class="form-group">
+            <label for="add_image_form" id="add-form-text" class="form-label"> Add image</label>
+            <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
         </div>
-    </div>
-    <br>
-    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" name="description" id="description" rows="2" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
-        <small id="mediaHelp" class="form-text text-muted">max 850 characters </small>
-    </div>
-    <br>
-  <button type="submit" id= "add_media_button" class="btn btn-primary">Add Media</button>
+        <br>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="status" id="add-form-text" class="form-label">Status</label>
+                <select class="form-select" aria-label="Default select example"name = "status">
+                    <option selected value="Planning">Planning</option>
+                    <option value="Watching">Watching</option>
+                    <option value="Paused">Paused</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="rating" id="add-form-text" class="form-label">Rating</label>
+                <select class="form-select" name="rating" aria-label="Default select example">
+                    <option selected>Rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
+                <input type="number" step="1" min="0" class="form-control" autocomplete="off" id="add-input" name = "current_ep">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
+                <input type="text" class="form-control" autocomplete="off" id="add-input" name = "total_eps" aria-describedby="mediaHelp">
+                <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?", leave this blank or write unknown if you don't know the total episode count</small>
+            </div>
+        </div>
+        <br>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="description" rows="2" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
+            <small id="mediaHelp" class="form-text text-muted">max 850 characters </small>
+        </div>
+        <br>
+    <button type="submit" id= "add_media_button" class="btn btn-primary">Add Media</button>
   </form>
-
+</div>
 {%endif%}
 <section class = "content">
     {% block body %}
     {% endblock %}
+     <!-- add media button -->
     {% if user.is_authenticated%}
     <div class="add-item">
         <button class="add-item-image">
@@ -192,6 +194,6 @@
         </button>
     </div> 
     {%endif%}
-     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='script.js')}}"></script>
 </section>

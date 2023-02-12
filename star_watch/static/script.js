@@ -73,7 +73,7 @@ const check = document.querySelector(".check_delete");
 if(delete_button) {
     delete_button.addEventListener('click', () => {
     check.style.display='table';
-    editmediaForm.style.display='none';
+    editMedia.style.display='none';
     check.scrollIntoView({behavior: "smooth"});
     });
 }
@@ -81,7 +81,7 @@ const cancel_delete = document.getElementById('cancel_check');
 if(cancel_delete) {
     cancel_delete.addEventListener("click", () => {
     check.style.display='none';
-    editmediaForm.style.display='table';
+    editMedia.style.display='table';
     });
 }
 
@@ -115,6 +115,7 @@ function closeTag(item) {
     addTag[item].style.display="none";
     add_button[item].style.display="inline";
     cancel_tag__button[item].classList.remove("active");
+    tag_input[item].value="";
 }
 
 const cardIMG = document.getElementsByClassName("card-image");
@@ -158,6 +159,7 @@ function flipCardA(item) {
 const newT = document.getElementsByClassName('addTagInput');
 const newC = document.getElementsByClassName('cardID');
 const newCount = document.getElementsByClassName('tagCount');
+// var tags = document.getElementsByClassName("tag");
 
 $(document).ready(function() {
     $(".tagForm").on('submit', function(event) {
@@ -169,8 +171,9 @@ $(document).ready(function() {
                     "card_id": $(this).find(newC).val(), 
                     "new_tag": $(this).find(newT).val() 
                 },
-                success: function() {
-                    $(tagDiv[tagItem]).load(' .tag:eq('+ tagItem +')');
+                success: function(data) {
+                    $('.tag').eq(tagItem).load(' .tag:eq('+ tagItem +')');
+                    
                 }
         });
         event.preventDefault();
@@ -182,7 +185,6 @@ const ep_on = document.getElementsByClassName("ep-on");
 
 function upcountFunc(upcount_card_id, upcountItem) {
     $(document).ready(function() {
-        // console.log(upcountItem);
         $.ajax({
             type: "POST",
             url: "/upcount",
@@ -197,21 +199,16 @@ function upcountFunc(upcount_card_id, upcountItem) {
 const search_btn = document.getElementById("search_button");
 const search_box = document.getElementById("search_box");
 function open_search() {
-    if (search_box.style.visibility!="visible") {
-        search_box.style.visibility="visible";
+    if (search_box.style.display!="block") {
+        search_box.style.display="block";
+        search_btn.classList.toggle('active');
         search_box.focus();
     }
     else {
-        search_box.style.visibility="hidden";
+        search_box.style.display="none";
+        search_btn.classList.remove('active');
     }
 }
-const dark_mode = document.getElementById("dark_mode");
-const light_mode = document.getAnimations("light_mode");
-const mode = document.getElementById("mode");
-const current_pg = document.getElementById("currentpage_btn");
-const pg_header = document.getElementsByClassName("page-header");
-const pg_title = document.getElementsByClassName("page-title");
-const page_btn = document.getElementsByClassName("pagenum_button");
 var user_id = '{{user.id}}';
 function switch_modes_light(user_id) {
     $(document).ready(function() {

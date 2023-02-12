@@ -23,15 +23,30 @@ def index():
 
     page = request.args.get('page', 1, type=int)
     watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
-    return render_template("index.html", user=current_user, cards=watching_list, images=images)
+
+    prev_page = url_for('index', page=watching_list.prev_num)
+    next_page = url_for('index', page=watching_list.next_num)
+    total_pgs = watching_list.pages
+    if next_page == '/index':
+        next_page = total_pgs
+
+    return render_template("index.html", user=current_user, cards=watching_list, images=images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
 def planning():
     user = current_user
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int) 
+    
     planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
-    return render_template("planning.html", user=current_user, cards=planning_list)
+
+    prev_page = url_for('planning', page=planning_list.prev_num)
+    next_page = url_for('planning', page=planning_list.next_num)
+    total_pgs = planning_list.pages
+    if next_page == '/planning':
+        next_page = total_pgs
+
+    return render_template("planning.html", user=current_user, cards=planning_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/paused", methods=['GET','POST'])
 @login_required
@@ -39,16 +54,31 @@ def paused():
     user = current_user
     page = request.args.get('page', 1, type=int)
     paused_list = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
-    return render_template("paused.html", user=current_user, cards=paused_list)
+
+    prev_page = url_for('paused', page=paused_list.prev_num)
+    next_page = url_for('paused', page=paused_list.next_num)
+    total_pgs = paused_list.pages
+    if next_page == '/paused':
+        next_page = total_pgs
+    
+    return render_template("paused.html", user=current_user, cards=paused_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 
 @app.route("/completed", methods=['GET','POST'])
 @login_required
 def completed():
     user = current_user
+
     page = request.args.get('page', 1, type=int)
     completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
-    return render_template("completed.html", user=current_user, cards=completed_list)
+
+    prev_page = url_for('completed', page=completed_list.prev_num)
+    next_page = url_for('completed', page=completed_list.next_num)
+    total_pgs = completed_list.pages
+    if next_page == '/completed':
+        next_page = total_pgs
+    
+    return render_template("completed.html", user=current_user, cards=completed_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/account", methods=['GET','POST'])
 @login_required
@@ -73,9 +103,11 @@ def account_profile():
                 password = generate_password_hash(password, method='sha256')
                 update_user.password = password
             db.session.commit()
+
             success_message = "Your account has successfully been updated!"
             flash(success_message, category="success")
             return redirect(url_for("index"))
+        
     return render_template("account.html", user=current_user)
 
 @app.route("/delete_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
@@ -96,6 +128,7 @@ def update_tag(tag_id, card_id):
     if request.form.get('tag_update') != "":
         tag.name = request.form.get('tag_update')
         db.session.commit()
+
         flash('Your tag has been updated', category="info")
         return redirect(request.referrer)
 
@@ -154,6 +187,7 @@ def editMedia(card_id):
         card.id = card_id 
         db.session.commit()
 
+        flash(f'{card.title} was updated!', category="success")
         return redirect(url_for("index"))
 
     return render_template("edit.html",  user=current_user, card_id = card_id)
@@ -263,23 +297,21 @@ def unfav():
             card.fav = False
         db.session.commit()
         return '', 204
-
-
-
-
+    
 @app.route("/tag", methods=['POST'])
 @login_required
 def tags():
     if request.method == 'POST':
         card = Card.query.get(request.form["card_id"])
         test_tag = request.form.get('new_tag')
-        print(len(test_tag))
         if test_tag != "":
             if not (test_tag is None):
                 print(test_tag)
                 new_tag = Tags(name=test_tag, card_id=card.id)
+
                 db.session.add(new_tag)
                 db.session.commit()
+                
                 return '', 204
 
 #updating count with click of a button

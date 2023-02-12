@@ -7,6 +7,11 @@
   <h2> Paused </h2>
   <br>
 <div class="page_numbers">
+  {% if prev_page != '/paused' %}
+    <a class='prev-btns' href="{{prev_page}}"> 
+      <i class="bi bi-arrow-left-square"></i>
+    </a>
+  {%endif%}
   {%for page_num in cards.iter_pages() %}
   {%if page_num%}
       {%if cards.page == page_num %}
@@ -16,6 +21,11 @@
       {%endif%}
   {%endif%}
   {%endfor%}
+  {% if page != total_pgs %}
+    <a class='next-btns' href="{{next_page}}"> 
+      <i class="bi bi-arrow-right-square"></i>
+    </a>
+  {%endif%}
   </div>
 </div>
 <br>

@@ -9,7 +9,7 @@
     <button id="cancel_check" class="btn btn-secondary" type="button">No, cancel</button>
 </div>
 <div id = "editMedia">  
-    <form action="/edit/card/{{card.id}}" method="POST" id="editmediaForm" >
+    <form action="/edit/card/{{card.id}}" method="POST" >
       <div class="addMediaFormHeader">
         <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
         <br>
@@ -75,30 +75,41 @@
           <label for="edit_description" class="form-label">Update Description</label>
           <textarea class="form-control" name="edit_description" placeholder="{{card.description}}" id="description" rows="3" maxlength="850"></textarea>
       </div>
-      <br>
-      <button type="submit" id= "add_media_button" class="btn btn-primary">Update</button>
+      <button type="submit" id= "edit_media_button" class="btn btn-primary">Update</button>
       <br>
       <button type="button" id="delete_button" aria-label="delete" class="btn btn-danger">Delete</button>
       </form>
-    </div>
-    <div id="editTagsDiv">
-        <div class="addMediaFormHeader">
-          <button type="button" id="cancel_button" class="btn-close" aria-label="Close"  onclick="history.back(-2);"></button>
-          <br>
-            <h4 class="addmediaHeader"> Tags </h4>
-            <p class="tag_text">Tags associated with "{{card.title}}" will appear here. <br> <br> Click on the red x button to delete tags. <br><br>
-           To update tags, simply type in the field of the tag you want to update and hit enter.</p>
-        </div> <br> <br>
-      {%for tag in card.tags %}          
-        <form action="{{url_for('update_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" id="editTagForm"> 
+      <br><br>
+      <div class="tagsForm">
+      <hr><br>
+      <div class="tagHeader">
+        <h4 class="addmediaHeader"> Tags </h4> 
+        <span id="tagHelpBtn">
+          <i class="bi bi-question-circle"></i>
+        </span> 
+          <p class="tag_text"> 
+            Click on the red x button to delete tags. <br>
+            To update tags: type in the field of the tag <br> that you want to update and hit enter.
+          </p>
+      </div>
+    
+     
+     
+            
+        <br> <br>
+    <ul id="tagUl">    
+      {%for tag in card.tags %}   
+        <li class="tag_li">
+        <form action="{{url_for('update_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="editTagForm"> 
           <input type="text" id="tag_input" class="tag-name"name="tag_update" placeholder="{{tag.name}}"> 
         </form>
-        <form action="{{url_for('delete_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST">
+        <form action="{{url_for('delete_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="deleteTagForm">
          <button type="submit" id="editButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
           </svg>
-        </button></form>
-      {%endfor%}
+        </button>
+      </form></li> 
+      {%endfor%}</ul> </div>
     </div>
   {%endif%}
   {%endfor%}

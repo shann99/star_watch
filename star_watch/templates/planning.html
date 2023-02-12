@@ -3,23 +3,32 @@
  <h1>{%block title%}Planning{%endblock%}</h1>
  {%endblock%}
 {%block body%}
-  <div class = "page-header">
-    <h2> Planning </h2>
+<div class = "page-header">
+  <h2> Planning </h2>
     <br>
-<div class="page_numbers">
-{%for page_num in cards.iter_pages() %}
-{%if page_num%}
-    {%if cards.page == page_num %}
-      <a class="btn btn-primary" href="{{url_for('planning', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
-    {%else%}
-    <a class="btn btn-outline-primary pagenum_button" href="{{url_for('planning', page=page_num)}}">{{page_num}}</a>
+  <div class="page_numbers">
+    {% if prev_page != '/planning' %}
+      <a class='prev-btns' href="{{prev_page}}"> 
+        <i class="bi bi-arrow-left-square"></i>
+      </a>
     {%endif%}
-{%endif%}
-{%endfor%}
-</div>
+    {%for page_num in cards.iter_pages() %}
+      {%if page_num%}
+          {%if cards.page == page_num %}
+            <a class="btn btn-primary" href="{{url_for('planning', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+          {%else%}
+          <a class="btn btn-outline-primary pagenum_button" href="{{url_for('planning', page=page_num)}}">{{page_num}}</a>
+          {%endif%}
+      {%endif%}
+    {%endfor%}
+  {% if page != total_pgs %}
+    <a class='next-btns' href="{{next_page}}"> 
+      <i class="bi bi-arrow-right-square"></i>
+    </a>
+  {%endif%}
+  </div>
 </div>
 <br>
-
 {%set counter = namespace(value=0)%} 
   {%for card in user.cards %} 
    {%if card.status == 'Planning' %}
