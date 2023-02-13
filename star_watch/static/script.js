@@ -21,7 +21,7 @@ const addItem = document.querySelector(".add-item");
 const body = document.getElementsByTagName('body')[0];
 if(addItem) {
     addItem.addEventListener('click', () => {
-        addmediaForm.style.display="table";
+        addmediaForm.style.display="flex";
         body.classList.toggle('active');
         addItem.style.display="none";
         addmediaForm.scrollIntoView({behavior: "smooth"});
@@ -118,7 +118,7 @@ function closeTag(item) {
     tag_input[item].value="";
 }
 
-const cardIMG = document.getElementsByClassName("card-image");
+const cardIMG = document.getElementsByClassName("card-img-container");
 const tagDiv = document.getElementsByClassName("tagForm");
 const heartsDiv = document.getElementsByClassName("heart_buttons");
 const stats = document.getElementsByClassName("bottom_row");

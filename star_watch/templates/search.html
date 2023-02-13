@@ -21,7 +21,10 @@
          </svg>
        </button>
     </div>
-        <img src = {{card.image}} class="card-image" alt={{card.title}}>
+       
+    <div class="card-img-container"> 
+      <img src = {{card.image}} class="card-image" alt={{card.title}}>
+    </div>
         <form action="" method="POST" class="tagForm">
         <div class="tag">
           {%for tag in card.tags %} 

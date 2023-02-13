@@ -8,69 +8,74 @@
     <form action="{{url_for('delete', card_id=card.id)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info">Yes, delete it</button></form>
     <button id="cancel_check" class="btn btn-secondary" type="button">No, cancel</button>
 </div>
-<div id = "editMedia">  
-    <form action="/edit/card/{{card.id}}" method="POST" >
+   <div id = "editMedia">  
+    <form action="/edit/card/{{card.id}}" method="POST">
       <div class="addMediaFormHeader">
-        <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
-        <br>
+          <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
+          <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
-      </div> 
+      </div>  <br><br>
+      <div class="editmediaimage">
+          <img class="edit-img" src="{{card.image}}">
+        </div>
+        <br>
       <div class="form-group">
         <label for="edit_title" id="add-form-text" class="form-label"> Edit Title</label>
-        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="{{card.title}}" name = "edit_title">
+        <input type="text" class="form-control" autocomplete="off" id="n-input" placeholder="{{card.title}}" name = "edit_title">
       </div>
+       
       <div class="form-group">
-        <label for="edit_image_form" id="add-form-text" class="form-label"> Edit Media image</label>
-        <input type="text" class="form-control" autocomplete="off" id="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
+          <label for="edit_image_form" id="add-form-text" class="form-label"> Edit Media image</label>
+          <input type="text" class="form-control" autocomplete="off" id="n-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
       </div>
-  
+  <br>
       <div class="form-row">
-      <div class="form-group col-md-6">
-          <label for="edit_status" id="add-form-text" class="form-label">Update Status</label>
-          <select class="form-select" aria-label="Default select example"name = "edit_status">
-              <option selected>{{card.status}}</option>
-              <option value="Planning">Planning</option>
-              <option value="Watching">Watching</option>
-              <option value="Paused">Paused</option>
-              <option value="Completed">Completed</option>
-            </select>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="edit_rating" id="add-form-text" class="form-label">Update Rating</label>
-          <select class="form-select" name="edit_rating" aria-label="Default select example">
-              <option selected>{{card.rating}}</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-        </div>
-        </div>
-      <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="edit_current_ep" id="add-form-text" class="form-label">Update Episode Count</label>
+        <!-- </div>
+      <div class="form-row"> -->
+        <div class="form-group col-md-3">
+            <label for="edit_current_ep" id="add-form-text" class="form-label">Current Episode </label>
             {%if card.current_ep == ""%}
-            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" value="0">
+            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="n-input" name = "edit_current_ep" value="0">
             {%else%}
-            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="add-input" name = "edit_current_ep" value={{card.current_ep}}>
+            <input type="number" step="1" min="0" class="form-control" autocomplete="off"  id="n-input" name = "edit_current_ep" value={{card.current_ep}}>
             {%endif%}
           </div>
-          <div class="form-group col-md-6">
-            <label for="edit_total_eps" id="add-form-text" class="form-label">Update Total Episode Count</label>
+          <div class="form-group col-md-3">
+            <label for="edit_total_eps" id="add-form-text" class="form-label">Total Episode Count</label>
             {%if card.total_eps == ""%}
-            <input type="text" class="form-control" autocomplete="off" id="add-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
+            <input type="text" class="form-control" autocomplete="off" id="n-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
             {%else%}
-            <input type="text" class="form-control" autocomplete="off" id="add-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
+            <input type="text" class="form-control" autocomplete="off" id="n-input" name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
             {%endif%}
+          </div> 
+          <div class="form-group col-md-3">
+            <label for="edit_status" id="add-form-text" class="form-label">Update Status</label>
+            <select class="form-select" aria-label="Default select example" name = "edit_status">
+                <option selected>{{card.status}}</option>
+                <option value="Planning">Planning</option>
+                <option value="Watching">Watching</option>
+                <option value="Paused">Paused</option>
+                <option value="Completed">Completed</option>
+              </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label for="edit_rating" id="add-form-text" class="form-label">Update Rating</label>
+            <select class="form-select" name="edit_rating" aria-label="Default select example">
+                <option selected>{{card.rating}}</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
           </div>
       </div>
-      <br>
+      <br> <br>
       <div class="mb-3">
           <label for="edit_description" class="form-label">Update Description</label>
           <textarea class="form-control" name="edit_description" placeholder="{{card.description}}" id="description" rows="3" maxlength="850"></textarea>
@@ -79,37 +84,36 @@
       <br>
       <button type="button" id="delete_button" aria-label="delete" class="btn btn-danger">Delete</button>
       </form>
-      <br><br>
+      <!--------------------Tag Form----------------------------->
       <div class="tagsForm">
-      <hr><br>
-      <div class="tagHeader">
-        <h4 class="addmediaHeader"> Tags </h4> 
-        <span id="tagHelpBtn">
-          <i class="bi bi-question-circle"></i>
-        </span> 
-          <p class="tag_text"> 
-            Click on the red x button to delete tags. <br>
-            To update tags: type in the field of the tag <br> that you want to update and hit enter.
-          </p>
+        <hr><br>
+        <div class="tagHeader">
+          <h4 class="addmediaHeader"> Tags </h4> 
+          <span id="tagHelpBtn">
+            <i class="bi bi-question-circle"></i>
+          </span> 
+            <p class="tag_text"> 
+              Click on the red x button to delete tags. <br>
+              To update tags: type in the field of the tag <br> that you want to update and hit enter.
+            </p>
+        </div>       
+          <br> <br>
+      <ul id="tagUl">    
+        {%for tag in card.tags %}   
+          <li class="tag_li">
+            <form action="{{url_for('update_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="editTagForm"> 
+              <input type="text" id="tag_input" class="tag-name"name="tag_update" placeholder="{{tag.name}}"> 
+            </form>
+            <form action="{{url_for('delete_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="deleteTagForm">
+            <button type="submit" id="editButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+              </svg>
+            </button>
+          </form>
+        </li> 
+        {%endfor%}
+      </ul> 
       </div>
-    
-     
-     
-            
-        <br> <br>
-    <ul id="tagUl">    
-      {%for tag in card.tags %}   
-        <li class="tag_li">
-        <form action="{{url_for('update_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="editTagForm"> 
-          <input type="text" id="tag_input" class="tag-name"name="tag_update" placeholder="{{tag.name}}"> 
-        </form>
-        <form action="{{url_for('delete_tag', tag_id=tag.id, card_id=card.id, card_title=card.title)}}", method="POST" class="deleteTagForm">
-         <button type="submit" id="editButton"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-          </svg>
-        </button>
-      </form></li> 
-      {%endfor%}</ul> </div>
     </div>
   {%endif%}
   {%endfor%}

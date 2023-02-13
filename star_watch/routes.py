@@ -188,7 +188,7 @@ def editMedia(card_id):
         db.session.commit()
 
         flash(f'{card.title} was updated!', category="success")
-        return redirect(url_for("index"))
+        return redirect(request.referrer)
 
     return render_template("edit.html",  user=current_user, card_id = card_id)
 
@@ -200,8 +200,6 @@ def delete(card_id):
     db.session.commit()
     flash('Your media has been deleted', category="info")
     return redirect(url_for("index"))
-
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
