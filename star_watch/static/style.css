@@ -88,7 +88,7 @@
     text-align: center; 
     border: solid #f5d5e0;
     flex-direction: column; 
-    margin-left: -3em;
+    margin-left: -3.5em;
     border-radius: 7px;
     box-shadow: 1px 1px 1px 1px rgb(47, 47, 47);
     z-index: 2;
@@ -338,7 +338,7 @@
 }
 
 .login-form {
-    outline-style: solid;
+    border: solid;
     display: flex;
     padding: 3em 3em 4em 3em;
     margin-left:auto;
@@ -387,7 +387,7 @@
 }
 
 .signup-form {
-    outline-style: solid;
+    border: solid;
     display: flex;
     padding: 3em 4em 2em 3em;
     margin-top: -4em;
@@ -464,7 +464,7 @@
 }
 
 #addmediaForm {
-    outline-style: solid;
+    border: solid;
     display: none;
     padding: 3em 4em 2em 3em;
     margin: 0 auto;
@@ -514,7 +514,8 @@
     margin-top: 1em;
     float:left;
     border:none;
-    display: block;
+    display: flex;
+    justify-content: center;
 }
 #del_acc_button {
     padding: 0.375rem 0.75rem;
@@ -550,36 +551,36 @@ body.active > *:not(#addmediaForm) {
 }
 .add-item {
     cursor: pointer;
-    margin-left: 97%;
-    border-radius: 75%;
     transform: scale(3.4);
     position: fixed;
     bottom: 0;
     margin-bottom: 2em;
     z-index: 1;
+    right: 0;
 }
 .add-item-image {
     width: 100%;  
     background-color: transparent;
     border:none;
     color: #ff889d;
+    margin-left: -1.5em;
+    margin-bottom: 0.2em
 }
-.add-item:hover {
-    transform: scale(4.4);
-    transition: .3s ease;
+.add-item-image:hover {
+    transform: scale(1.2);
+    transition: all .3s ease-in-out;
 }
 #accountForm {
-    outline-style: solid;
+    border: solid;
     display: block;
-    padding: 3em 4em 3em 3em;
+    padding: 1em 4em 3em 3em;
     margin: 0 auto;
     background-color: #e3a6ff; 
     border-radius: 10px;
-    max-width: 800px;
-    overflow-wrap: break-word;
+    max-width: 700px;
 }
 #account-input {
-    margin-bottom: 3em;
+    margin-bottom: 2em;
     width: 100%;
     display: block;
     border-radius: 0.5em;
@@ -682,7 +683,7 @@ body.active > *:not(#addmediaForm) {
 }
 
 .check_delete {
-    outline-style: solid;
+    border: solid;
     padding: 3em 4em 2em 3em;
     margin: 0 auto;
     background-color: #e3a6ff; 
@@ -730,7 +731,7 @@ body.active > *:not(#addmediaForm) {
  }
 
 .check_acc_delete {
-    outline-style: solid;
+    border: solid;
     padding: 3em 4em 2em 3em;
     margin: 0 auto;
     background-color: #e3a6ff; 
@@ -858,550 +859,6 @@ body.active > *:not(#addmediaForm) {
 
 
 
-@media screen and (min-width: 320px) and (max-width: 425px){
-    #addmediaForm {
-        inline-size: 300px !important;
-    }
-    #add_media_button {
-        width: 30%;
-    }
-    #editTagsDiv {
-        margin-right: 5em;
-    }
-    #editmediaForm {
-        margin-left: 0em;
-        inline-size: 323px;
-    }
-    #delete_button {
-        width:34%;
-    }
-    /* #editTagsDiv {
-        inline-size: 317px;
-        margin-top: 1em;
-        margin-right: 0em;
-    } */
-    .logged-out {
-        display: flex;
-        padding: 0em !important;
-        gap: 1em  !important;
-        margin-top: -3em;
-        margin-left: 65%;
-    }
-    .login-nav.active {
-        display: flex; 
-        position:absolute;
-        margin-top: 16em;
-    }
-    .navigation {
-        display:flex;
-        align-items: center;
-        margin-right:90%;
-        margin-top: 1em;
-    }
-    .nav-ul {
-        flex-direction: column;
-        transition: 0.3s;
-        background: linear-gradient(15deg,#5900ff 0%, #e94462 100%);
-        display: none;
-        border-radius: 7px;
-        margin-top: 4em;
-        width: 95%;
-        box-shadow: 2px 5px 7px 2px;
-        text-align: center;
-        left: -100%;
-        
-    }
-    .nav-item {
-        padding: 0em 0.3em 1.5em 0em;
-        gap: 0em !important;
-        display: inline-block;
-        
-    }
-    .nav-ul.active {
-        position:absolute;
-        display: block;
-        left: 2%;
-
-    }
-    .page-title {
-        margin-top: 3em;
-    }
-    .hamburger {
-        display: block; 
-        position:relative;
-    }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-       
-    }
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-    .carousel-item {
-        overflow:hidden;
-        width: 100%;
-        height: 250px;
-        margin-top: 1em;
-    }
-    .nav {
-        display: flex;
-        justify-content: center;
-    }
-    .site-name {
-        text-align: center;
-        font-size: 71px;
-    }
-    .nav-menu {
-        display:flex;
-        margin-top: 2em;
-        margin-right: auto;
-    }
-
-    .account-access {
-        display:flex;
-        align-items: center;
-        margin-left: 80%;
-        margin-top: -4em;
-    }
-    .card-item {
-        margin: 1em 3em 1em 4em;
-        grid-template-columns: 280px;
-    }
-    .card-container {
-        grid-template-columns: auto ;
-    }
-    
-    .card-item {
-        margin: 1em 0em 1em 0em;
-        grid-template-columns: 300px;
-    } 
-    .page_numbers {
-        margin-left: 41.5%;
-    }
-  
-    .add-item {
-        cursor: pointer;
-        margin-left: 86%;
-    }
-    .edit_button {
-        margin-left: 88%;
-    }
-    #heart {
-        margin-left: 0em;
-    }
-    #heart_filled {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart_filled {
-        margin-left: 0em;
-    } 
-  
-}
-/* @media screen and (max-width: 767px) and (min-width: 620px){
-    .nav-ul.active {
-        margin-top: 9em;
-        z-index: 2;
-    } 
-    #addmediaForm {
-        inline-size: 500px !important;
-    }
-}
-@media screen and (max-width: 619px) and (min-width: 426px){
-    .nav-ul.active {
-        margin-top: 3em;
-        z-index: 2;
-    } 
-    #add_media_button  {
-        width: 30%;
-    }
-    #editTagsDiv {
-        inline-size: 453px;
-        margin-top: 1em;
-        margin-left: 0em;
-        margin-right: 1em;
-    }   
-} */
- @media screen and (max-width: 767px) and (min-width: 426px){
-    .logged-out {
-        display: flex;
-        padding: 0em !important;
-        gap: 1em  !important;
-        margin-top: -3em;
-        margin-left: 65%;
-    }
-    .login-nav.active {
-        display: flex; 
-        position:absolute;
-        margin-top: 17em;
-    }
-    .navigation {
-        display:flex;
-        align-items: center;
-        margin-right:90%;
-        margin-top: 1em;
-    }
-    .nav-ul {
-        flex-direction: column;
-        transition: 0.3s;
-        background: linear-gradient(15deg,#5900ff 0%, #e94462 100%);
-        display: none;
-        border-radius: 7px;
-        margin-top: 4em;
-        width: 95%;
-        box-shadow: 2px 5px 7px 2px;
-        text-align: center;
-        left: -100%;
-        
-    }
-    .nav-item {
-        padding: 0em 0.3em 1.5em 0em;
-        gap: 0em !important;
-        display: inline-block;
-        
-    }
-    .nav-ul.active {
-        position:absolute;
-        display: block;
-        left: 2%;
-
-    }
-    .page-title {
-        margin-top: 3em;
-    }
-    .hamburger {
-        display: block; 
-        position:relative;
-    }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-       
-    }
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-    .carousel-item {
-        overflow:hidden;
-        width: 100%;
-        height: 250px;
-        margin-top: 1em;
-    }
-    .nav {
-        display: flex;
-        justify-content: center;
-    }
-    .site-name {
-        text-align: center;
-        font-size: 71px;
-    }
-    .nav-menu {
-        display:flex;
-        margin-top: 2em;
-        margin-right: auto;
-    }
-
-    .account-access {
-        display:flex;
-        align-items: center;
-        margin-left: 80%;
-        margin-top: -14em !important;
-    }
-
-    .card-item {
-        grid-template-columns: 430px;
-    }
-    .add-item {
-        margin-left: 85%;
-    }
-    .card-container {
-        grid-template-columns: auto;
-    }
-    #heart {
-        margin-left: 0em;
-    }
-    #heart_filled {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart_filled {
-        margin-left: 0em;
-    }
-    #editmediaForm {
-        inline-size: 378px;
-    }
-    #delete_button {
-        width:30%;
-    }
-    /* #editTagsDiv {
-        inline-size: 378px;
-        margin-top: 1em;
-    } */
-    #add_media_button  {
-        width: 30%;
-    }
-    #editmediaForm {
-        inline-size: 452px;
-    } 
-    #cancel_button {
-        margin-right: -1em;
-        margin-top: -1em;
-    }
-    /* #dark_mode {
-        margin-left: -29em;
-    } */
-    /* .search {
-        margin-top: 2.2em;
-        margin-left: 13em;
-    } */
-}
-
-/* @media screen and (width: 1920px) {
-    .card-item { 
-        margin: 1em 3em 1em 4em;
-        grid-template-columns: 500px;
-    }
-    #editmediaForm {
-        margin-left: 29%;
-    }
-    #editTagsDiv {
-        margin-right: 7em;
-    }
-}
-@media screen and (max-width: 1810px) and (min-width: 1693px){
-    .card-item {
-        grid-template-columns: 460px;
-    }
-}
-@media screen and (max-width: 1692px) and (min-width: 1530px){
-    .card-item {
-        grid-template-columns: 400px;
-    }
-}
-@media screen and (max-width: 1529px) and (min-width: 1441px){
-    .card-item {
-        grid-template-columns: 370px;
-    }
-}
-@media screen and (max-width: 1440px) and (min-width: 1350px){
-    .card-item {
-        grid-template-columns: 350px;
-    }
-    .heart_filled {
-        margin-left: 0.3em;
-    }
-    .card-item:hover .heart {
-        display: inline;
-        margin-left: 0.3em;
-    }
-    .card-item:hover .heart_filled {
-        display: inline;
-        margin-left: 0.3em;
-    }
-    .card-item:hover .edit_button {
-        margin-left: -0.5em;
-    }
-    .card-item:hover .editButtonB {
-        margin-left: 20em;
-    }
-}
-
-@media screen and (max-width: 1349px) and (min-width: 1262px){
-    .card-item {
-        margin: 1em 3em 1em 2em;
-        grid-template-columns: 339px;
-    }
-    .heart_filled {
-        margin-left: 0em;
-    }
-    .card-item:hover .heart {
-        display: inline;
-        margin-left: 0em;
-    }
-    .card-item:hover .heart_filled {
-        display: inline;
-        margin-left: 0em;
-    }
-    .card-item:hover .edit_button {
-        margin-left: -0.5em;
-    }
-    .card-item:hover .editButtonB {
-        margin-left: 19.5em;
-    }
-    .add-item {
-        margin-left: 96%;
-    }
-}
-@media screen and (max-width: 1261px) and (min-width: 1123px){
-    .card-item {
-        grid-template-columns: 450px;
-    }
-    .card-container {
-        grid-gap: 2em;
-        grid-template-columns: auto auto;
-    }
-    .nav {
-        justify-content: center;
-    } */
-    /* .search {
-        margin-top: 7.2em;
-    }
-    #dark_mode {
-        margin-top: 5em;
-        margin-left: -49em;
-    }
-    
-    .account-access {
-        float: none;
-        margin-right: 3em;
-    }
-    .search {
-        margin-left: 4em;
-    } */
-    /* .nav-ul {
-        margin-top: -1.5em;
-        margin-left: 9em;
-    }
-    .account-access {
-        display: flex;
-        float: none;
-        margin-left: 26em;
-    }
-}
-@media screen and (max-width: 1122px) and (min-width: 1040px) {
-    .nav-ul {
-        display:flex;
-        width: 100%;
-        justify-content:center;
-    }
-    .hamburger {
-        display:none;
-    }
-
-    .carousel-item {
-        overflow:hidden;
-        width: 100%;
-        height: 500px;
-    }
-    .login-nav.active {
-        z-index: 2;
-    }
-    .nav {
-        flex-wrap: wrap;
-        flex-direction: column;
-        align-content: center;
-        align-items: center;
-    }
-    .card-container {
-        grid-gap: 2em;
-        grid-template-columns: auto auto;
-    }
-    
-    .card-item {
-        grid-template-columns: 410px;
-    }
-    .add-item {
-        margin-left: 93%;
-    }
-    .edit_button {
-        margin-left: 88%;
-    }
-    #heart {
-        margin-left: 0em;
-    }
-    #heart_filled {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart {
-        margin-left: 0em;
-    }
-    .card-item:hover #heart_filled {
-        margin-left: 0em;
-    }
-} */
-/* @media screen and (max-width: 1039px) and (min-width: 950px) {
-    .card-item { 
-        margin: 1em 3em 1em 4em;
-        grid-template-columns: 370px;
-    }
-    .card-container {
-        grid-gap: 2em;
-        grid-template-columns: auto auto;
-    }
-    .nav {
-        justify-content: space-evenly;
-    }
-    .add-item {
-        margin-left: 93%;
-    }
-    .heart_filled {
-        margin-left: 0em;
-    }
-    .card-item:hover .heart {
-        display: inline;
-        margin-left: 0em;
-    }
-    .card-item:hover .heart_filled {
-        display: inline;
-        margin-left: 0em;
-    }
-    .card-item:hover .edit_button {
-        margin-left: -0.5em;
-    }
-    .card-item:hover .editButtonB {
-        margin-left: 21em;
-    }
-    .add-item {
-        margin-left: 96%;
-    }
-} */
-
-/* @media screen and (max-width: 622px) and (min-width: 500px) {
-    .search {
-        margin-left: 20em;
-    }
-    #dark_mode {
-        margin-left: -35.4em;
-    }
-} */
-/* @media screen and (max-width: 949px) and (min-width: 768px) {
-    .card-item { 
-        margin: 1em 3em 1em 4em;
-        grid-template-columns: 500px;
-    }
-    .card-container {
-        grid-gap: 2em;
-        grid-template-columns: auto;
-    }
-    .nav {
-        justify-content: space-evenly;
-    }
-    .add-item {
-        margin-left: 93%;
-    }
-    #editTagsDiv {
-        margin-right: 15em;
-        margin-top: 1em;
-    }
-    .search {
-        margin-left: -7em !important;
-    }
-    .nav-menu {
-        margin-left: -6em;
-    }
-    .right-nav {
-        gap: 7.5em !important;
-    }
-} */
 
 .plus_tag_button {
     background-color: transparent;
@@ -1608,7 +1065,7 @@ body.active > *:not(#addmediaForm) {
     /* margin-top: 1em; */
 }
 #editMedia {
-    outline-style: solid;
+    border: solid;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -1617,7 +1074,7 @@ body.active > *:not(#addmediaForm) {
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
-    max-width: 800px;
+    max-width: 950px;
 }
 
 #tagUl {
@@ -1681,13 +1138,13 @@ body.active > *:not(#addmediaForm) {
 .edit-img {
     object-fit: cover;
     width:100%;
-    outline: solid 2px;
+    border: solid 2px;
     border-radius: 12px;;
     
 }
 .editmediaimage {
-    width: 500px;
-    height: 350px;
+    max-width: 600px;
+    max-height: 350px;
     margin-left:auto;
     margin-right:auto;
     display: flex;

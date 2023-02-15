@@ -110,6 +110,36 @@ def account_profile():
         
     return render_template("account.html", user=current_user)
 
+@app.route("/statistics", methods=['GET','POST'])
+@login_required
+def stats():
+    if request.method == "POST":
+        user = current_user;
+        # update_user = User.query.get(user.id)
+
+        # password = request.form.get("update_password")
+        # pass_confirm = request.form.get("update_password_confirm")
+        
+        # if password != pass_confirm:
+        #         flash('Passwords must match, please try again', category='error') 
+        # else:
+        #     if request.form.get('update_profile_pic') != "":
+        #         update_user.profile_pic = request.form.get('update_profile_pic')
+        #     if request.form.get('update_email') != "":
+        #         update_user.email = request.form.get('update_email')
+        #     if request.form.get('update_name') != "":
+        #         update_user.name = request.form.get('update_name')
+        #     if request.form.get('update_password') != "":
+        #         password = generate_password_hash(password, method='sha256')
+        #         update_user.password = password
+        #     db.session.commit()
+
+        #     success_message = "Your account has successfully been updated!"
+        #     flash(success_message, category="success")
+        #     return redirect(url_for("index"))
+        
+    return render_template("stats.html", user=current_user)
+
 @app.route("/delete_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
 @login_required
 def delete_tag(tag_id, card_id):

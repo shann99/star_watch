@@ -24,7 +24,7 @@ if(addItem) {
         addmediaForm.style.display="flex";
         body.classList.toggle('active');
         addItem.style.display="none";
-        addmediaForm.scrollIntoView({behavior: "smooth"});
+        addmediaForm.scrollIntoView({behavior: "smooth", block:"center", inline: "end"});
     });
 }
 const closeForm = document.getElementById("mediaClose");
@@ -32,7 +32,7 @@ if(closeForm) {
     closeForm.addEventListener("click", () => {
         addmediaForm.style.display="none";
         body.classList.remove('active');
-        addItem.style.display="inline-grid";
+        addItem.style.display="flex";
     });
 }
 const heart = document.getElementsByClassName('heart');
