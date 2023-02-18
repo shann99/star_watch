@@ -11,6 +11,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+    align-content: space-around;
     color: #e5e5e5;
 }
 .page-title {

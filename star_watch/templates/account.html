@@ -13,37 +13,65 @@
 </div>
 
 <br>
-<form method="POST" id="accountForm" action="">
-   <div class = "page-title">
-        <h2> Account Details </h2>
-    </div> 
-    <div class="change_profile">
-        <img class = "change_profile_pic" src={{user.profile_pic}} alt="profile pic">
-        <br><br><br>
+
+<div id="accountForm">
+    <br>
+    <h5> Display Settings </h5>
+        <div id="mode">
+        {%if user.mode == True%}
+            <button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')">
+                <i class="bi bi-moon-stars-fill"></i> Dark Mode
+            </button>
+        {%else%}
+            <button id="light_mode" onclick="switch_modes_light('{{user.id}}')">
+                <i class="bi bi-sun-fill"></i> Light Mode
+            </button>
+        {%endif%}
+        </div>
+    <br> <br>
+    <hr>
+    <form method="POST"  action="">
+        <br>
+    <!-- <div class = "page-title">
+            <h2> Account Details </h2>
+        </div>  -->
+        <h5> Update Profile Picture </h5>
+        <div class="change_profile">
+            <img class = "change_profile_pic" src={{user.profile_pic}} alt="profile pic">
+            <br><br><br>
+            <div class="mb-3">
+                <label for="update_profile_pic" id="signup-text" class="form-label"> Change Profile Picture</label>
+                <input type="text" class="form-control" autocomplete="off" id="account-input"  placeholder="image source (https://...jpg, .png, etc.)" name = "update_profile_pic">
+            </div>        
+        </div>
+        <hr>
+        <h5> Name </h5> <br> 
         <div class="mb-3">
-            <label for="update_profile_pic" id="signup-text" class="form-label"> Change Profile Picture</label>
-            <input type="text" class="form-control" autocomplete="off" id="account-input"  placeholder="image source (https://...jpg, .png, etc.)" name = "update_profile_pic">
-        </div>        
-    </div><hr>
-    <div class="mb-3">
-        <label for="update_email" id="signup-text" class="form-label">Update Email</label>
-        <input type="email" class="form-control" autocomplete="off" id="account-input"  name = "update_email">
-    </div>
-    <div class="mb-3">
-        <label for="update_name" id="signup-text" class="form-label">Change Name</label>
-        <input type="text" class="form-control" autocomplete="off" id="account-input" placeholder="{{user.name}}" name = "update_name">
-    </div>
-    <div class="mb-3">
-        <label for="update_password" id="signup-text" class="form-label">Change Password</label>
-        <input type="password" class="form-control" autocomplete="off" id="account-input"  placeholder="new password" minlength="8" maxlength="20" name = "update_password">
-    </div>
-    <div class="mb-3">
-        <label for="update_password_confirm" id="signup-text" class="form-label">Confirm New Password</label>
-        <input type="password" class="form-control" autocomplete="off" id="account-input" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
-    </div>
-    <button type="submit" id="del_acc_button" class="btn btn-primary">Update</button>
-    <br>
-    <br>
-    <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger">Delete Account</button>
-</form>
+            <label for="update_name" id="signup-text" class="form-label">Change Name</label>
+            <input type="text" class="form-control" autocomplete="off" id="account-input" placeholder="{{user.name}}" name = "update_name">
+        </div>
+        <hr>
+        <h5> Email </h5> <br>
+        <div class="mb-3">
+            <label for="update_email" id="signup-text" class="form-label">Update Email</label>
+            <input type="email" class="form-control" autocomplete="off" id="account-input"  name = "update_email">
+        </div>
+        <hr>
+        <h5> Change Password </h5> <br>
+        <div class="mb-3">
+            <label for="update_password" id="signup-text" class="form-label">New Password</label>
+            <input type="password" class="form-control" autocomplete="off" id="account-input"  placeholder="new password" minlength="8" maxlength="20" name = "update_password">
+        </div>
+        <div class="mb-3">
+            <label for="update_password_confirm" id="signup-text" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" autocomplete="off" id="account-input" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
+        </div>
+        <button type="submit" id="del_acc_button" class="btn btn-primary">Update</button>
+        <br> <br> <br>
+        <hr>
+        <h5> Delete Account</h5> <br>
+        <p> <i class="bi bi-exclamation-triangle-fill"></i> Once you delete your account, there's no going back! </p> <br>
+        <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger">Delete Account</button>
+    </form>
+</div>
 {%endblock%}

@@ -129,6 +129,7 @@
         </div>  
       </form>
         <!-- heart functionality -->
+      <div class="hearts">
         <div class="heart_buttons">
           <p id="name">{{card.title}}</p> 
           {%if card.fav == False%}
@@ -145,12 +146,17 @@
           </button>
           {%endif%}
         </div>
+      </div>
         <!-- bottom row with status and ep count -->
+        <!-- <div class="" -->
         <div class="bottom_row">
           <p id="status" class="status_watching">#{{card.status}}</p>
           <div class="ep-tracker">
-            <p class="ep-on">{{card.current_ep}}</p>
-            <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}')" id="upcount">+</button> 
+            <div class="upcountDiv">
+              <p class="ep-on">{{card.current_ep}}</p> 
+            </div>
+              <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}')" id="upcount">+</button> 
+           
             <p id="divider"> / </p>
             <p id="ep-total">{{card.total_eps}}</p>
           </div>

@@ -54,17 +54,7 @@
                     </svg>
                 </button>
             </div>
-            <div id="mode">
-            {%if user.mode == True%}
-                <button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')">
-                    <i class="bi bi-moon-stars-fill"></i>
-                </button>
-            {%else%}
-                <button id="light_mode" onclick="switch_modes_light('{{user.id}}')">
-                    <i class="bi bi-sun-fill"></i>
-                </button>
-            {%endif%}
-            </div>
+           
             <div class="account-access">
                 <button type="button" class="profile-button">
                     <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
@@ -78,8 +68,21 @@
                 </div>  
             </div>
         </div>
+       
     </div>  
-</nav>
+</nav> <div class="hamburger_navigation">
+            <ul>
+                <li> 
+                <form action='/search' method="GET">
+                    <input type="text" id="search_box_smaller" placeholder="Search..." autofocus name="q"></input>
+                </form>
+                </li>
+                <li><a class="nav-item" href="/">  <i class="bi bi-tv"></i> Home</a></li>
+                <li><a class="nav-item" href="/planning"><i class="bi bi-collection-play"></i>Planning</a></li>
+                <li><a class="nav-item" href="/paused"><i class="bi bi-pause-circle"></i>Paused</a></li>
+                <li><a class="nav-item" href="/completed"> <i class="bi bi-check-circle"></i>Completed</a></li>
+            </ul>
+        </div>
 <!-- navigation for a user that's not signed in -->
     {%else%}
     <div class="nav">

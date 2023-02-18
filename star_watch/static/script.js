@@ -1,11 +1,16 @@
 var item = "{{counter.count}}";
 
 const hamburger = document.querySelector('.hamburger');
-const navUL = document.querySelector('.nav-ul');
+const ham_nav = document.querySelector('.hamburger_navigation');
 if(hamburger) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
-        navUL.classList.toggle('active');
+        if(ham_nav.style.display != 'flex') {
+            ham_nav.style.display = 'flex'; 
+        }
+       else {
+        ham_nav.style.display = 'none'; 
+       }
     });
 }
 
@@ -37,7 +42,7 @@ if(closeForm) {
 }
 const heart = document.getElementsByClassName('heart');
 const filled = document.getElementsByClassName('heart_filled');
-const heart_btns = document.getElementsByClassName('heart_buttons');
+const hearts = document.getElementsByClassName('hearts');
 var card_id = '{{card.id}}';
 var card_fav = "{{card.fav}}";
 var heartItem = "{{counter.count}}";
@@ -49,7 +54,7 @@ function hearted(card_id, heartItem) {
             url: "/fav",
             data: {"card_id": card_id, "card_fav": true},
             success: function() {
-                $(heart_btns[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+                $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
             }
         });
     });
@@ -62,7 +67,7 @@ function unhearted(card_id, heartItem) {
             url: "/unfav",
             data: {"card_id": card_id, "card_fav": false},
             success: function() {
-                $(heart_btns[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+                $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
             }
         });
     });
@@ -159,7 +164,8 @@ function flipCardA(item) {
 const newT = document.getElementsByClassName('addTagInput');
 const newC = document.getElementsByClassName('cardID');
 const newCount = document.getElementsByClassName('tagCount');
-// var tags = document.getElementsByClassName("tag");
+const tag_class = document.getElementsByClassName('tagForm');
+
 
 $(document).ready(function() {
     $(".tagForm").on('submit', function(event) {
@@ -172,8 +178,7 @@ $(document).ready(function() {
                     "new_tag": $(this).find(newT).val() 
                 },
                 success: function(data) {
-                    $('.tag').eq(tagItem).load(' .tag:eq('+ tagItem +')');
-                    
+                    $(tag_class[tagItem]).load(' .tag:eq('+ tagItem +')');
                 }
         });
         event.preventDefault();
@@ -182,7 +187,7 @@ $(document).ready(function() {
 var upcount_card_id = '{{card.id}}';
 var upcountItem = "{{counter.count}}";
 const ep_on = document.getElementsByClassName("ep-on");
-
+const currentepDiv = document.getElementsByClassName('upcountDiv');
 function upcountFunc(upcount_card_id, upcountItem) {
     $(document).ready(function() {
         $.ajax({
@@ -190,7 +195,7 @@ function upcountFunc(upcount_card_id, upcountItem) {
             url: "/upcount",
             data: {"card_id": upcount_card_id},
             success: function() {
-                $('.ep-on:eq('+upcountItem+')').load(' .ep-on:eq('+upcountItem+')');
+                $(currentepDiv[upcountItem]).load(' .ep-on:eq('+upcountItem+')');
             }
         });
     });
