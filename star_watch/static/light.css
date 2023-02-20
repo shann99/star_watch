@@ -18,13 +18,7 @@ body {
     align-content: space-around;
     flex-direction: column;
 }
-#dark_mode {
-    transform: scale(1.4);
-    background-color: transparent;
-    border:none; 
-    margin-top: 2.6em; 
-    color: rgb(0, 89, 255); 
-}
+
 .pagenum_button {
     color:white;
     background-color: #fa003227;
@@ -71,4 +65,10 @@ body {
 }
 .carousel-next {
     color:black;
+}
+#account-title {
+    font-family: 'Lexend Deca';
+    padding: 2em;
+    text-align: center;
+    color: black;
 }

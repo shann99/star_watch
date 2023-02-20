@@ -1,4 +1,4 @@
-@media screen and (min-width:320px) and (max-width:374px) {
+@media screen and (max-width:374px) {
     .nav {
         justify-content: space-between;
     }
@@ -57,7 +57,7 @@
     }
     
 }
-@media screen and (min-width:375px) and (max-width:424px) {
+@media screen and (min-width:375px) and (max-width:425px) {
     .account-access {
         margin-top: -4em;
         margin-left: 200%;
@@ -124,7 +124,7 @@
     }
 
 }
-@media screen and (min-width:425px) and (width:766px) {
+@media screen and (min-width:425px) and (max-width:767px) {
     .account-access {
         margin-top: -4em;
         margin-left: 230%;
@@ -190,7 +190,7 @@
         display: none;
     }
 }
-@media screen and (min-width:768px) and (width:1023px) { 
+@media screen and (min-width:768px) and (max-width:1023px) { 
     .card-container {
         grid-template-columns: auto;
     }
@@ -239,7 +239,7 @@
         margin-left: 375%;
     } 
 } 
-@media screen and (min-width: 1024px) and (max-width:1339px) {
+@media screen and (min-width: 1024px) and (max-width:1439px) {
     .card-container {
         grid-template-columns: auto auto;
     }
@@ -250,10 +250,20 @@
         width: 425px;
         height: 300px;
     }
+    .site-header {
+        margin-left: -1em;
+        margin-top: 0.3em;
+    }
     .nav {
-        justify-content: center;
-        align-content: center;
-        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+    .nav-menu {
+        margin-left: -1em;
+        margin-top: 0.5em;
+    }
+    .search {
+        margin-top: 2.4em;
     }
     #search_box {
         border-radius: 6px;
@@ -264,10 +274,13 @@
     } 
      .right-nav {
         gap: 0.5em;
+        flex-wrap: nowrap;
+        margin-left: -2.5em;
     } 
     .nav-item {
-        gap: 1.4em;
+        gap: 2.4em;
     } 
+
 } 
 
 @media screen and (min-width: 1440px) and (max-width:1919px) {
@@ -287,6 +300,9 @@
     .card-img-container {
         width: 500px;
         height: 300px;
+    }
+    .nav-item {
+        gap: 10em;
     }
 }
 

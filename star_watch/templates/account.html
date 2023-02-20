@@ -11,60 +11,62 @@
     <form action="{{url_for('delete_account')}}" method="POST"><button type="submit" id="confirm_acc_delete" class="btn btn-info">Yes, delete my account</button></form>
     <button id="cancel_delete" class="btn btn-secondary" type="button">No, go back</button>
 </div>
-
-<br>
-
+<div id = "account-title">
+    <h2> Account Settings </h2>
+</div> 
+    
 <div id="accountForm">
+
+    <!-- <h3> Account </h3> -->
     <br>
-    <h5> Display Settings </h5>
-        <div id="mode">
-        {%if user.mode == True%}
-            <button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')">
-                <i class="bi bi-moon-stars-fill"></i> Dark Mode
-            </button>
-        {%else%}
-            <button id="light_mode" onclick="switch_modes_light('{{user.id}}')">
-                <i class="bi bi-sun-fill"></i> Light Mode
-            </button>
-        {%endif%}
-        </div>
-    <br> <br>
+    <h5> Appearance </h5>
+    <br>
+    <div id="mode">     
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
+          <i class="bi bi-droplet-half"></i> <a id="theme_title">Theme</a>
+        </button>
+        <ul class="dropdown-menu" id="appearance_dropdown">
+            <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-fill"></i><a> Dark</a></button> </li>
+            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-paint-bucket" id="system_icon"></i><a> System </a></button> </li>
+        </ul>
+      </div>
+    </div>
+    <br> 
     <hr>
     <form method="POST"  action="">
         <br>
-    <!-- <div class = "page-title">
-            <h2> Account Details </h2>
-        </div>  -->
         <h5> Update Profile Picture </h5>
         <div class="change_profile">
             <img class = "change_profile_pic" src={{user.profile_pic}} alt="profile pic">
             <br><br><br>
             <div class="mb-3">
                 <label for="update_profile_pic" id="signup-text" class="form-label"> Change Profile Picture</label>
-                <input type="text" class="form-control" autocomplete="off" id="account-input"  placeholder="image source (https://...jpg, .png, etc.)" name = "update_profile_pic">
+                <input type="text" class="form-control" autocomplete="off" class="account-input"  placeholder="image source (https://...jpg, .png, etc.)" name = "update_profile_pic">
             </div>        
         </div>
         <hr>
         <h5> Name </h5> <br> 
         <div class="mb-3">
             <label for="update_name" id="signup-text" class="form-label">Change Name</label>
-            <input type="text" class="form-control" autocomplete="off" id="account-input" placeholder="{{user.name}}" name = "update_name">
+            <input type="text" class="form-control" autocomplete="off" class="account-input" placeholder="{{user.name}}" name = "update_name">
         </div>
         <hr>
         <h5> Email </h5> <br>
         <div class="mb-3">
             <label for="update_email" id="signup-text" class="form-label">Update Email</label>
-            <input type="email" class="form-control" autocomplete="off" id="account-input"  name = "update_email">
+            <input type="email" class="form-control" autocomplete="off" class="account-input"  name = "update_email">
         </div>
         <hr>
         <h5> Change Password </h5> <br>
         <div class="mb-3">
             <label for="update_password" id="signup-text" class="form-label">New Password</label>
-            <input type="password" class="form-control" autocomplete="off" id="account-input"  placeholder="new password" minlength="8" maxlength="20" name = "update_password">
+            <input type="password" class="form-control" autocomplete="off" class="account-input"  placeholder="new password" minlength="8" maxlength="20" name = "update_password">
         </div>
         <div class="mb-3">
             <label for="update_password_confirm" id="signup-text" class="form-label">Confirm New Password</label>
-            <input type="password" class="form-control" autocomplete="off" id="account-input" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
+            <input type="password" class="form-control" autocomplete="off" class="account-input" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
         </div>
         <button type="submit" id="del_acc_button" class="btn btn-primary">Update</button>
         <br> <br> <br>

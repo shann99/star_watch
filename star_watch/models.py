@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150),nullable=False)
     password = db.Column(db.String(150),nullable=False)
     profile_pic = db.Column(db.String(20), nullable=False, server_default='/default.png')
-    mode = db.Column(db.Boolean,nullable=False, default=0)
+    mode = db.Column(db.String(10), nullable=False, default="light")
     cards = db.relationship('Card', backref='user', cascade="all, delete", lazy=True)
 
     
@@ -33,7 +33,7 @@ class Card(db.Model):
     fav = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship('Tags', backref='card', cascade="all, delete", lazy=True)
-
+    date_edited = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     def __repr__(self):
         return f"Card('{self.id}','{self.title}','{self.date_added}','{self.image}','{self.user_id}')"
 

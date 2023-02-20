@@ -1,6 +1,7 @@
 from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
+from datetime import datetime, timezone
 import random, json
 from star_watch.models import User, Card, Tags
 from star_watch import app, db
@@ -22,7 +23,7 @@ def index():
     random.shuffle(images)
 
     page = request.args.get('page', 1, type=int)
-    watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
     prev_page = url_for('index', page=watching_list.prev_num)
     next_page = url_for('index', page=watching_list.next_num)
@@ -38,7 +39,7 @@ def planning():
     user = current_user
     page = request.args.get('page', 1, type=int) 
     
-    planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
     prev_page = url_for('planning', page=planning_list.prev_num)
     next_page = url_for('planning', page=planning_list.next_num)
@@ -53,7 +54,7 @@ def planning():
 def paused():
     user = current_user
     page = request.args.get('page', 1, type=int)
-    paused_list = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    paused_list = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
     prev_page = url_for('paused', page=paused_list.prev_num)
     next_page = url_for('paused', page=paused_list.next_num)
@@ -70,7 +71,7 @@ def completed():
     user = current_user
 
     page = request.args.get('page', 1, type=int)
-    completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_added.desc()).paginate(page=page, per_page=9)
+    completed_list = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
     prev_page = url_for('completed', page=completed_list.prev_num)
     next_page = url_for('completed', page=completed_list.next_num)
@@ -213,6 +214,7 @@ def editMedia(card_id):
             card.rating = request.form.get('edit_rating')
         if request.form.get('edit_status') != "":
             card.status = request.form.get('edit_status')
+            card.date_edited = datetime.now(timezone.utc)
 
         card.id = card_id 
         db.session.commit()
@@ -275,7 +277,7 @@ def signup():
 
                 else:
                     #mode=0 -> default light mode, mode = 1 -> means user has dark mode enabled
-                    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), mode=True)
+                    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), mode='light')
                     db.session.add(new_user)
                     db.session.commit()
                     login_user(new_user, remember=True)
@@ -305,7 +307,7 @@ def delete_account():
         flash('Your account has been deleted', category="success")
         return redirect(url_for("login"))
 
-# misc stuff
+# <--------misc stuff-------->
 @app.route('/fav/',  methods=['POST'])
 @login_required
 def fav():
@@ -367,7 +369,7 @@ def search():
 def dark_mode():
     if request.method == 'POST':
         user = User.query.get(request.form["user_id"])
-        user.mode = False;
+        user.mode = 'dark';
         print(user.mode)
         db.session.commit() 
         return '', 204  
@@ -377,7 +379,17 @@ def dark_mode():
 def light_mode():
     if request.method == 'POST':
         user = User.query.get(request.form["user_id"])
-        user.mode = True;
+        user.mode = 'light';
+        print(user.mode)
+        db.session.commit() 
+        return '', 204  
+    
+@app.route("/system-mode", methods=['POST'])
+@login_required
+def system_mode():
+    if request.method == 'POST':
+        user = User.query.get(request.form["user_id"])
+        user.mode = 'system';
         print(user.mode)
         db.session.commit() 
         return '', 204  

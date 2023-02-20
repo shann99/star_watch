@@ -16,12 +16,34 @@ if(hamburger) {
 
 const acc = document.querySelector('.profile-button');
 const acc_nav = document.querySelector('.login-nav');
+const arrow_up = document.getElementById('arrow_up');
+const arrow_down = document.getElementById('arrow_down');
+
 if (acc) {
     acc.addEventListener('click', () => {
         acc_nav.classList.toggle('active');
+        if(arrow_up.style.display!='block') {
+            arrow_up.style.display='block';
+            arrow_down.style.display='none';
+        }
+        else {
+            arrow_up.style.display='none';
+            arrow_down.style.display='block';
+        }
     });
 }
-
+const themes = document.getElementById("theme_dropdown");
+const mode = document.getElementById('mode');
+if (themes) {
+    themes.addEventListener('click', () => {
+        if(mode.style.display != "flex") {
+            mode.style.display="flex";
+        }
+        else {
+            mode.style.display='none';
+        }
+    });
+}
 const addItem = document.querySelector(".add-item");
 const body = document.getElementsByTagName('body')[0];
 if(addItem) {
@@ -86,7 +108,7 @@ const cancel_delete = document.getElementById('cancel_check');
 if(cancel_delete) {
     cancel_delete.addEventListener("click", () => {
     check.style.display='none';
-    editMedia.style.display='table';
+    editMedia.style.display='flex';
     });
 }
 
@@ -95,6 +117,7 @@ const check_delete = document.querySelector(".check_acc_delete");
 if(delete_account) {
     delete_account.addEventListener("click", () => {
         check_delete.style.display='table';
+        document.getElementById('account-title').style.display='none';
         accountForm.style.display='none';
         check_delete.scrollIntoView({behavior: "smooth"});
     });
@@ -103,7 +126,8 @@ const cancel_acc_delete = document.getElementById('cancel_delete');
 if(cancel_acc_delete) {
     cancel_acc_delete.addEventListener("click", () => {
         check_delete.style.display='none';
-        accountForm.style.display='table';
+        document.getElementById('account-title').style.display='block';
+        accountForm.style.display='flex';
     });
 }
 const addTag = document.getElementsByClassName("addTagForm");
@@ -214,7 +238,9 @@ function open_search() {
         search_btn.classList.remove('active');
     }
 }
+
 var user_id = '{{user.id}}';
+
 function switch_modes_light(user_id) {
     $(document).ready(function() {
         $.ajax({
@@ -222,10 +248,12 @@ function switch_modes_light(user_id) {
             url: "/light-mode",
             data: {"user_id": user_id},
             success: function() {
-                location.reload();
+                location.reload(); 
+                
             }
         });
     });
+   
 
 }
 function switch_modes_dark(user_id) {   
@@ -234,9 +262,22 @@ function switch_modes_dark(user_id) {
             type: "POST",
             url: "/dark-mode",
             data: {"user_id": user_id},
-            success: function() {
+            success: function() {    
                 location.reload();
             }
         });
     });
+}
+function system_mode(user_id) {   
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "/system-mode",
+            data: {"user_id": user_id},
+            success: function() {    
+                location.reload();
+            }
+        });
+    });
+
 }

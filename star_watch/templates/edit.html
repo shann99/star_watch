@@ -5,8 +5,8 @@
 <div class="check_delete"> 
     <h4 class = "delete_text"> Are you sure you'd like to delete "{{card.title}}"?</h4>
     <br>
-    <form action="{{url_for('delete', card_id=card.id)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info">Yes, delete it</button></form>
-    <button id="cancel_check" class="btn btn-secondary" type="button">No, cancel</button>
+    <form action="{{url_for('delete', card_id=card.id)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info">Delete</button></form>
+    <button id="cancel_check" class="btn btn-secondary" type="button">Cancel</button>
 </div>
    <div id = "editMedia">  
     <form action="/edit/card/{{card.id}}" method="POST">
