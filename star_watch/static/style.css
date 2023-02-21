@@ -1,9 +1,3 @@
-/* body {
-    background-color: rgb(245 205 213);
-    margin: -2em 0 0 0em;
-    padding-bottom: 800px;
-    
-} */
 /* navigation bar css */
 .nav {
     height: auto;
@@ -51,7 +45,7 @@
     width:100%;
 }
 .nav-item:hover {
-    color:#ff00c7;
+    color:#ff99d3;
 }
 
 /* account access CSS for logout, login, etc. */
@@ -61,23 +55,26 @@
     padding-right: 0.5em;
     padding-left: 0.5em;
     color: #2900ff;
+    transition: 0.3s ease;
+    
 }
 
 .account-item:hover {
-    color:#ff00c7;
+    color:#ffd0eb;
     display: block;
-    background-color: #d18fe134;
+    /* background-color: #d18fe134; */
 }
 .user-welcome {
     text-decoration: none !important;
     color: #2900ff; 
     margin: 16px 0;
+    transition: 0.3s ease;
     padding-right: 0.5em;
     padding-left: 0.5em;
 }
 .user-welcome:hover {
     background-color: none;
-    color:#ff00c7;
+    color:#ffd0eb;
     display: block;
 }
 /* account access stuff for dropdown of profile pic */
@@ -85,7 +82,7 @@
 .login-nav {
     display: none;
     list-style: none;
-    background-color:  #f5d5e0; 
+    background: linear-gradient(330deg, #ea8295 0%, #b092e7 100%);
     transition: 0.5s ease;
     margin-top: 5.8em;
     text-align: center; 
@@ -96,6 +93,7 @@
     box-shadow: 1px 1px 1px 1px rgb(47, 47, 47);
     z-index: 2;
     width:175px;
+    border: none;
 
 }
 
@@ -313,30 +311,22 @@
 .card-item:hover #upcount {
     display:block;
 }
-
-#user-welcome {
-    font-family: "Poppins", sans-serif;
-}
-#acc-item-login {
-    color: #00d4ff;
-}
-#acc-item-signup {
-    color: #00d4ff;
-    flex-wrap:wrap;
+.loggedout-navitem {
+    display: block;
+    margin-left: 3em;
+    margin-top: 1.2em;
 }
 .logged-out {
     display:flex;
-    padding: 1.3em 0em 0em 1em;
+    padding-top: 1.3em;
+    padding-left: 1em;
     justify-content: space-evenly;
-    gap: 3em;
     float: right;
 }
-
 .account-access {
     display: flex;
     float: right;
 }
-
 .login-form {
     border: solid;
     display: flex;
@@ -347,6 +337,7 @@
     border-radius: 10px;
     max-width: 550px;
     flex-direction: column;
+    height: 550px;
 }
 
 .login-header {
@@ -356,8 +347,7 @@
     margin-top: 0em;
     margin-bottom: 1.5em;
 }
-
-#login-input {
+.login-input {
     margin-bottom: 1em;
     margin-top:1em;
     width: 100%;
@@ -370,9 +360,7 @@
     font-size: 20px;
     font-family: 'Poppins', sans-serif;
     margin-top: 0em;
-    
 }
-
 #login-button {
     padding: 0.375rem 0.75rem;
     margin-bottom:2em;
@@ -415,7 +403,7 @@
     margin-top: 0em;
 }
 
-#signup-input {
+.signup-input {
     margin-bottom: 1em;
     width: 100%;
     /* padding: 0.375rem 0.75rem; */
@@ -454,13 +442,16 @@
 }
 .header-name {
     font-family: 'Monoton', cursive;
-    font-size: 55px;
+    font-size: 40px;
+    margin-left: 0.5em;
+    float:left;
     text-decoration: none;
     color: black;
     transition: 0.7s ease;
+    margin-top: .3em;
 }
 .header-name:hover, focus{
-    color:#e54ed0;
+    color: #ea6ecd;
 }
 
 #addmediaForm {
@@ -620,13 +611,14 @@ body.active > *:not(#addmediaForm) {
 .heart {
     width: 10%;
     grid-area:name;
-    margin-top: 1.1em;
+    margin-top: .9em;
     margin-left: -0.5em;
     background: transparent;
     border:none;
     height: 30%;
-    color: red;
+    color: #ff889d;
     display:none;
+    position: relative;
 }
 .heart:hover {
    transform: scale(1.2);
@@ -635,22 +627,77 @@ body.active > *:not(#addmediaForm) {
 .heart_filled {
     width: 10%;
     grid-area:name;
-    margin-top: 1.1em;
+    margin-top: .9em;
     margin-left: -0.5em;
     background: transparent;
     height: 20%;
-    color: red;
+    color: #ff889d;
+    position: relative;
     border: none;
+
 }
 
 .card-item:hover .heart {
     display:inline;
 }
 .card-item:hover .heart_filled {
-    margin-top: 1.1em;
+    margin-top: .9em;
     margin-left: -0.5em;
 }
-
+/* https://www.youtube.com/watch?v=F7iFnhSZe7o */
+.heart_filled::before, .heart_filled::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0%;
+    width: 150%;
+    z-index: -1;
+    background-repeat: no-repeat;
+}
+.heart_filled.animate::before {
+    top: -70%;
+    background-image: radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, pink 20%, transparent 30%), 
+    radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, lightcoral 20%, transparent 30%), 
+    radial-gradient(circle, plum 20%, transparent 20%), 
+    radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, red 20%, transparent 30%);
+    background-size: 10% 2%, 10% 46%, 17% 7%, 14% 20%, 14% 5%, 9% 26%, 11% 5%, 14% 13%;
+    background-position: 19% 108%, 19% 134%, 21% 113%, 24% 120%, 29% 96%, 37% 104%, 37% 108%;
+    animation: top 0.7s ease-in-out forwards;
+}
+@keyframes top {
+    50% {
+        background-position: 5% 90%, 10% 90%, 15% 90%, 25% 90%, 30% 90%, 40% 90%, 50% 90%;
+    }
+    100% {
+        background-position: 5% 80%, 10% 70%, 15% 70%, 25% 70%, 30% 70%, 40% 70%, 50% 70%;
+        background-size:  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;;
+    }
+}
+.heart_filled.animate::after {
+    bottom: -70%;
+    background-image: radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, pink 20%, transparent 30%), 
+    radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, lightcoral 20%, transparent 30%), 
+    radial-gradient(circle, plum 20%, transparent 20%), 
+    radial-gradient(circle, red 20%, transparent 20%), 
+    radial-gradient(circle, transparent 20%, red 20%, transparent 30%);
+    background-size: 10% 2%, 10% 46%, 17% 7%, 14% 20%, 14% 5%, 9% 26%, 11% 5%, 14% 13%;
+    background-position: 16% -8%, 24% -4%, 28% -3%, 28% -5%, 29% -6%, 31% -4%, 32% -8%;
+    animation: bottom 0.7s ease-in-out forwards;
+}
+@keyframes bottom {
+    50% {
+        background-position: 5% 4%, 10% 3%, 15% 3%, 25% 3%, 30% 3%, 40% 3%, 50% 3%;
+    }
+    100% {
+        background-position: 5% 10%, 10% 10%, 15% 10%, 25% 10%, 30% 10%, 40% 10%, 50% 10%;
+        background-size:  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;;
+    }
+}
 #delete_button {
     width: 12%;
     height: 11%;
@@ -926,6 +973,8 @@ body.active > *:not(#addmediaForm) {
 .card-item.active {
     animation: flipB 0.5s;
     background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
+        max-height: 454px;
+
 }
 
 

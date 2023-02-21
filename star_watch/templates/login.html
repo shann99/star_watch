@@ -5,16 +5,18 @@
 {%block body%}
 <br><br><br><br>
 <form class="login-form" method="POST">
-    <h1 class="login-header"> Login </h1>
+    <h1 class="login-header"> Log in </h1>
     <div class="mb-3">
         <label for="login_address" id="login-text" class="form-label">Email Address</label>
-        <input type="email" class="form-control" autocomplete="off" id="login-input" placeholder="email@email.com" autofocus name = "login_address" required>
+        <input type="email" class="form-control" autocomplete="off" class="login-input" placeholder="email@email.com" autofocus name = "login_address" required>
       </div>
+      <br>
       <div class="mb-3">
         <label for="login_pass" id="login-text"class="form-label">Password</label>
-        <input type="password" class="form-control" autocomplete="off" id="login-input" placeholder="password" autofocus name = "login_pass" required>
+        <input type="password" class="form-control" autocomplete="off" class="login-input" placeholder="password" autofocus name = "login_pass" required>
     </div>
-    <button id="login-button" class="btn btn-primary" type="submit">Login</button>
-    <text class="account">Don't have an account? <a href="/signup">Sign Up</a></text>
+    <br>
+    <button id="login-button" class="btn btn-primary" type="submit">Log in</button>
+    <text class="account">Don't have an account? <a href="/signup">Sign up</a></text>
 </form>
 {%endblock%}

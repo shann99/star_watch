@@ -1,0 +1,155 @@
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: rgb(245 205 213);
+    margin: -2em 0 0 0em;
+    padding-bottom: 800px; 
+  }
+  .page-title {
+      font-family: 'Lexend Deca';
+      padding: 2em;
+      text-align: center;
+  }
+  .page-header {
+      font-family: 'Poppins', sans-serif;
+      padding-top: 1em;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      align-content: space-around;
+      flex-direction: column;
+  }
+
+  .pagenum_button {
+      color:white;
+      background-color: #fa003227;
+      border:none;
+  }
+  #currentpage_btn {
+      color:white;
+      border:none;
+      background-color: #fa003152;
+  }
+  .pagenum_button:hover {
+      color: white;
+      background-color: #fa003152;
+  }
+
+  .pagenum_button:focus, .pagenum_button:active {
+      outline: none !important;
+      box-shadow: none !important;
+  }
+  #currentpage_btn:focus, #currentpage_btn:active {
+      outline: none !important;
+      box-shadow: none !important;
+  }
+  .prev-btns {
+      color: #f39eaec4;
+      margin-top: 0.1em;
+      transform: scale(0.7);
+
+  }
+  .next-btns {
+      color: #f39eaec4; 
+      margin-top: 0.1em;
+      transform: scale(0.7);
+
+  }
+  .prev-btns:hover {
+      color: #fd0d4666;
+  }
+  .next-btns:hover{
+      color: #fd0d4666;
+  }
+  .carousel-prev {
+      color:black;
+  }
+  .carousel-next {
+      color:black;
+  }
+  #account-title {
+      font-family: 'Lexend Deca';
+      padding: 2em;
+      text-align: center;
+      color: black;
+  }
+
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color:rgb(42 41 41) !important;
+    margin: -2em 0 0 0em !important;
+    padding-bottom: 800px !important; 
+  }
+  .page-header {
+      font-family: 'Poppins', sans-serif;
+      padding-top: 1em;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-content: space-around;
+      color: #e5e5e5;
+  }
+  .page-title {
+      font-family: 'Lexend Deca';
+      padding: 2em;
+      text-align: center;
+      color: #e5e5e5;
+  }
+
+  .pagenum_button {
+      color: white;
+      background-color: #c67f8d;
+      border:none !important;
+  }
+  #currentpage_btn {
+      color:white !important;
+      border:none !important;
+      background-color: #e86981 !important;
+      /* #dd8092 */
+  }
+  .pagenum_button:hover {
+      color: white !important;
+      background-color: #e86981;
+  }
+  .pagenum_button:focus, .pagenum_button:active {
+      outline: none !important;
+      box-shadow: none !important;
+  }
+  #currentpage_btn:focus, #currentpage_btn:active {
+      outline: none !important;
+      box-shadow: none !important;
+  }
+  .prev-btns {
+      color: #f39eaec4;
+      margin-top: 0.1em;
+      transform: scale(0.7);
+
+  }
+  .next-btns {
+      color: #f39eaec4; 
+      margin-top: 0.1em;
+      transform: scale(0.7);
+
+  }
+  .prev-btns:hover {
+      color: #ff758f;
+  }
+  .next-btns:hover{
+      color: #ff758f;
+  }
+  .carousel-prev {
+      color:white;
+  }
+  .carousel-next {
+      color:white;
+  }
+  #account-title {
+      font-family: 'Lexend Deca';
+      padding: 2em;
+      text-align: center;
+      color: white;
+  }
+}

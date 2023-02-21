@@ -13,17 +13,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <!-- selecting which stylesheet to show (whether in dark mode or light mode) -->
-{%if user.mode == 'light'%}
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='light.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
+{% if user.is_authenticated %}
+    {%if user.mode == 'light'%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}" id="site-theme">
+    <link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
+    {%endif%}
+    <!-- for keeping dark mode between browsers -->
+    {%if user.mode == 'dark'%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark-theme.css') }}" id="site-theme">
+    <link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
+    {%endif%}
+    {%if user.mode == 'system'%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='system-theme.css') }}" id="site-theme">
+    <link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
+    {%endif%}
+{%else%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}" id="site-theme">
+    <link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
 {%endif%}
 
-{%if user.mode == 'dark'%}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='dark.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='media.css') }}">
-{%endif%}
 <nav>
     <!-- navigation for logged in user -->
     {% if user.is_authenticated %}
@@ -67,10 +76,10 @@
                 </button> 
                 <div class="login-nav">
                     <a class="user-welcome">Hi 👋 , {{user.name}} </a>
-                    <a class="account-item" id="acc-item-logout" href="/notifications"> <i class="bi bi-bell"></i> Updates </a>
-                    <a class="account-item" id="acc-item-logout" href="/account"> <i class="bi bi-person-gear"></i> Settings </a>
-                    <a class="account-item" id="acc-item-logout" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
-                    <a class="account-item" id="acc-item-logout" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout</a>
+                    <a class="account-item" href="/notifications"> <i class="bi bi-bell"></i> Updates </a>
+                    <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>
+                    <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
+                    <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
                 </div>  
             </div>
         </div>
@@ -97,8 +106,8 @@
             <a class = "header-name" href="/">star <i class="bi bi-stars"></i> watch</a>    
         </div>
         <div class = "logged-out">
-            <a class="account-item" id ="acc-item-login" href="/login">Login</a>
-            <a class="account-item" id="acc-item-signup" href="/signup">Sign Up</a>  
+            <a class="nav-item loggedout-navitem" href="/login">Log in</a>
+            <a class="nav-item loggedout-navitem" href="/signup">Sign up</a>  
         </div>
     </div>
     {%endif%}        

@@ -4,8 +4,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -4.5em;
-        width: 145px;
+        margin-left: -6.5em;
     }
     .carousel-item {
         height: 180px;
@@ -69,8 +68,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -4.5em;
-        width: 145px;
+        margin-left: -6.3em;
     }
     .carousel-item {
         height: 180px;
@@ -136,8 +134,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -4.5em;
-        width: 145px;
+        margin-left: -6em;
     }
     .carousel-item {
         height: 240px;
@@ -202,7 +199,6 @@
     .login-nav {
         margin-top: 4.8em;
         margin-left: -4.5em;
-        width: 145px;
     }
     .carousel-item {
         height: 435px;
@@ -240,6 +236,9 @@
     } 
 } 
 @media screen and (min-width: 1024px) and (max-width:1439px) {
+    .login-nav {
+        margin-left: -6.5em;
+    }
     .card-container {
         grid-template-columns: auto auto;
     }
@@ -290,6 +289,9 @@
     .card-img-container {
         width: 390px;
         height: 240px;
+    }
+    .login-nav {
+        margin-left: -5em;
     }
 }
 

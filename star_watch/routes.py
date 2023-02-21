@@ -81,9 +81,9 @@ def completed():
     
     return render_template("completed.html", user=current_user, cards=completed_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
-@app.route("/account", methods=['GET','POST'])
+@app.route("/settings", methods=['GET','POST'])
 @login_required
-def account_profile():
+def settings():
     if request.method == "POST":
         user = current_user;
         update_user = User.query.get(user.id)
@@ -109,7 +109,7 @@ def account_profile():
             flash(success_message, category="success")
             return redirect(url_for("index"))
         
-    return render_template("account.html", user=current_user)
+    return render_template("settings.html", user=current_user)
 
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
@@ -336,7 +336,6 @@ def tags():
         test_tag = request.form.get('new_tag')
         if test_tag != "":
             if not (test_tag is None):
-                print(test_tag)
                 new_tag = Tags(name=test_tag, card_id=card.id)
 
                 db.session.add(new_tag)
@@ -370,7 +369,6 @@ def dark_mode():
     if request.method == 'POST':
         user = User.query.get(request.form["user_id"])
         user.mode = 'dark';
-        print(user.mode)
         db.session.commit() 
         return '', 204  
     
@@ -380,7 +378,6 @@ def light_mode():
     if request.method == 'POST':
         user = User.query.get(request.form["user_id"])
         user.mode = 'light';
-        print(user.mode)
         db.session.commit() 
         return '', 204  
     
@@ -390,6 +387,5 @@ def system_mode():
     if request.method == 'POST':
         user = User.query.get(request.form["user_id"])
         user.mode = 'system';
-        print(user.mode)
         db.session.commit() 
         return '', 204  

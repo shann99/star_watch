@@ -77,13 +77,18 @@ function hearted(card_id, heartItem) {
             data: {"card_id": card_id, "card_fav": true},
             success: function() {
                 $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+                setTimeout( () => {
+                    filled[heartItem].classList.toggle('animate');
+                }, 30)
+                setTimeout(() => {
+                  filled[heartItem].classList.remove('animate');  
+                }, 340)
             }
         });
     });
 }
 function unhearted(card_id, heartItem) {
     $(document).ready(function() {
-        console.log(heartItem);
         $.ajax({
             type: "POST",
             url: "/unfav",
@@ -149,7 +154,7 @@ function closeTag(item) {
 
 const cardIMG = document.getElementsByClassName("card-img-container");
 const tagDiv = document.getElementsByClassName("tagForm");
-const heartsDiv = document.getElementsByClassName("heart_buttons");
+const heartsDiv = document.getElementsByClassName("hearts");
 const stats = document.getElementsByClassName("bottom_row");
 const seemore = document.getElementsByClassName("see_more");
 const less = document.getElementsByClassName("see_less");
@@ -240,7 +245,7 @@ function open_search() {
 }
 
 var user_id = '{{user.id}}';
-
+const site_theme = document.querySelector("#site-theme");
 function switch_modes_light(user_id) {
     $(document).ready(function() {
         $.ajax({
@@ -248,7 +253,7 @@ function switch_modes_light(user_id) {
             url: "/light-mode",
             data: {"user_id": user_id},
             success: function() {
-                location.reload(); 
+                    site_theme.href = "light-theme.css";
                 
             }
         });
@@ -263,7 +268,8 @@ function switch_modes_dark(user_id) {
             url: "/dark-mode",
             data: {"user_id": user_id},
             success: function() {    
-                location.reload();
+                    site_theme.href = "dark-theme.css";
+                
             }
         });
     });
@@ -275,7 +281,7 @@ function system_mode(user_id) {
             url: "/system-mode",
             data: {"user_id": user_id},
             success: function() {    
-                location.reload();
+                site_theme.href = "system-theme.css";
             }
         });
     });
