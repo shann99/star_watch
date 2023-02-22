@@ -70,18 +70,19 @@ var card_fav = "{{card.fav}}";
 var heartItem = "{{counter.count}}";
 function hearted(card_id, heartItem) {
     $(document).ready(function() {
-        console.log(heartItem);
         $.ajax({
             type: "POST",
             url: "/fav",
             data: {"card_id": card_id, "card_fav": true},
             success: function() {
                 $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+                test =  $(".hearts").find(".heart_filled");
+                console.log(test);
                 setTimeout( () => {
-                    filled[heartItem].classList.toggle('animate');
+                    $(hearts[heartItem]).find(".heart_filled").toggleClass('animate');
                 }, 30)
                 setTimeout(() => {
-                  filled[heartItem].classList.remove('animate');  
+                    $(hearts[heartItem]).find(".heart_filled").removeClass('animate');  
                 }, 340)
             }
         });

@@ -180,14 +180,20 @@
             {% if card.rating == "Rating"%}
             <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
             {%else%}
-              <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
+            <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br> 
+            <hr>
             {%endif%}
+           
             {%if card.description == "" %}
-            <p class="description">No current description, click on the edit button in the top right to add one!</p> 
+            <div class="description"> No current description, click on the edit button in the top right to add one!</div> 
             {%else%}
-            <p class="description">  <b>Description:</b> <br> <br> {{card.description}} <br> </p> 
+            <div class="description">
+              <h6 class="desc-title">Description:</h6>
+             {{card.description}}
+            </div> 
             {%endif%}
-            <br> <br> <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
+            <br> <br> 
+            <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
                 <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm8.096 10.803L6 6.707v2.768a.5.5 0 0 1-1 0V5.5a.5.5 0 0 1 .5-.5h3.975a.5.5 0 1 1 0 1H6.707l4.096 4.096a.5.5 0 1 1-.707.707z"/>
               </svg>
