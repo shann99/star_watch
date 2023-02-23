@@ -24,11 +24,17 @@ it will definitely get tedious to go through multiple pages to find a show or mo
 
 ## Images:
 
-![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning-page.png)
-<br/><br/><br/>
-
-Example of an edit/update media page. You can see the current information associated with the media, which in this case is a move, and choose to update if you wish to or exit out. 
-<br/> You can also see at the right, the tags that are associated with the movie. Here you can delete the tags or rewrite over the tags that are currently there to update them.
-<br/> For example, maybe I wanted to change "Movie" to "movie" I could change that here and it would still be the same tag in the same location, just updated.
+![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page.png)
 <br/><br/>
-![Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/edit-media.png)
+
+![Dark Mode Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/dark_mode.png)
+<br/><br/><br/>
+![Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/edit_media.png)
+Example of an update media page. You can see the current information associated with the media, which in this case is a show, and choose to update if you wish to or exit out. I decided to include the image of the title within the update media page because here you could get a good look at what the image will look like in the card without have to go back to whichever page the card is and see how it looks after updating.
+
+Full Edit Page
+![Full Edit Media Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/full_page_edit.png)
+<br/> In this full page view, you can see the tags associated with the show.
+<br/> If I wanted to edit a tag (changing maybe mystery to comedy), I could just type comedy where mystery is and overwrite it. Deleting tags is also possible by just clicking on the red X in the top left corner of the tag.
+
+See more pictures of the website [here!](https://github.com/shann99/star_watch/tree/master/star_watch/static/star_watch_images)
