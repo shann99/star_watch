@@ -6,10 +6,26 @@
 <div class = "page-title">
     <h2> Search Results </h2>
 </div>
+<!-- <div> -->
+  <form action='/search' method="GET" id="search_search">
+    <div class="form-group">
+      <div class="input-group">
+          <div class="input-group-text" id="search_search_icon">&#xF52A;</div>
+          <input type="text" class="form-control" id="search_search_box" value="{{search_query}}" onkeyup="countSearch()" autocomplete="off" name="q"></input>
+          <div id="search_clear">
+            <button type="button" class="input-group-text" id="search_clear_btn">&#xF659;</button>
+          </div>
+      </div>
+    </div>
+</form>
+<!-- </div> -->
 {%set counter = namespace(count=0)%}  
 {%if cards|length == 0 %}
-<h3 class="search_text"> No items found matching search, please try again</h3>
+<br><br>
+<h3 class="search_text"> No items found matching search "{{search_query}}"
+<br> <br> Please try again</h3>
 {%endif%}
+<br><br>
 <div class = "card-container"> 
 {%for card in cards %} 
     <div class="card-item">

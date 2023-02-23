@@ -212,7 +212,7 @@ def editMedia(card_id):
             card.description = request.form.get('edit_description')
         if request.form.get('edit_rating') != "":
             card.rating = request.form.get('edit_rating')
-        if request.form.get('edit_status') != "":
+        if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
             card.date_edited = datetime.now(timezone.utc)
 
@@ -361,7 +361,7 @@ def search():
     if request.method == 'GET':
         name = request.args.get("q")
         search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.asc()).all()
-        return render_template("search.html", user=current_user, cards=search_cards)
+        return render_template("search.html", user=current_user, cards=search_cards, search_query=name)
 
 @app.route("/dark-mode", methods=['POST'])
 @login_required

@@ -14,7 +14,8 @@
           <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
           <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
-      </div>  <br><br>
+      </div>  
+      <br><br>
       <div class="editmediaimage">
           <img class="edit-img" src="{{card.image}}">
         </div>
@@ -78,7 +79,11 @@
       <br> <br>
       <div class="mb-3">
           <label for="edit_description" class="form-label">Update Description</label>
-          <textarea class="form-control" name="edit_description" placeholder="{{card.description}}" id="description" rows="3" maxlength="850"></textarea>
+          <textarea class="form-control" name="edit_description" placeholder="{{card.description}}" onkeyup="countEditDesc()" id="edit_description" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
+          <div id="descHelpBlock" class="form-text">
+            <p id="active_desc_count">850</p>
+            <p id="total_desc_count"> out of 850 characters </p>
+          </div>
       </div>
       <button type="submit" id= "edit_media_button" class="btn btn-primary">Update</button>
       <br>

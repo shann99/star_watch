@@ -58,7 +58,7 @@
         <div class="right-nav">    
             <div class = "search">
                 <form action='/search' method="GET">
-                    <input type="text" id="search_box" placeholder="Search..." autofocus name="q"></input>
+                    <input type="text" id="search_box" placeholder="Search..." autocomplete="off" autofocus name="q"></input>
                 </form>
                 <button id="search_button" onclick="open_search()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -90,7 +90,7 @@
             <ul>
                 <li> 
                 <form action='/search' method="GET">
-                    <input type="text" id="search_box_smaller" placeholder="Search..." autofocus name="q"></input>
+                    <input type="text" id="search_box_smaller" autocomplete="off" placeholder="Search..." autofocus name="q"></input>
                 </form>
                 </li>
                 <li><a class="nav-item" href="/">  <i class="bi bi-tv"></i> Home</a></li>
@@ -151,7 +151,6 @@
             <label for="add_image_form" id="add-form-text" class="form-label"> Add image</label>
             <input type="text" class="form-control" autocomplete="off" class="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
         </div>
-        <br>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="status" id="add-form-text" class="form-label">Status</label>
@@ -180,21 +179,39 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?</label>
+            <div class="form-group col-md-6 ">
+                <div class="currentEpLabelDiv">
+                    <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?  </label>
+                    <div class="currentEpDiv">
+                        <span id="currentEpIcon"> 
+                            <i class="bi bi-question-circle" ></i>
+                        </span>
+                        <p id="currentEpText"> Defaults to "planning" when left blank</p>
+                    </div>
+            </div>
                 <input type="number" step="1" min="0" class="form-control" autocomplete="off" class="add-input" name = "current_ep">
             </div>
             <div class="form-group col-md-6">
-                <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
+                <div class="totalEpLabelDiv">
+                    <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
+                    <div class="totalEpDiv">
+                        <span id="totalEpHelp">
+                            <i class="bi bi-question-circle"></i>
+                        </span>
+                        <p id="totalEpText"> Defaults to "?"" when left blank</p>
+                    </div>
+                </div>
                 <input type="text" class="form-control" autocomplete="off" class="add-input" name = "total_eps" aria-describedby="mediaHelp">
-                <small id="mediaHelp" class="form-text text-muted">Feel free to write a "?", leave this blank or write unknown if you don't know the total episode count</small>
             </div>
         </div>
         <br>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" name="description" id="description" rows="2" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
-            <small id="mediaHelp" class="form-text text-muted">max 850 characters </small>
+            <textarea class="form-control" name="description" id="add_description" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
+            <div id="mediaDescHelp" class="form-text">
+                <p id="add_desc_count">850</p>
+                <p id="add_desc_total"> out of 850 characters </p>
+              </div>
         </div>
         <br>
     <button type="submit" id= "add_media_button" class="btn btn-primary">Add Media</button>
