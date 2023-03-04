@@ -16,7 +16,8 @@ body {
 }
 .page-title {
     font-family: 'Lexend Deca';
-    padding: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
     text-align: center;
     color: #e5e5e5;
 }
@@ -70,7 +71,8 @@ body {
 }
 #account-title {
     font-family: 'Lexend Deca';
-    padding: 2em;
+    padding-top: 1em;
+    padding-bottom: 2em;
     text-align: center;
     color: white;
 }

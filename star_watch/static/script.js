@@ -16,20 +16,12 @@ if(hamburger) {
 
 const acc = document.querySelector('.profile-button');
 const acc_nav = document.querySelector('.login-nav');
-const arrow_up = document.getElementById('arrow_up');
-const arrow_down = document.getElementById('arrow_down');
+const arrow_down = document.querySelector('.arrow_down');
 
 if (acc) {
     acc.addEventListener('click', () => {
         acc_nav.classList.toggle('active');
-        if(arrow_up.style.display!='block') {
-            arrow_up.style.display='block';
-            arrow_down.style.display='none';
-        }
-        else {
-            arrow_up.style.display='none';
-            arrow_down.style.display='block';
-        }
+            arrow_down.classList.toggle('active');
     });
 }
 const themes = document.getElementById("theme_dropdown");
@@ -199,7 +191,9 @@ const tag_class = document.getElementsByClassName('tagForm');
 $(document).ready(function() {
     $(".tagForm").on('submit', function(event) {
         var tagItem = $(this).find(newCount).val();
-        $.ajax({
+        var test_tag = $(this).find(newT).val();
+        if (test_tag !== "") {
+           $.ajax({
                 type: "POST",
                 url: "/tag",
                 data: {
@@ -209,7 +203,11 @@ $(document).ready(function() {
                 success: function(data) {
                     $(tag_class[tagItem]).load(' .tag:eq('+ tagItem +')');
                 }
-        });
+            });  
+        }
+        else {
+            alert("Error: The tag you tried to enter was blank! Please add one or more characters and try again!");
+        }
         event.preventDefault();
     });
 });
@@ -230,19 +228,6 @@ function upcountFunc(upcount_card_id, upcountItem) {
     });
 }
 
-const search_btn = document.getElementById("search_button");
-const search_box = document.getElementById("search_box");
-function open_search() {
-    if (search_box.style.display!="block") {
-        search_box.style.display="block";
-        search_btn.classList.toggle('active');
-        search_box.focus();
-    }
-    else {
-        search_box.style.display="none";
-        search_btn.classList.remove('active');
-    }
-}
 
 var user_id = '{{user.id}}';
 const site_theme = document.querySelector("#site-theme");
@@ -257,8 +242,6 @@ function switch_modes_light(user_id) {
             }
         });
     });
-   
-
 }
 function switch_modes_dark(user_id) {   
     $(document).ready(function() {
@@ -298,7 +281,6 @@ if(search_search_form){
         }  
     });
     function countSearch() {
-        console.log(search_search_input.value);
         if(search_search_input.value.length > 0) {
             search_clear_btn.style.visibility='visible';        
         } 
@@ -329,12 +311,10 @@ function countEditDesc() {
         total_desc_count.style.display='none';
     }
 }
-
 const add_description = document.getElementById("add_description");
 const add_desc_count = document.getElementById("add_desc_count");
 const add_desc_total = document.getElementById('add_desc_total');
 function countAddDesc() {
-    console.log(add_description.value);
     const maxChara = 850;
     if(add_description.value.length < maxChara) {
         add_desc_count.innerText = (maxChara - add_description.value.length).toString();
@@ -344,4 +324,86 @@ function countAddDesc() {
         add_desc_count.innerText = "You're at the limit!";
         add_desc_total.style.display='none';
     }
+}
+const nav_search = document.getElementById("nav_search");
+const nav_search_box = document.getElementById("search_box");
+const nav_search_clear_btn = document.getElementById("nav_search_clear_btn");
+
+function countSearchBox() {
+    if(nav_search_box.value.length > 0) {
+        nav_search_clear_btn.style.visibility='visible';        
+    } 
+    else {
+        nav_search_clear_btn.style.visibility='hidden';
+    }  
+}
+nav_search_clear_btn.addEventListener("click", (event) => {
+    document.getElementById('search_box').value="";
+    search_box.focus();  
+    nav_search_clear_btn.style.visibility='hidden';
+});
+
+const modal = document.getElementById('exampleModal')
+modal.addEventListener('shown.bs.modal', () => {
+    nav_search_box.focus();
+});
+
+carouselbgImg = document.getElementById("myCarousel");
+if (carouselbgImg) {
+    var img_src0 = document.getElementById('img-active0').src;
+    var img0 = `url(${img_src0})`;
+    var img_src1 = document.getElementById("img-active1").src;
+    var img1 = `url(${img_src1})`;
+    var img_src2 = document.getElementById("img-active2").src;
+    var img2 = `url(${img_src2})`;
+    var img_src3 = document.getElementById("img-active3").src;
+    var img3 = `url(${img_src3})`;
+    var img_src4 = document.getElementById("img-active4").src;
+    var img4 = `url(${img_src4})`;
+
+    carouselbgImg.style.backgroundImage=img0;
+
+    carouselbgImg.addEventListener('slide.bs.carousel', event => {
+        setTimeout(function(){
+            var src = $('.active').find('img').attr('src'); 
+            if (event.direction == 'left') {
+                switch(src) {
+                    case img_src0:
+                        carouselbgImg.style.backgroundImage=img1;
+                        break;
+                    case img_src1:
+                        carouselbgImg.style.backgroundImage=img2;
+                        break;
+                    case img_src2:
+                        carouselbgImg.style.backgroundImage=img3;
+                        break;
+                    case img_src3:
+                        carouselbgImg.style.backgroundImage=img4;
+                        break;
+                    case img_src4:
+                        carouselbgImg.style.backgroundImage=img0;        
+                        break;
+                }
+            }
+            else {
+                switch(src) {
+                    case img_src0:
+                        carouselbgImg.style.backgroundImage=img4;
+                        break;
+                    case img_src4:
+                        carouselbgImg.style.backgroundImage=img3;
+                        break;
+                    case img_src3:
+                        carouselbgImg.style.backgroundImage=img2;
+                        break;
+                    case img_src2:
+                        carouselbgImg.style.backgroundImage=img1;
+                        break;
+                    case img_src1:
+                        carouselbgImg.style.backgroundImage=img0;        
+                        break;
+                }
+            }
+        }, 70);
+    });
 }

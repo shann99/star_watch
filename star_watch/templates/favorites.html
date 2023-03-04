@@ -1,0 +1,53 @@
+{%extends "base.html"%}
+{%block header%}
+ <h1>{%block title%}Favorites{%endblock%}</h1>
+{%endblock%}
+{%block body%}
+<div class = "page-title">
+    <h2> Favorites </h2> <br>
+    <h5> Total: {{fav_count}} </h5>
+</div>
+{%if fav_count == 0%}
+        <h3 class="no_media"> There doesn't seem to be anything on your favorites list. </h3>
+          <h5 class="no_media"> Click on the heart button after adding a new media to add it to your favorites </h5> 
+{%else%}
+
+<div class="pagenum_header">
+    <div class="page_numbers">
+      {% if prev_page != '/favorites' %}
+        <a class='prev-btns' href="{{prev_page}}"> 
+          <i class="bi bi-arrow-left-square"></i>
+        </a>
+      {%endif%}
+      {%for page_num in cards.iter_pages() %}
+        {%if page_num%}
+          {%if cards.page == page_num %}
+            <a class="btn btn-primary" href="{{url_for('favorites', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+          {%else%}
+            <a class="pagenum_button btn btn-outline-primary " href="{{url_for('favorites', page=page_num)}}">{{page_num}}</a>
+          {%endif%}
+        {%endif%}
+      {%endfor%}
+      {% if page != total_pgs %}
+      <a class='next-btns' href="{{next_page}}"> 
+        <i class="bi bi-arrow-right-square"></i>
+      </a>
+    {%endif%}
+    </div>
+  </div>
+<div class = "fav-container"> 
+{%for card in cards %} 
+    <div class="fav-item">
+    <div class="fav-img-container"> 
+      <img src = {{card.image}} class="card-image" alt={{card.title}}>
+    </div>
+          <div class="hearts">
+            <div class="heart_buttons">
+              <p id="name">{{card.title}}</p> 
+            </div>
+          </div>
+    </div>
+{%endfor%}  
+</div> 
+{%endif%} 
+{%endblock%}

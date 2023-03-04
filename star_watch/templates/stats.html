@@ -3,6 +3,25 @@
  <h1>{%block title%}Account Statistics{%endblock%}</h1>
 {%endblock%}
 {%block body%}
-<br><br><br><br>
+<div class = "page-title">
+    <h2> Account Statistics </h2>
+</div>
+<h3> Count </h3>
+<div> 
+    <ul> 
+        <li>  Currently watching: {{watch_count}} </li> 
+        <li>  Planning List: {{plan_count}} </li> 
+        <li>  Paused List: {{pause_count}} </li> 
+        <li> Completed List: {{complete_count}} </li> 
+    </ul>
+</div>
+<!-- if favorites is greaters than 12  -->
+
+<!-- else show regular favorites heading -->
+<br><br>
+<h3> Most Common Tags </h3>
+<br> <br>
+
+
 
 {%endblock%}

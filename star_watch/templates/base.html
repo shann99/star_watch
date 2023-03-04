@@ -55,35 +55,26 @@
                 <span class="bar"></span>
             </div>
         </div> 
-        <div class="right-nav">    
-            <div class = "search">
-                <form action='/search' method="GET">
-                    <input type="text" id="search_box" placeholder="Search..." autocomplete="off" autofocus name="q"></input>
-                </form>
-                <button id="search_button" onclick="open_search()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="account-access">
-                <button type="button" class="profile-button">
-                    <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
-                    <div class="arrows">
-                        <span class="material-symbols-outlined" id="arrow_down"> arrow_drop_down</span>
-                        <span class="material-symbols-outlined" id="arrow_up">arrow_drop_up</span>
-                    </div>
-                </button> 
-                <div class="login-nav">
-                    <a class="user-welcome">Hi 👋 , {{user.name}} </a>
-                    <a class="account-item" href="/notifications"> <i class="bi bi-bell"></i> Updates </a>
-                    <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>
-                    <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
-                    <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
-                </div>  
-            </div>
+    <div class="right_navigation">
+        <button id="search_button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            &#xF52A;
+        </button>
+        <div class="account-access">
+            <button type="button" class="profile-button">
+                <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
+                <div class="arrows">
+                    <span  class="arrow_down"> &#xe5c5;</span>
+                </div>
+            </button> 
+            <div class="login-nav">
+                <a class="user-welcome">Hi 👋 , {{user.name}} </a>
+                <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
+                <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>
+                <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
+                <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
+            </div>  
         </div>
-       
+        </div>
     </div>  
 </nav> 
 <div class="hamburger_navigation">
@@ -135,6 +126,26 @@
         {%endfor%}
     {%endif%}
  {%endwith%}
+<form action='/search' method="GET"  class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="input_search">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-text" id="nav_search_icon">&#xF52A;</div>
+                        <input type="text" class="form-control" id="search_box" placeholder="Search..." onkeyup="countSearchBox()" autocomplete="off" name="q"></input>
+                        <div id="nav_search_clear">
+                            <button type="button" class="input-group-text" id="nav_search_clear_btn">&#xF659;</button>
+                        </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</form> 
+<!-- </div> -->
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+    
  <!-- add media form -->
 {% if user.is_authenticated%}
 <div id="addmediaForm">
@@ -144,26 +155,27 @@
             <h1 class="addmediaHeader"> Add New Media</h1>
         </div> 
         <div class="form-group">
-            <label for="add_title" id="add-form-text" class="form-label"> Title</label>
-            <input type="text" class="form-control" autocomplete="off" class="add-input" placeholder="ex. Naruto" name = "add_title" required>
+            <label for="add_title" class="form-label add-form-text"> Title</label>
+            <input type="text" class="form-control add-input" autocomplete="off" placeholder="ex. Naruto" name = "add_title" required>
         </div>
         <div class="form-group">
-            <label for="add_image_form" id="add-form-text" class="form-label"> Add image</label>
-            <input type="text" class="form-control" autocomplete="off" class="add-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
+            <label for="add_image_form"  class="form-label add-form-text"> Image Link</label>
+            <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="status" id="add-form-text" class="form-label">Status</label>
-                <select class="form-select" aria-label="Default select example"name = "status">
+                <label for="status"  class="form-label add-form-text">Status</label>
+                <select class="form-select add-input" aria-label="Default select example" name = "status">
                     <option selected value="Planning">Planning</option>
                     <option value="Watching">Watching</option>
                     <option value="Paused">Paused</option>
                     <option value="Completed">Completed</option>
                 </select>
             </div>
+           
             <div class="form-group col-md-6">
-                <label for="rating" id="add-form-text" class="form-label">Rating</label>
-                <select class="form-select" name="rating" aria-label="Default select example">
+                <label for="rating"  class="form-label add-form-text">Rating</label>
+                <select class="form-select add-input" name="rating" aria-label="Default select example">
                     <option selected>Rating</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -177,11 +189,30 @@
                     <option value="10">10</option>
                 </select>
             </div>
+        </div> 
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="type" class="form-label add-form-text">Type</label>
+                    <select class="form-select add-input" aria-label="Default select example" name = "type">
+                        <option selected value="select type">Media Type</option>
+                        <option value="Show">Show</option>
+                        <option value="Movie">Movie</option>
+                        <option value="Anime">Anime</option>
+                        <option value="Donghua">Donghua</option>
+                        <option value="Animation/Cartoon">Animation/Cartoon</option>
+                        <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
+                        <option value="other">Other</option>
+                    </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="language" class="form-label add-form-text">Language</label>
+                <input type="text" class="form-control add-input" name="language" id="language">
+            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6 ">
                 <div class="currentEpLabelDiv">
-                    <label for="current_ep" id="add-form-text" class="form-label">What episode are you currently on?  </label>
+                    <label for="current_ep"  class="form-label add-form-text">What episode are you currently on?</label>
                     <div class="currentEpDiv">
                         <span id="currentEpIcon"> 
                             <i class="bi bi-question-circle" ></i>
@@ -189,11 +220,11 @@
                         <p id="currentEpText"> Defaults to "planning" when left blank</p>
                     </div>
             </div>
-                <input type="number" step="1" min="0" class="form-control" autocomplete="off" class="add-input" name = "current_ep">
+                <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off" name = "current_ep">
             </div>
             <div class="form-group col-md-6">
                 <div class="totalEpLabelDiv">
-                    <label for="total_eps" id="add-form-text" class="form-label">How many episodes are there in total?</label>
+                    <label for="total_eps"  class="form-label add-form-text">Total Episodes</label>
                     <div class="totalEpDiv">
                         <span id="totalEpHelp">
                             <i class="bi bi-question-circle"></i>
@@ -201,19 +232,17 @@
                         <p id="totalEpText"> Defaults to "?"" when left blank</p>
                     </div>
                 </div>
-                <input type="text" class="form-control" autocomplete="off" class="add-input" name = "total_eps" aria-describedby="mediaHelp">
+                <input type="text" class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
             </div>
         </div>
-        <br>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" name="description" id="add_description" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
+            <label for="description" class="form-label add-form-text">Description</label>
+            <textarea class="form-control add-input" name="description" id="add_description" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
             <div id="mediaDescHelp" class="form-text">
                 <p id="add_desc_count">850</p>
                 <p id="add_desc_total"> out of 850 characters </p>
               </div>
         </div>
-        <br>
     <button type="submit" id= "add_media_button" class="btn btn-primary">Add Media</button>
   </form>
 </div>

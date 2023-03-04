@@ -6,6 +6,16 @@
 <div class = "page-header">
   <h2> Paused </h2>
   <br>
+  {%set counter = namespace(value=0)%} 
+  {%for card in user.cards %} 
+   {%if card.status == 'Paused' %}
+      {% set counter.value = counter.value + 1 %}
+    {%endif%} 
+  {%endfor%}  
+{%if counter.value == 0%}
+        <h3 class="no_media"> There doesn't seem to be anything on your paused list.</h3>
+        <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
+{%else%} 
 <div class="page_numbers">
   {% if prev_page != '/paused' %}
     <a class='prev-btns' href="{{prev_page}}"> 
@@ -30,16 +40,7 @@
 </div>
 <br>
 
-{%set counter = namespace(value=0)%} 
-  {%for card in user.cards %} 
-   {%if card.status == 'Paused' %}
-      {% set counter.value = counter.value + 1 %}
-    {%endif%} 
-  {%endfor%}  
-{%if counter.value == 0%}
-        <h3 class="no_media"> There doesn't seem to be anything on your paused list.</h3>
-        <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
-{%endif%} 
+
 {%set counter = namespace(count=0)%}
 <div class = "card-container">
   {%for card in cards.items %} 
@@ -53,7 +54,7 @@
        </button>
 </div>
 <div class="card-img-container"> 
-  <img src = {{card.image}} class="card-image" alt={{card.title}}>
+  <img src = {{card.image}} class="card-image"  alt='{{card.title}}'>
 </div>
         <form action="" method="POST" class="tagForm">
         <div class="tag">
@@ -78,7 +79,7 @@
         </form>
       <div class="hearts">
       <div class="heart_buttons">
-        <p id="name">{{card.title}}</p> 
+        <p id="name"><u>{{card.title}}</u>
         {%if card.fav == False%}
             <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -91,7 +92,7 @@
                 <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
               </svg>
             </button>
-            {%endif%}
+            {%endif%}</p> 
       </div>
     </div>
       <div class="bottom_row">
@@ -139,5 +140,6 @@
     </div>
     {% set counter.count = counter.count + 1 %}
 {%endfor%}  
-</div> 
+</div> {%endif%} 
+
 {%endblock%}

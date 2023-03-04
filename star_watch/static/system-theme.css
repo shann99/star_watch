@@ -69,7 +69,8 @@
   }
   #account-title {
       font-family: 'Lexend Deca';
-      padding: 2em;
+      padding-top: 1em;
+      padding-bottom: 2em;
       text-align: center;
       color: black;
   }
@@ -148,7 +149,8 @@
   }
   #account-title {
       font-family: 'Lexend Deca';
-      padding: 2em;
+      padding-top: 1em;
+      padding-bottom: 2em;
       text-align: center;
       color: white;
   }

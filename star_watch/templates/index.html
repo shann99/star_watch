@@ -13,26 +13,29 @@
     {%endif%} 
   {%endfor%}  
 {%if counter.value == 0%}
-        <h3 class="no_media"> There doesn't seem to be anything on your watching list. </h3>
-          <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
-{%endif%} 
+  <div class = "page-title">
+    <h2> Currently Watching </h2>
+  </div>
+  <h3 class="no_media"> There doesn't seem to be anything on your watching list. </h3>
+    <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
+{%else%} 
 {%if images|length >= 5 %}  
     <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true"> 
       <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="2000">
-          <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}}>
+        <div class="carousel-item active" data-bs-interval="2000" >
+          <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}} id="img-active0">
         </div>
         <div class="carousel-item">
-          <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}}>
+          <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}} id="img-active1">
         </div>
         <div class="carousel-item">
-          <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}}>
+          <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}} id="img-active2">
         </div>
         <div class="carousel-item">
-          <img src="{{images[3]}}" class="carousel-img" alt={{images[3]}}>
+          <img src="{{images[3]}}" class="carousel-img" alt={{images[3]}} id="img-active3">
         </div>
         <div class="carousel-item">
-          <img src="{{images[4]}}" class="carousel-img" alt={{images[4]}}>
+          <img src="{{images[4]}}" class="carousel-img" alt={{images[4]}} id="img-active4">
         </div>
     </div>
     <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
@@ -103,7 +106,7 @@
       </div>
         <!-- card image -->
         <div class="card-img-container"> 
-          <img src = {{card.image}} class="card-image" alt={{card.title}}>
+          <img src = {{card.image}} class="card-image" alt='{{card.title}}'>
         </div>
         <!-- tags div   -->
        <form action="" method="POST" class="tagForm">
@@ -131,7 +134,7 @@
         <!-- heart functionality -->
       <div class="hearts">
         <div class="heart_buttons">
-          <p id="name">{{card.title}}</p> 
+          <p id="name"><u>{{card.title}}</u>
           {%if card.fav == False%}
               <button type="button" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -144,7 +147,7 @@
               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
             </svg>
           </button>
-          {%endif%}
+          {%endif%}</p> 
         </div>
       </div>
         <!-- bottom row with status and ep count -->
@@ -181,9 +184,7 @@
             <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
             {%else%}
             <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br> 
-            <hr>
             {%endif%}
-           
             {%if card.description == "" %}
             <div class="description"> No current description, click on the edit button in the top right to add one!</div> 
             {%else%}
@@ -202,5 +203,6 @@
     </div>
     {% set counter.count = counter.count + 1 %}
   {%endfor%}  
-</div> 
+</div> {%endif%} 
+
 {%endblock%}

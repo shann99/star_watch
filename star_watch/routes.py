@@ -21,7 +21,6 @@ def index():
             images.remove(image)
 
     random.shuffle(images)
-
     page = request.args.get('page', 1, type=int)
     watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
@@ -40,7 +39,7 @@ def planning():
     page = request.args.get('page', 1, type=int) 
     
     planning_list = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
-
+    
     prev_page = url_for('planning', page=planning_list.prev_num)
     next_page = url_for('planning', page=planning_list.next_num)
     total_pgs = planning_list.pages
@@ -114,32 +113,35 @@ def settings():
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
 def stats():
-    if request.method == "POST":
-        user = current_user;
-        # update_user = User.query.get(user.id)
+    user = current_user;
+    #list counts
+    watching_count = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).count()
+    planning_count = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).count()
+    paused_count = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).count()
+    completed_count = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).count()
 
-        # password = request.form.get("update_password")
-        # pass_confirm = request.form.get("update_password_confirm")
-        
-        # if password != pass_confirm:
-        #         flash('Passwords must match, please try again', category='error') 
-        # else:
-        #     if request.form.get('update_profile_pic') != "":
-        #         update_user.profile_pic = request.form.get('update_profile_pic')
-        #     if request.form.get('update_email') != "":
-        #         update_user.email = request.form.get('update_email')
-        #     if request.form.get('update_name') != "":
-        #         update_user.name = request.form.get('update_name')
-        #     if request.form.get('update_password') != "":
-        #         password = generate_password_hash(password, method='sha256')
-        #         update_user.password = password
-        #     db.session.commit()
+    #favorites
+    favorites_list = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).limit(12)
 
-        #     success_message = "Your account has successfully been updated!"
-        #     flash(success_message, category="success")
-        #     return redirect(url_for("index"))
+    return render_template("stats.html", user=current_user, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count, favs=favorites_list)
+@app.route("/favorites", methods=['GET','POST'])
+@login_required
+def favorites():
+    user = current_user;
+    favorites_count = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).count()
+    print(favorites_count)
+    #favorites
+    page = request.args.get('page', 1, type=int) 
+    
+    favorites_list = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=12)
         
-    return render_template("stats.html", user=current_user)
+    prev_page = url_for('favorites', page=favorites_list.prev_num)
+    next_page = url_for('favorites', page=favorites_list.next_num)
+    total_pgs = favorites_list.pages
+    if next_page == '/favorites':
+        next_page = total_pgs
+
+    return render_template("favorites.html", user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
 
 @app.route("/delete_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
 @login_required
@@ -182,12 +184,21 @@ def add_media():
             total_eps = request.form.get('total_eps')
         else: 
             total_eps = '?'
+        if request.form.get('type') != "":
+            media_type = request.form.get('type')
+        else: 
+            media_type = 'unknown'
+        if request.form.get('language') != "":
+            language = request.form.get('language')
+        else: 
+            language = 'unknown'
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
         fav = False
-        
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, user=current_user)
+       
+
+        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, media_type=media_type, language=language, user=current_user)
         
         db.session.add(card)
         db.session.commit()
@@ -212,10 +223,13 @@ def editMedia(card_id):
             card.description = request.form.get('edit_description')
         if request.form.get('edit_rating') != "":
             card.rating = request.form.get('edit_rating')
+        if request.form.get('edit_type') != "":
+            card.media_type = request.form.get('edit_type')
+        if request.form.get('edit_language') != "":
+            card.language = request.form.get('edit_language')
         if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
             card.date_edited = datetime.now(timezone.utc)
-
         card.id = card_id 
         db.session.commit()
 
@@ -334,14 +348,11 @@ def tags():
     if request.method == 'POST':
         card = Card.query.get(request.form["card_id"])
         test_tag = request.form.get('new_tag')
-        if test_tag != "":
-            if not (test_tag is None):
-                new_tag = Tags(name=test_tag, card_id=card.id)
-
-                db.session.add(new_tag)
-                db.session.commit()
-                
-                return '', 204
+        new_tag = Tags(name=test_tag, card_id=card.id)
+        db.session.add(new_tag)
+        db.session.commit()
+        
+        return '', 204
 
 #updating count with click of a button
 @app.route('/upcount', methods=['POST'])

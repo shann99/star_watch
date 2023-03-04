@@ -11,7 +11,7 @@
    <div id = "editMedia">  
     <form action="/edit/card/{{card.id}}" method="POST">
       <div class="addMediaFormHeader">
-          <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-2)"></button>
+          <button type="button" id="cancel_button" class="btn-close" aria-label="Close" onclick="history.go(-1)"></button>
           <br>
           <h1 class="addmediaHeader"> {{card.title}}</h1>
       </div>  
@@ -24,7 +24,7 @@
         <label for="edit_title" id="add-form-text" class="form-label"> Edit Title</label>
         <input type="text" class="form-control" autocomplete="off" id="n-input" placeholder="{{card.title}}" name = "edit_title">
       </div>
-       
+      <br>
       <div class="form-group">
           <label for="edit_image_form" id="add-form-text" class="form-label"> Edit Media image</label>
           <input type="text" class="form-control" autocomplete="off" id="n-input" placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
@@ -76,10 +76,29 @@
               </select>
           </div>
       </div>
-      <br> <br>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="edit_type" class="form-label add-form-text">Type</label>
+                <select class="form-select add-input" aria-label="Default select example" name = "edit_type">
+                    <option selected value="select type">{{card.media_type}}</option>
+                    <option value="Show">Show</option>
+                    <option value="Movie">Movie</option>
+                    <option value="Anime">Anime</option>
+                    <option value="Donghua">Donghua</option>
+                    <option value="Animation/Cartoon">Animation/Cartoon</option>
+                    <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
+                    <option value="other">Other</option>
+                </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="edit_language" class="form-label add-form-text">Language</label>
+            <input type="text" class="form-control add-input" name="edit_language" id="language" placeholder="{{card.language}}">
+        </div>
+    </div>
+      <br>
       <div class="mb-3">
           <label for="edit_description" class="form-label">Update Description</label>
-          <textarea class="form-control" name="edit_description" placeholder="{{card.description}}" onkeyup="countEditDesc()" id="edit_description" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
+          <textarea class="form-control" name="edit_description" placeholder='{{card.description}}' onkeyup="countEditDesc()" id="edit_description" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
           <div id="descHelpBlock" class="form-text">
             <p id="active_desc_count">850</p>
             <p id="total_desc_count"> out of 850 characters </p>

@@ -6,7 +6,6 @@
 <div class = "page-title">
     <h2> Search Results </h2>
 </div>
-<!-- <div> -->
   <form action='/search' method="GET" id="search_search">
     <div class="form-group">
       <div class="input-group">
@@ -18,7 +17,6 @@
       </div>
     </div>
 </form>
-<!-- </div> -->
 {%set counter = namespace(count=0)%}  
 {%if cards|length == 0 %}
 <br><br>
@@ -63,7 +61,7 @@
           </div> </form>
           <div class="hearts">
             <div class="heart_buttons">
-              <p id="name">{{card.title}}</p> 
+              <p id="name"><u>{{card.title}}</u>
               {%if card.fav == False%}
                   <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -76,7 +74,7 @@
                       <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                   </button>
-                  {%endif%}
+                  {%endif%}</p>
             </div>
           </div>
       <div class="bottom_row">

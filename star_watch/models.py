@@ -33,6 +33,8 @@ class Card(db.Model):
     fav = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship('Tags', backref='card', cascade="all, delete", lazy=True)
+    media_type = db.Column(db.String(1000), nullable=False, server_default="Unknown")
+    language = db.Column(db.String(1000), nullable=False, server_default="Unknown")
     date_edited = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     def __repr__(self):
         return f"Card('{self.id}','{self.title}','{self.date_added}','{self.image}','{self.user_id}')"
