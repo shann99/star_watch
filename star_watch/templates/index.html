@@ -20,7 +20,7 @@
     <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
 {%else%} 
 {%if images|length >= 5 %}  
-    <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true"> 
+    <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">  
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="2000" >
           <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}} id="img-active0">
@@ -105,8 +105,8 @@
         </button>
       </div>
         <!-- card image -->
-        <div class="card-img-container"> 
-          <img src = {{card.image}} class="card-image" alt='{{card.title}}'>
+        <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0"> 
+          <img src = {{card.image}} class="card-image"  alt='{{card.title}}' >
         </div>
         <!-- tags div   -->
        <form action="" method="POST" class="tagForm">
@@ -166,9 +166,7 @@
         </div>
         <div class="see_more">
               <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
-                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm8.096 10.803L6 6.707v2.768a.5.5 0 0 1-1 0V5.5a.5.5 0 0 1 .5-.5h3.975a.5.5 0 1 1 0 1H6.707l4.096 4.096a.5.5 0 1 1-.707.707z"/>
-                </svg>
+                <i class="bi bi-arrow-up-left-square"></i>
               </button>
         </div>
           <div class="see_less">
@@ -179,7 +177,7 @@
             </svg>
           </button>
             <br>
-            <h3 class="mediaTitle"> {{card.title}} </h3> <br>
+            <h3 class="mediaTitle"> {{card.title}} </h3> <br>{{card.language}} {{card.media_type}}
             {% if card.rating == "Rating"%}
             <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
             {%else%}
@@ -194,10 +192,9 @@
             </div> 
             {%endif%}
             <br> <br> 
+            
             <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-square-fill" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm8.096 10.803L6 6.707v2.768a.5.5 0 0 1-1 0V5.5a.5.5 0 0 1 .5-.5h3.975a.5.5 0 1 1 0 1H6.707l4.096 4.096a.5.5 0 1 1-.707.707z"/>
-              </svg>
+              <i class="bi bi-arrow-up-left-square"></i>
             </button>
           </div>
     </div>

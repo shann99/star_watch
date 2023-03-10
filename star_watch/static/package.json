@@ -1,0 +1,24 @@
+{
+  "name": "starwatch-npm",
+  "version": "1.0.0",
+  "description": "npm dependencies for star_watch",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shann99/star_watch.git"
+  },
+  "author": "Shannon Reid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shann99/star_watch/issues"
+  },
+  "homepage": "https://github.com/shann99/star_watch#readme",
+  "dependencies": {
+    "vanilla-tilt": "^1.8.0" 
+   }
+
+}

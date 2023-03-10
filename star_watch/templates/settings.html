@@ -3,13 +3,19 @@
  <title>Settings</title>
  {%endblock%}
 {%block body %}
-<div class="check_acc_delete"> 
-    <h4 class = "delete_text"> Are you sure you'd like to delete your account? </h4>
-    <br>
-    <h5>This will permanently delete all of your account data. This action cannot be reversed. </h5>
-    <br>
-    <form action="{{url_for('delete_account')}}" method="POST"><button type="submit" id="confirm_acc_delete" class="btn btn-info">Yes, delete my account</button></form>
-    <button id="cancel_delete" class="btn btn-secondary" type="button">No, go back</button>
+<div class="modal fade"  id="confirmAccountDeletion"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content  check_acc_delete">
+            <div class="modal-body">
+                <h4 class = "delete_text"> Are you sure you'd like to delete your account? </h4>
+                <br>
+                <h5>This will permanently delete all of your account data. This action cannot be reversed. </h5>
+                <br>
+                <form action="{{url_for('delete_account')}}" method="POST"><button type="submit" id="confirm_acc_delete" class="btn btn-info">Yes, delete my account</button></form>
+                <button id="cancel_delete" class="btn btn-secondary" type="button" data-bs-dismiss="modal">No, go back</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div id = "account-title">
     <h2> Account Settings </h2>
@@ -20,17 +26,41 @@
     <h5> Appearance </h5>
     <br>
     <div id="mode">     
-    <div class="dropdown">
+        <div class="dropdown">
+            {%if user.mode=="system"%}       
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
+            <a id="theme_title">System <i class="bi bi-check-all checkoff"></i></a>
+            </button>
+            <ul class="dropdown-menu" id="appearance_dropdown">
+                <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+                <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+                <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
+            </ul>
+         
+        {%endif%}
+        {%if user.mode=="dark"%}       
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
-          <i class="bi bi-droplet-half"></i> <a id="theme_title">Theme</a>
+            <a id="theme_title">Dark <i class="bi bi-check-all checkoff"></i></a>
         </button>
         <ul class="dropdown-menu" id="appearance_dropdown">
             <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
-            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-fill"></i><a> Dark</a></button> </li>
-            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-paint-bucket" id="system_icon"></i><a> System </a></button> </li>
+            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
         </ul>
-      </div>
-    </div>
+        {%endif%}
+        {%if user.mode=="light"%}       
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
+        <a id="theme_title">Light <i class="bi bi-check-all checkoff"></i></a>
+        </button>
+        <ul class="dropdown-menu" id="appearance_dropdown">
+            <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
+        </ul> 
+        {%endif%}
+    </div>   
+</div>    
+
     <br> 
     <hr>
     <form method="POST"  action="">
@@ -71,7 +101,8 @@
         <hr>
         <h5> Delete Account</h5> <br>
         <p> <i class="bi bi-exclamation-triangle-fill"></i> Once you delete your account, there's no going back! </p> <br>
-        <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger">Delete Account</button>
+        <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmAccountDeletion">Delete Account</button>
     </form>
 </div>
+
 {%endblock%}

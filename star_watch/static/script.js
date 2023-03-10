@@ -1,3 +1,4 @@
+
 var item = "{{counter.count}}";
 
 const hamburger = document.querySelector('.hamburger');
@@ -36,24 +37,7 @@ if (themes) {
         }
     });
 }
-const addItem = document.querySelector(".add-item");
-const body = document.getElementsByTagName('body')[0];
-if(addItem) {
-    addItem.addEventListener('click', () => {
-        addmediaForm.style.display="flex";
-        body.classList.toggle('active');
-        addItem.style.display="none";
-        addmediaForm.scrollIntoView({behavior: "smooth", block:"center", inline: "end"});
-    });
-}
-const closeForm = document.getElementById("mediaClose");
-if(closeForm) {
-    closeForm.addEventListener("click", () => {
-        addmediaForm.style.display="none";
-        body.classList.remove('active');
-        addItem.style.display="flex";
-    });
-}
+
 const heart = document.getElementsByClassName('heart');
 const filled = document.getElementsByClassName('heart_filled');
 const hearts = document.getElementsByClassName('hearts');
@@ -71,7 +55,7 @@ function hearted(card_id, heartItem) {
                 test =  $(".hearts").find(".heart_filled");
                 setTimeout( () => {
                     $(hearts[heartItem]).find(".heart_filled").toggleClass('animate');
-                }, 30)
+                }, 40)
                 setTimeout(() => {
                     $(hearts[heartItem]).find(".heart_filled").removeClass('animate');  
                 }, 340)
@@ -92,53 +76,18 @@ function unhearted(card_id, heartItem) {
     });
 }
 
-const delete_button = document.getElementById('delete_button');
-const check = document.querySelector(".check_delete");
-if(delete_button) {
-    delete_button.addEventListener('click', () => {
-    check.style.display='table';
-    editMedia.style.display='none';
-    check.scrollIntoView({behavior: "smooth"});
-    });
-}
-const cancel_delete = document.getElementById('cancel_check');
-if(cancel_delete) {
-    cancel_delete.addEventListener("click", () => {
-        check.style.display='none';
-        editMedia.style.display='flex';
-    });
-}
-
-const delete_account = document.getElementById("delete_acc_button");
-const check_delete = document.querySelector(".check_acc_delete");
-if(delete_account) {
-    delete_account.addEventListener("click", () => {
-        check_delete.style.display='table';
-        document.getElementById('account-title').style.display='none';
-        accountForm.style.display='none';
-        check_delete.scrollIntoView({behavior: "smooth"});
-    });
-}
-const cancel_acc_delete = document.getElementById('cancel_delete');
-if(cancel_acc_delete) {
-    cancel_acc_delete.addEventListener("click", () => {
-        check_delete.style.display='none';
-        document.getElementById('account-title').style.display='block';
-        accountForm.style.display='flex';
-    });
-}
 const addTag = document.getElementsByClassName("addTagForm");
 const add_button = document.getElementsByClassName("plus_tag_button");
 const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
 const tag_input = document.getElementsByClassName("addTagInput");
 function openTag(item){
-    addTag[item].style.display="inline";
+    tag_input[item].style.display="block";
     add_button[item].style.display="none";
     cancel_tag__button[item].classList.toggle("active");
     tag_input[item].focus();
 }
 function closeTag(item) {
-    addTag[item].style.display="none";
+    tag_input[item].style.display="none";
     add_button[item].style.display="inline";
     cancel_tag__button[item].classList.remove("active");
     tag_input[item].value="";
@@ -182,12 +131,13 @@ function flipCardA(item) {
     rating[item].style.display="none";
     desc[item].style.display="none";
 }
+
 const newT = document.getElementsByClassName('addTagInput');
 const newC = document.getElementsByClassName('cardID');
 const newCount = document.getElementsByClassName('tagCount');
-const tag_class = document.getElementsByClassName('tagForm');
-
-
+const tag_class = document.getElementsByClassName('editTagForm');
+const divtag = document.getElementsByClassName('divtag');
+const tagForm = document.getElementsByClassName('tagForm')
 $(document).ready(function() {
     $(".tagForm").on('submit', function(event) {
         var tagItem = $(this).find(newCount).val();
@@ -201,7 +151,10 @@ $(document).ready(function() {
                     "new_tag": $(this).find(newT).val() 
                 },
                 success: function(data) {
-                    $(tag_class[tagItem]).load(' .tag:eq('+ tagItem +')');
+                    $(tagForm[tagItem]).load(' .addTagForm:eq('+ tagItem +')');
+                    $(tag_class[tagItem]).load(' .tag:eq('+ tagItem +')');  
+                    $(updateTagForm[tagItem]).load(' .input_wrapper:eq('+ tagItem +')');
+                  
                 }
             });  
         }
@@ -230,6 +183,9 @@ function upcountFunc(upcount_card_id, upcountItem) {
 
 
 var user_id = '{{user.id}}';
+const theme_name = document.getElementById("theme_title");
+
+
 const site_theme = document.querySelector("#site-theme");
 function switch_modes_light(user_id) {
     $(document).ready(function() {
@@ -239,6 +195,7 @@ function switch_modes_light(user_id) {
             data: {"user_id": user_id},
             success: function() {
                 site_theme.href = "light-theme.css"; 
+                $(theme_name).load(' #theme_title');
             }
         });
     });
@@ -251,6 +208,7 @@ function switch_modes_dark(user_id) {
             data: {"user_id": user_id},
             success: function() {    
                 site_theme.href = "dark-theme.css";
+                $(theme_name).load(' #theme_title');
             }
         });
     });
@@ -262,7 +220,8 @@ function system_mode(user_id) {
             url: "/system-mode",
             data: {"user_id": user_id},
             success: function() {    
-                site_theme.href = "system-theme.css";
+                site_theme.href = "system-theme.css";                
+                $(theme_name).load(' #theme_title');
             }
         });
     });
@@ -407,3 +366,83 @@ if (carouselbgImg) {
         }, 70);
     });
 }
+
+var tagCounterId = "{{counter.tag}}";
+const expand_tag = document.getElementsByClassName("expand_more");
+const expand_edit = document.getElementsByClassName("expand_edit")
+const expand_delete = document.getElementsByClassName("expand_delete")
+function expandMoreTag(tagCounterId) {
+    expand_tag[tagCounterId].classList.toggle('active');
+    if(expand_tag[tagCounterId].classList.contains("active")) {
+        expand_edit[tagCounterId].style.display='contents';
+        expand_delete[tagCounterId].style.display='contents';
+    }
+    else {
+        expand_edit[tagCounterId].style.display='none';
+        expand_delete[tagCounterId].style.display='none';
+    }
+}
+const updateTagInput = document.getElementsByClassName('input_tag_name');
+const updateTagId = document.getElementsByClassName('updateTagId');
+const updateTagCount = document.getElementsByClassName('updateTagCounter');
+const edit_tag_class = document.getElementsByClassName('editTagForm');
+
+var cardId = '{{card.id}}';
+var tagId = '{{tag.id}}';
+var tagEditItem = '{{counter.tag}}'
+var tagName = document.getElementsByClassName('tag-name');
+var input_tag = document.getElementsByClassName('input_tag_name');
+
+
+function edit_tag(tagEditItem, tagId, cardId) {
+    tagName[tagEditItem].style.display='none';
+    input_tag[tagEditItem].style.display='inline';
+    input_tag[tagEditItem].focus();
+}
+var tagId = '{{tag.id}}';
+var tagDeleteItem = '{{counter.count}}';
+function delete_tag(tagId, tagDeleteItem) {
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "/delete_tag",
+            data: {"tag_id": tagId},
+            success: function() {
+                $(tag_class[tagDeleteItem]).load(' .tag:eq('+ tagDeleteItem +')');
+            }
+        });
+    });
+}
+var taginput = document.querySelectorAll('.input_tag_name');
+for (i = 0; i<taginput.length; i++) {
+    taginput[i].setAttribute('size', taginput[i].getAttribute('placeholder').length);
+}
+const spanTags = document.getElementsByClassName('tag-name');
+const updateTagForm = document.getElementsByClassName('updateTagForm');
+
+$(document).ready(function() {
+    $(".updateTagForm").on('submit', function(event) {
+        var editTagItem = $(this).find(updateTagCount).val();
+        console.log(editTagItem);
+        var checktag = $(this).find(updateTagInput).val();
+        console.log(checktag)
+        if (checktag !== "") {
+           $.ajax({
+                type: "POST",
+                url: "/update_tag",
+                data: {
+                    "tag_id": $(this).find(updateTagId).val(), 
+                    "tag_update": $(this).find(updateTagInput).val() 
+                },
+                success: function(data) {
+                    $(updateTagForm[editTagItem]).load(' .input_wrapper:eq('+ editTagItem +')');
+                    $(tag_class[editTagItem]).load(' .tag:eq('+ editTagItem +')');  
+                }
+            });  
+        }
+        else {
+            alert("Error: The tag you tried to enter was blank! Please add one or more characters and try again!");
+        }
+        event.preventDefault();
+    });
+});

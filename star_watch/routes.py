@@ -1,6 +1,14 @@
-from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages, jsonify
+from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages, jsonify, send_file
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
+from sqlalchemy import func
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')
+import base64
+import numpy as np
+import os
+from io import StringIO
 from datetime import datetime, timezone
 import random, json
 from star_watch.models import User, Card, Tags
@@ -20,7 +28,7 @@ def index():
         if image == '/background.jpg':
             images.remove(image)
 
-    random.shuffle(images)
+    np.random.shuffle(images)
     page = request.args.get('page', 1, type=int)
     watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
@@ -110,6 +118,20 @@ def settings():
         
     return render_template("settings.html", user=current_user)
 
+# @app.route('/pie', methods=['GET'])
+# def plot():
+#     user=current_user
+#     language_count = Card.query.with_entities(Card.language, func.count(Card.language)).join(User).filter(User.id==user.id).group_by(Card.language).all()
+#     languages = [lang[0] for lang in language_count]
+#     nums = [num[1] for num in language_count]
+#     print(nums)
+#     arr = np.array(nums)
+#     fig, ax = plt.subplots()
+#     # ax.bar(languages,nums)
+#     ax.pie(nums, labels=languages)
+#     plt.savefig("/static/pie.png")
+#     return render_template('stats.html', user=current_user, plot_url='/static/pie.png', numbers=nums)
+
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
 def stats():
@@ -119,17 +141,24 @@ def stats():
     planning_count = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).count()
     paused_count = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).count()
     completed_count = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).count()
+    # language_count = Card.query.with_entities(Card.language, func.count(Card.language)).join(User).filter(User.id==user.id).group_by(Card.language).all()
+    # languages = [lang[0] for lang in language_count]
+    # nums = [num[1] for num in language_count]
+    # print(nums)
+    # arr = np.array(nums)
+    # fig = plt.figure()
+    # # fig, ax = plt.subplots()
+    # # ax.bar(languages,nums)
+    # plt.pie(nums, labels=languages)
+    # filename = 'pie.png'
+    # plt.savefig("static/images/pie.png")
+    return render_template("stats.html", user=current_user, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
 
-    #favorites
-    favorites_list = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).limit(12)
-
-    return render_template("stats.html", user=current_user, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count, favs=favorites_list)
 @app.route("/favorites", methods=['GET','POST'])
 @login_required
 def favorites():
     user = current_user;
     favorites_count = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).count()
-    print(favorites_count)
     #favorites
     page = request.args.get('page', 1, type=int) 
     
@@ -143,27 +172,29 @@ def favorites():
 
     return render_template("favorites.html", user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
 
-@app.route("/delete_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
+@app.route("/delete_tag", methods=['POST'])
 @login_required
-def delete_tag(tag_id, card_id):
-    card_id = card_id
-    tag = Tags.query.get(tag_id)
-    db.session.delete(tag)
-    db.session.commit()
-    flash('Your tag has been deleted', category="info")
-    return redirect(request.referrer)
-
-@app.route("/update_tag/<int:tag_id>/<int:card_id>", methods=['POST'])
-@login_required
-def update_tag(tag_id, card_id):
-    card_id = card_id
-    tag = Tags.query.get(tag_id)
-    if request.form.get('tag_update') != "":
-        tag.name = request.form.get('tag_update')
+def delete_tag():
+    if request.method == 'POST':
+        tag = request.form["tag_id"]
+        del_tag = Tags.query.get(tag)
+        print(tag)
+        db.session.delete(del_tag)
         db.session.commit()
+        return '', 204
 
-        flash('Your tag has been updated', category="info")
-        return redirect(request.referrer)
+
+@app.route("/update_tag", methods=['POST'])
+@login_required
+def update_tag():
+     if request.method == 'POST':
+        update_tagID = request.form['tag_id']
+        tag = Tags.query.get(update_tagID)
+        tag_name = request.form['tag_update']
+        if request.form['tag_update'] != None:
+            tag.name = request.form['tag_update']
+        db.session.commit()
+        return '', 204
 
 
 @app.route("/add_media", methods=['POST'])
@@ -400,3 +431,6 @@ def system_mode():
         user.mode = 'system';
         db.session.commit() 
         return '', 204  
+    
+
+

@@ -7,7 +7,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -6.5em;
+        margin-left: -9.5em;
     }
     .carousel-item {
         height: 180px;
@@ -57,13 +57,15 @@
     .nav-item {
         margin-left: 0em;
     }
-    /* .heart {
-        margin-left: 0em;
+    .right_navigation {
+        width: 24%;
     }
-
-    .heart_filled{
-        margin-left: 0em;
-    } */
+    .heart_filled.animate::before {
+        left: 57%;
+    }
+    .heart_filled.animate::after {
+        left: 57%;
+    }
 }
 @media screen and (min-width:375px) and (max-width:425px) {
     .nav-item {
@@ -83,7 +85,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -6.3em;
+        margin-left: -9.6em;
     }
     .carousel-item {
         height: 180px;
@@ -132,7 +134,15 @@
     .search { 
         display: none;
     }
-
+    .right_navigation {
+        width: 100%;
+    }
+    .heart_filled.animate::before {
+        left: 57%;
+    }
+    .heart_filled.animate::after {
+        left: 57%;
+    }
 }
 @media screen and (min-width:425px) and (max-width:767px) {
     .nav-item {
@@ -149,7 +159,7 @@
     }
     .login-nav {
         margin-top: 4.8em;
-        margin-left: -6em;
+        margin-left: -8.7em;
     }
     .carousel-item {
         height: 240px;
@@ -200,6 +210,15 @@
     }
     .search { 
         display: none;
+    }
+    .right_navigation {
+        width: 100%;
+    }
+    .heart_filled.animate::before {
+        left: 37%;
+    }
+    .heart_filled.animate::after {
+        left: 37%;
     }
 }
 @media screen and (min-width:768px) and (max-width:1023px) { 
@@ -255,10 +274,13 @@
         margin-top: -3.5em;
         margin-left: 80%;
     } 
+    .right_navigation {
+        width: 100%;
+    }
 } 
 @media screen and (min-width: 1024px) and (max-width:1439px) {
     .login-nav {
-        margin-left: -6.5em;
+        margin-left: -9.5em;
     }
     .card-container {
         grid-template-columns: auto auto;
@@ -288,6 +310,12 @@
     .nav-item {
         margin-left: 5em;
     } 
+    .heart_filled.animate::before {
+        left: 27%;
+    }
+    .heart_filled.animate::after {
+        left: 27%;
+    }
 } 
 
 @media screen and (min-width: 1440px) and (max-width:1919px) {
@@ -306,6 +334,12 @@
     }
     .nav-menu {
         margin-left: -5em;
+    }
+    .heart_filled.animate::before {
+        left: 27%;
+    }
+    .heart_filled.animate::after {
+        left: 27%;
     }
 }
 

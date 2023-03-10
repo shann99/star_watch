@@ -69,7 +69,7 @@
             <div class="login-nav">
                 <a class="user-welcome">Hi 👋 , {{user.name}} </a>
                 <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
-                <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>
+                <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
                 <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
                 <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
             </div>  
@@ -127,9 +127,10 @@
     {%endif%}
  {%endwith%}
 <form action='/search' method="GET"  class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal_bg">
     <div class="modal-dialog">
-        <div class="modal-content" id="input_search">
-            <div class="form-group">
+        <div class="modal-content"> 
+            <div class="form-group" id="input_search">
                 <div class="input-group">
                     <div class="input-group-text" id="nav_search_icon">&#xF52A;</div>
                         <input type="text" class="form-control" id="search_box" placeholder="Search..." onkeyup="countSearchBox()" autocomplete="off" name="q"></input>
@@ -139,7 +140,7 @@
                 </div>
             </div> 
         </div>
-    </div>
+    </div></div>
 </form> 
 <!-- </div> -->
 <!-- Button trigger modal -->
@@ -148,103 +149,111 @@
     
  <!-- add media form -->
 {% if user.is_authenticated%}
-<div id="addmediaForm">
-    <form method="POST"  action="/add_media">
-        <div class="addMediaFormHeader">
-            <button id="mediaClose" type="button" class="btn-close" aria-label="Close"></button>
-            <h1 class="addmediaHeader"> Add New Media</h1>
-        </div> 
-        <div class="form-group">
-            <label for="add_title" class="form-label add-form-text"> Title</label>
-            <input type="text" class="form-control add-input" autocomplete="off" placeholder="ex. Naruto" name = "add_title" required>
-        </div>
-        <div class="form-group">
-            <label for="add_image_form"  class="form-label add-form-text"> Image Link</label>
-            <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="status"  class="form-label add-form-text">Status</label>
-                <select class="form-select add-input" aria-label="Default select example" name = "status">
-                    <option selected value="Planning">Planning</option>
-                    <option value="Watching">Watching</option>
-                    <option value="Paused">Paused</option>
-                    <option value="Completed">Completed</option>
-                </select>
-            </div>
-           
-            <div class="form-group col-md-6">
-                <label for="rating"  class="form-label add-form-text">Rating</label>
-                <select class="form-select add-input" name="rating" aria-label="Default select example">
-                    <option selected>Rating</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-        </div> 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="type" class="form-label add-form-text">Type</label>
-                    <select class="form-select add-input" aria-label="Default select example" name = "type">
-                        <option selected value="select type">Media Type</option>
-                        <option value="Show">Show</option>
-                        <option value="Movie">Movie</option>
-                        <option value="Anime">Anime</option>
-                        <option value="Donghua">Donghua</option>
-                        <option value="Animation/Cartoon">Animation/Cartoon</option>
-                        <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
-                        <option value="other">Other</option>
-                    </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="language" class="form-label add-form-text">Language</label>
-                <input type="text" class="form-control add-input" name="language" id="language">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6 ">
-                <div class="currentEpLabelDiv">
-                    <label for="current_ep"  class="form-label add-form-text">What episode are you currently on?</label>
-                    <div class="currentEpDiv">
-                        <span id="currentEpIcon"> 
-                            <i class="bi bi-question-circle" ></i>
-                        </span>
-                        <p id="currentEpText"> Defaults to "planning" when left blank</p>
+<div class="modal fade" id="addmediaForm">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="POST"  action="/add_media" id="mediaFormNew">
+                    <div class="addMediaFormHeader">
+                        <button id="mediaClose" type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        <h1 class="addmediaHeader"> Add New Media</h1>
+                    </div> 
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" autocomplete="off" placeholder="ex. Naruto" name = "add_title" required>
+                        <label for="add_title" class="form-label" id="labelText"> Title</label>
+
                     </div>
-            </div>
-                <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off" name = "current_ep">
-            </div>
-            <div class="form-group col-md-6">
-                <div class="totalEpLabelDiv">
-                    <label for="total_eps"  class="form-label add-form-text">Total Episodes</label>
-                    <div class="totalEpDiv">
-                        <span id="totalEpHelp">
-                            <i class="bi bi-question-circle"></i>
-                        </span>
-                        <p id="totalEpText"> Defaults to "?"" when left blank</p>
+                    <div class="form-group">
+                        <label for="add_image_form"  class="form-label"> Image Link</label>
+                        <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
                     </div>
-                </div>
-                <input type="text" class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="status"  class="form-label add-form-text">Status</label>
+                            <select class="form-select add-input" aria-label="Default select example" name = "status">
+                                <option selected value="Planning">Planning</option>
+                                <option value="Watching">Watching</option>
+                                <option value="Paused">Paused</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label for="rating"  class="form-label add-form-text">Rating</label>
+                            <select class="form-select add-input" name="rating" aria-label="Default select example">
+                                <option selected>Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="form-row">
+                        <div class="form-floating">
+                                <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "type">
+                                    <option selected>Media Type</option>
+                                    <option value="Show">Show</option>
+                                    <option value="Movie">Movie</option>
+                                    <option value="Anime">Anime</option>
+                                    <option value="Donghua">Donghua</option>
+                                    <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <label for="type" class="form-label">Type</label>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="language" class="form-label add-form-text">Language</label>
+                            <input type="text" class="form-control add-input" name="language" id="language">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 ">
+                            <div class="currentEpLabelDiv">
+                                <label for="current_ep"  class="form-label add-form-text">What episode are you currently on?</label>
+                                <div class="currentEpDiv">
+                                    <span id="currentEpIcon"> 
+                                        <i class="bi bi-question-circle" ></i>
+                                    </span>
+                                    <p id="currentEpText"> Defaults to planning when left blank</p>
+                                </div>
+                        </div>
+                            <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off" name = "current_ep">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="totalEpLabelDiv">
+                                <label for="total_eps"  class="form-label add-form-text">Total Episodes</label>
+                                <div class="totalEpDiv">
+                                    <span id="totalEpHelp">
+                                        <i class="bi bi-question-circle"></i>
+                                    </span>
+                                    <p id="totalEpText"> Defaults to ? when left blank</p>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
+                        </div>
+                    </div><br>
+                    <div class="form-floating">
+                        <textarea class="form-control" name="description" id="floatingTextarea" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
+                        <label for="description" class="form-label">Description</label>
+
+                        <div id="mediaDescHelp" class="form-text">
+                            <p id="add_desc_count">850</p>
+                            <p id="add_desc_total"> out of 850 characters </p>
+                        </div>
+                    </div>
+                    <button type="submit" id= "add_media_button" class="btn btn-primary" >Add Media</button>
+                </form>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="description" class="form-label add-form-text">Description</label>
-            <textarea class="form-control add-input" name="description" id="add_description" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
-            <div id="mediaDescHelp" class="form-text">
-                <p id="add_desc_count">850</p>
-                <p id="add_desc_total"> out of 850 characters </p>
-              </div>
-        </div>
-    <button type="submit" id= "add_media_button" class="btn btn-primary">Add Media</button>
-  </form>
+    </div>
 </div>
 {%endif%}
 <section class = "content">
@@ -253,11 +262,12 @@
      <!-- add media button -->
     {% if user.is_authenticated%}
     <div class="add-item">
-        <button class="add-item-image">
+        <button class="add-item-image" data-bs-toggle="modal" data-bs-target="#addmediaForm">
             <i class="bi bi-patch-plus-fill add_plus"></i>
         </button>
     </div> 
     {%endif%}
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script type="module" src="{{url_for('static', filename='node_modules/vanilla-tilt/src/vanilla-tilt.js')}}"></script> <!-- Load Tilt.js library -->
 </section>
