@@ -156,30 +156,37 @@
                 <form method="POST"  action="/add_media" id="mediaFormNew">
                     <div class="addMediaFormHeader">
                         <button id="mediaClose" type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                        
                         <h1 class="addmediaHeader"> Add New Media</h1>
-                    </div> 
+                    </div> <br> <br>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" autocomplete="off" placeholder="ex. Naruto" name = "add_title" required>
                         <label for="add_title" class="form-label" id="labelText"> Title</label>
 
+                    </div><br>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">    
+                          <label for="add_image_form"  class="form-label"  id="labelText" > Image Link</label>
+
                     </div>
-                    <div class="form-group">
-                        <label for="add_image_form"  class="form-label"> Image Link</label>
-                        <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="status"  class="form-label add-form-text">Status</label>
+                    <br>
+                    <div class="row g-2">
+                        <div class="col-md">
+
+                            <div class="form-floating">
                             <select class="form-select add-input" aria-label="Default select example" name = "status">
                                 <option selected value="Planning">Planning</option>
                                 <option value="Watching">Watching</option>
                                 <option value="Paused">Paused</option>
                                 <option value="Completed">Completed</option>
                             </select>
+                            <label for="status" id="labelText" class="form-label">Status</label>
+
                         </div>
-                    
-                        <div class="form-group col-md-6">
-                            <label for="rating"  class="form-label add-form-text">Rating</label>
+                        </div>
+                        <div class="col-md">
+
+                        <div class="form-floating">
                             <select class="form-select add-input" name="rating" aria-label="Default select example">
                                 <option selected>Rating</option>
                                 <option value="1">1</option>
@@ -192,11 +199,17 @@
                                 <option value="8">8</option>
                                 <option value="9">9</option>
                                 <option value="10">10</option>
-                            </select>
+                            </select>                  
+                        <label for="rating"   id="labelText" class="form-label">Rating</label>
+
+                        </div>
                         </div>
                     </div> 
-                    <div class="form-row">
-                        <div class="form-floating">
+                    <br>
+                    <div class="row g-2">
+
+                        <div class="col-md">
+                            <div class="form-floating">
                                 <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "type">
                                     <option selected>Media Type</option>
                                     <option value="Show">Show</option>
@@ -209,11 +222,26 @@
                                 <label for="type" class="form-label">Type</label>
 
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="language" class="form-label add-form-text">Language</label>
-                            <input type="text" class="form-control add-input" name="language" id="language">
+                        </div>
+                        <div class="col-md">
+
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "language">
+                                <option selected >Language</option>
+                                <option value="English">English</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="German">German</option>
+                                <option value="Swedish">Swedish</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Multi">Multi</option>
+                                <option value="other">Other</option>
+                        </select>  
+                        <label for="language"  id="labelText" class="form-label ">Language</label>
+                        </div>
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
                             <div class="currentEpLabelDiv">
@@ -237,12 +265,12 @@
                                     <p id="totalEpText"> Defaults to ? when left blank</p>
                                 </div>
                             </div>
-                            <input type="text" class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
+                            <input type="text"  class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
                         </div>
                     </div><br>
                     <div class="form-floating">
-                        <textarea class="form-control" name="description" id="floatingTextarea" rows="2" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
-                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" style="height: 100px" name="description" id="add_description" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
+                        <label for="description"   id="labelText" class="form-label">Description</label>
 
                         <div id="mediaDescHelp" class="form-text">
                             <p id="add_desc_count">850</p>

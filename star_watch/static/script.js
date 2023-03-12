@@ -132,38 +132,7 @@ function flipCardA(item) {
     desc[item].style.display="none";
 }
 
-const newT = document.getElementsByClassName('addTagInput');
-const newC = document.getElementsByClassName('cardID');
-const newCount = document.getElementsByClassName('tagCount');
-const tag_class = document.getElementsByClassName('editTagForm');
-const divtag = document.getElementsByClassName('divtag');
-const tagForm = document.getElementsByClassName('tagForm')
-$(document).ready(function() {
-    $(".tagForm").on('submit', function(event) {
-        var tagItem = $(this).find(newCount).val();
-        var test_tag = $(this).find(newT).val();
-        if (test_tag !== "") {
-           $.ajax({
-                type: "POST",
-                url: "/tag",
-                data: {
-                    "card_id": $(this).find(newC).val(), 
-                    "new_tag": $(this).find(newT).val() 
-                },
-                success: function(data) {
-                    $(tagForm[tagItem]).load(' .addTagForm:eq('+ tagItem +')');
-                    $(tag_class[tagItem]).load(' .tag:eq('+ tagItem +')');  
-                    $(updateTagForm[tagItem]).load(' .input_wrapper:eq('+ tagItem +')');
-                  
-                }
-            });  
-        }
-        else {
-            alert("Error: The tag you tried to enter was blank! Please add one or more characters and try again!");
-        }
-        event.preventDefault();
-    });
-});
+
 var upcount_card_id = '{{card.id}}';
 var upcountItem = "{{counter.count}}";
 const ep_on = document.getElementsByClassName("ep-on");
@@ -383,21 +352,41 @@ function expandMoreTag(tagCounterId) {
     }
 }
 const updateTagInput = document.getElementsByClassName('input_tag_name');
-const updateTagId = document.getElementsByClassName('updateTagId');
 const updateTagCount = document.getElementsByClassName('updateTagCounter');
-const edit_tag_class = document.getElementsByClassName('editTagForm');
 
 var cardId = '{{card.id}}';
 var tagId = '{{tag.id}}';
 var tagEditItem = '{{counter.tag}}'
+var tag_card_counter = '{{counter.counter}}'
 var tagName = document.getElementsByClassName('tag-name');
 var input_tag = document.getElementsByClassName('input_tag_name');
+var updateTagId = document.getElementsByClassName('updateTagId');
+var updateTagDiv = document.getElementsByClassName('tagTest');
+var editTagForm = document.getElementsByClassName('editTagForm');
 
-
-function edit_tag(tagEditItem, tagId, cardId) {
+function edit_tag(tagId, tag_card_counter, tagEditItem) {
     tagName[tagEditItem].style.display='none';
-    input_tag[tagEditItem].style.display='inline';
+    input_tag[tagEditItem].setAttribute('type','text');
+    input_tag[tagEditItem].setAttribute('size', input_tag[tagEditItem].getAttribute('placeholder').length);
     input_tag[tagEditItem].focus();
+    console.log(tagId);
+    $(editTagForm[tag_card_counter]).on('keypress', function(e) {
+        var key = e.which;
+        if (key == 13 && input_tag[tagEditItem].value != "") {
+            $.ajax({
+                type: "POST",
+                url: "/update_tag",
+                data: {
+                    "tag_id": $(updateTagId[tagEditItem]).val(),
+                    "tag_update": $(input_tag[tagEditItem]).val()
+                },
+                success: function() {
+                    $(updateTagDiv[tag_card_counter]).load(' .tag:eq('+ tag_card_counter +')');   
+                }
+            });  
+            e.preventDefault();  
+        }
+    });
 }
 var tagId = '{{tag.id}}';
 var tagDeleteItem = '{{counter.count}}';
@@ -408,35 +397,41 @@ function delete_tag(tagId, tagDeleteItem) {
             url: "/delete_tag",
             data: {"tag_id": tagId},
             success: function() {
-                $(tag_class[tagDeleteItem]).load(' .tag:eq('+ tagDeleteItem +')');
+                $(updateTagDiv[tagDeleteItem]).load(' .tag:eq('+ tagDeleteItem +')');   
+                for (let i = 0; i < cars.length; i++) {
+                    text += cars[i] + "<br>";
+                  }
+                $('.addTagWrapper:eq(' + tagDeleteItem +')').load(' .addTagForm:eq(' + tagDeleteItem +')');
+
             }
         });
     });
 }
-var taginput = document.querySelectorAll('.input_tag_name');
-for (i = 0; i<taginput.length; i++) {
-    taginput[i].setAttribute('size', taginput[i].getAttribute('placeholder').length);
-}
-const spanTags = document.getElementsByClassName('tag-name');
-const updateTagForm = document.getElementsByClassName('updateTagForm');
+const newT = document.getElementsByClassName('addTagInput');
+const newC = document.getElementsByClassName('cardID');
+var tag_number = document.getElementsByClassName('tag_num');
+const newCount = document.getElementsByClassName('tagCount');
+const divtag = document.getElementsByClassName('divtag');
+const tagForm = document.getElementsByClassName('tagForm');
 
 $(document).ready(function() {
-    $(".updateTagForm").on('submit', function(event) {
-        var editTagItem = $(this).find(updateTagCount).val();
-        console.log(editTagItem);
-        var checktag = $(this).find(updateTagInput).val();
-        console.log(checktag)
-        if (checktag !== "") {
+    $(".tagForm").on('submit', function(event) {
+        var tagItem = $(this).find(newCount).val();
+        var test_tag = $(this).find(newT).val();
+        var tag_num = $(this).find(tag_number).val();
+        console.log(tagItem);
+        if (test_tag !== "") {
            $.ajax({
                 type: "POST",
-                url: "/update_tag",
+                url: "/tag",
                 data: {
-                    "tag_id": $(this).find(updateTagId).val(), 
-                    "tag_update": $(this).find(updateTagInput).val() 
+                    "card_id": $(this).find(newC).val(), 
+                    "new_tag": $(this).find(newT).val() 
                 },
                 success: function(data) {
-                    $(updateTagForm[editTagItem]).load(' .input_wrapper:eq('+ editTagItem +')');
-                    $(tag_class[editTagItem]).load(' .tag:eq('+ editTagItem +')');  
+                    $(editTagForm[tagItem]).load(' .tag:eq('+ tagItem +')');
+                    $('.addTagWrapper:eq(' + tagItem +')').load(' .addTagForm:eq(' + tagItem +')');
+                    // closeTag(tagItem);
                 }
             });  
         }

@@ -178,7 +178,6 @@ def delete_tag():
     if request.method == 'POST':
         tag = request.form["tag_id"]
         del_tag = Tags.query.get(tag)
-        print(tag)
         db.session.delete(del_tag)
         db.session.commit()
         return '', 204

@@ -1,102 +1,262 @@
 {%extends "base.html"%}
 {%block header%}
  <h1>{%block title%}Completed{%endblock%}</h1>
- {%endblock%}
+{%endblock%}
 {%block body%}
-  <div class = "page-header">
-    <h2> Completed </h2>
-    <br>
-{%set counter = namespace(value=0)%} 
-  {%for card in user.cards %} 
-   {%if card.status == 'Completed' %}
-      {% set counter.value = counter.value + 1 %}
+{%for card in cards.items %}
+<div  class="modal fade" id= "editMedia_{{card.id}}">  
+  <div class="modal-dialog">
+    <div class="modal-content editMediaModal">
+      <div class="modal-header">   
+        <div class="addMediaFormHeader">
+          <div class="editmediaimage">
+            <img class="edit-img" src="{{card.image}}"> </div>
+            <br>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1>
+          </div> 
+      </div> 
+      <br>
+      <div class="modal-body">
+        <form action="/edit/card/{{card.id}}" method="POST">
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="{{card.title}}" name = "edit_title">
+                <label for="edit_title"  id="labelText" class="form-label"> Title</label>
+              </div>
+            <br>
+            </div>
+            <div class="col-md">
+              <div class="form-floating mb-2">
+                  <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
+                  <label   id="labelText" for="edit_image_form"  class="form-label"> Image Link</label>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <select class="form-select" aria-label="Default select example"  id="floatingSelect" name = "edit_status">
+                    <option selected>{{card.status}}</option>
+                    <option value="Planning">Planning</option>
+                    <option value="Watching">Watching</option>
+                    <option value="Paused">Paused</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                <label id="labelText" for="edit_status"  class="form-label">Status</label>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <select class="form-select add-input" id="floatingSelect" name="edit_rating" aria-label="Default select example">
+                    <option selected>{{card.rating}}</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <label  id="labelText" class="form-label" for="edit_rating">Rating</label>
+              </div>
+            </div>   
+            <div class="col-md">
+              <div class="form-floating">
+                  <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_type">
+                      <option selected>{{card.media_type}}</option>
+                      <option value="Show">Show</option>
+                      <option value="Movie">Movie</option>
+                      <option value="Anime">Anime</option>
+                      <option value="Donghua">Donghua</option>
+                      <option value="Animation/Cartoon">Animation/Cartoon</option>
+                      <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
+                      <option value="other">Other</option>
+                  </select>
+                  <label   id="labelText" for="edit_type">Type</label>
+              </div> 
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_language">
+                  <option selected>{{card.language}}</option>
+                  <option value="English">English</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Korean">Korean</option>
+                  <option value="German">German</option>
+                  <option value="Swedish">Swedish</option>
+                  <option value="Thai">Thai</option>
+                  <option value="Multi">Multi</option>
+                  <option value="other">Other</option>
+                </select>
+                <label id="labelText" for="edit_language" class="form-label">Language</label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-group col-auto">
+                <label for="edit_current_ep" >Current Episode </label>
+                {%if card.current_ep == ""%}
+                  <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off"   name = "edit_current_ep" value="0">
+                {%else%}
+                  <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off"  name = "edit_current_ep" value={{card.current_ep}}>
+                {%endif%}
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-group col-auto">
+                <label for="edit_total_eps">Total Episode Count</label>
+                {%if card.total_eps == ""%}
+                  <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
+                {%else%}
+                  <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
+                {%endif%}
+              </div> 
+            </div>
+          </div>
+          <br>
+          <div class="mb-3">
+              <label for="edit_description" class="form-label"> Description</label>
+              <textarea class="form-control" name="edit_description" placeholder='{{card.description}}' onkeyup="countEditDesc()" id="edit_description" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
+              <div id="descHelpBlock" class="form-text">
+                <p id="active_desc_count">850</p>
+                <p id="total_desc_count"> out of 850 characters </p>
+              </div>
+          </div>
+          <button type="submit" id= "edit_media_button" class="btn btn-primary">Update</button>               
+          <br>
+          <button type="button" id="delete_button" aria-label="delete" class="btn btn-danger" data-bs-target="#deleteMedia__{{card.id}}" data-bs-toggle="modal">Delete</button>
+        </form> 
+        <br>
+      </div>         
+    </div>
+  </div> 
+</div>
+{%endfor%}
+{%for card in cards.items %}
+<div class="modal fade" id="deleteMedia__{{card.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body check_delete">
+          <h4 class = "delete_text"> Are you sure you'd like to delete "{{card.title}}"?</h4>
+          <br>        
+          <form action="{{url_for('delete', card_id=card.id)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info" >Delete</button></form>
+          <button id="cancel_check" class="btn btn-secondary" type="button"  data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>  
+  </div> 
+</div> 
+{%endfor%}
+
+<div class = "page-header">
+  <h2> Completed </h2>
+  <br>
+  {%set counter = namespace(value=0)%} 
+    {%for card in user.cards %} 
+    {%if card.status == 'Completed' %}
+        {% set counter.value = counter.value + 1 %}
     {%endif%} 
-  {%endfor%}  
-{%if counter.value == 0%}
-        <h3 class="no_media"> There doesn't seem to be anything on your completed list. </h3>
-          <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
-{%else%}
-<div class="page_numbers">
-  {% if prev_page != '/completed' %}
-  <a class='prev-btns' href="{{prev_page}}"> 
-    <i class="bi bi-arrow-left-square"></i>
-  </a>
-{%endif%}
+    {%endfor%}  
+  {%if counter.value == 0%}
+    <h3 class="no_media"> There doesn't seem to be anything on your completed list. </h3>
+    <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
+  {%else%}
+    <div class="page_numbers">
+      {% if prev_page != '/completed' %}
+        <a class='prev-btns' href="{{prev_page}}"> 
+          <i class="bi bi-arrow-left-square"></i>
+        </a>
+  {%endif%}
   {%for page_num in cards.iter_pages() %}
-  {%if page_num%}
+    {%if page_num%}
       {%if cards.page == page_num %}
         <a class="btn btn-primary" href="{{url_for('completed', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
       {%else%}
-      <a class="btn btn-outline-primary pagenum_button" href="{{url_for('completed', page=page_num)}}">{{page_num}}</a>
+        <a class="btn btn-outline-primary pagenum_button" href="{{url_for('completed', page=page_num)}}">{{page_num}}</a>
       {%endif%}
-  {%endif%}
+    {%endif%}
   {%endfor%}
   {% if page != total_pgs %}
     <a class='next-btns' href="{{next_page}}"> 
       <i class="bi bi-arrow-right-square"></i>
-    </a>
+      </a>
   {%endif%}
   </div>
 </div>
 <br>
-
-
-
-{%set counter = namespace(count=0)%}
+{%set counter = namespace(count=0, tag=0)%}
 <div class = "card-container">
   {%for card in cards.items %} 
-      <div class="card-item">
-        <div class="toggleEdit">
-          <button type="button" class="edit_button" onclick="location.href='/edit/card/{{card.id}}';">
-           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-         </svg>
-       </button>
-</div>
-       <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0"> 
+    <div class="card-item">
+      <div class="toggleEdit">
+        <button type="button" class="edit_button" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+        </button>
+      </div>
+      <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0"> 
         <img src = {{card.image}} class="card-image"  alt='{{card.title}}'>
       </div>
-        <form action="" method="POST" class="tagForm">
-        <div class="tag">
-          {%for tag in card.tags %} 
-              <span class="tag-name">{{tag.name}}</span>
-          {%endfor%} 
-          <div class="divtag">
-                <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg>
-            </button>
-          </div>
-          <div class="addTagForm">
-            <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
-            <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
-            <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
-        </div>
-            <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      
+      <form action="" method="POST" class="editTagForm">  
+        <div class="tagTest">  
+         <div class="tag">  
+           {%for tag in card.tags %} 
+             <span class="tag-name"> {{tag.name}} 
+               <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">&#xe5cc;</button>
+               <button type="button" class="expand_edit" onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i class="bi bi-pencil-square"></i></button>
+               <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i class="bi bi-trash"></i></button>
+             </span> 
+             <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
+             <input type="hidden" class="updateTagCounter" name="updateTagCounter" value="{{counter.count}}">
+             <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
+             <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}"> 
+             {% set counter.tag = counter.tag + 1 %}
+           {%endfor%} 
+         </div> 
+       </div>
+       </form>      
+       <form action="" method="POST" class="tagForm"> 
+         <div class="addTagWrapper">     
+           <div class="addTagForm">
+             <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
+             <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
+             <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">  
+           </div> 
+         </div>     
+         <div class="divtag">
+           <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><i class="bi bi-plus-circle-fill"></i></button> 
+           <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><i class="bi bi-x-circle-fill"></i></button>
+         </div>      
+       </form>
+    
+      <div class="hearts"> 
+        <div class="heart_buttons">
+          <p id="name"><u>{{card.title}}</u>
+          {%if card.fav == False%}
+            <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
               </svg>
-          </button>
-          </div>
-    </form>
-     <div class="hearts"> 
-      <div class="heart_buttons">
-        <p id="name"><u>{{card.title}}</u>
-        {%if card.fav == False%}
-              <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg>
-              </button>
-              {%else%}
-              <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
-                <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                </svg>
-              </button>
-              {%endif%}</p> 
+            </button>
+          {%else%}
+            <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
+              <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
+            </button>
+          {%endif%}
+          </p> 
+        </div>
       </div>
-    </div>
+      
       <div class="bottom_row">
         <p id="status" class="status_completed">#{{card.status}}</p>
         <div class="ep-tracker">
@@ -104,36 +264,42 @@
           <p id="divider"> / </p>
           <p id="ep-total">{{card.total_eps}}</p>
         </div> 
-        </div>
-        <div class="see_more">
-          <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
-            <i class="bi bi-arrow-up-left-square"></i>
-          </button>
-    </div>
+      </div>
+        
+      <div class="see_more">
+        <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
+          <i class="bi bi-arrow-up-left-square"></i>
+        </button>
+      </div>
+        
       <div class="see_less">
-        <button type="button" class ="editButtonB" onclick="location.href='/edit/card/{{card.id}}';"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-        </svg>
-      </button>
+        <button type="button" class ="editButtonB" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+          </svg>
+        </button>
         <br>
         <h3 class="mediaTitle"> {{card.title}} </h3> <br>
         {% if card.rating == "Rating"%}
-        <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
+          <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
         {%else%}
           <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
         {%endif%}
         {%if card.description == "" %}
-        <p class="description">No current description, click on the edit button in the top right to add one!</p> 
+          <p class="description">No current description, click on the edit button in the top right to add one!</p> 
         {%else%}
-        <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
+          <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
         {%endif%}
-        <br> <br> <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
-          <i class="bi bi-arrow-up-left-square"></i>
-        </button>
+          <br> 
+          <br> 
+          <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
+            <i class="bi bi-arrow-up-left-square"></i>
+          </button>
       </div>
     </div>
     {% set counter.count = counter.count + 1 %}
-  {%endfor%}  
-</div> {%endif%} 
+    {%endfor%}  
+  </div> 
+{%endif%} 
 {%endblock%}

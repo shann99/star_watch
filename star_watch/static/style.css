@@ -176,7 +176,7 @@
     display: grid;
     grid-template-columns: 500px;
     grid-template-rows: auto;
-    grid-template-areas: "image" "tag" "tagInput"  "name" "status";   
+    grid-template-areas: "image" "tag" "name" "status";   
     transition: 0.5s ease;
     cursor: pointer;
     z-index: 0;
@@ -226,12 +226,11 @@
     gap: 0.3em;
 }
 .tag-name {
-    padding: 1px 8px;
+    padding: 2px 8px;
     display: inline-block;
     border: 1px solid #fbc6d1;
     border-radius: 50px;
     font-size: 13px;
-    font-weight: 600;
     color: #98cfff;
     font-family: 'Lexend Deca';
 }
@@ -448,13 +447,13 @@
     margin: 0 auto;
     background-color: #e3a6ff; 
     border-radius: 10px;
-    max-width: 800px;
+    max-width: 950px;
     flex-direction: column;
 }
 .add-input {
     margin-bottom: 0em;
     width: 100%;
-    padding: 0.375rem 0.75rem;
+    padding: 0.75rem 0.75rem;
     display:block;
     border-radius: 5px;
 }
@@ -474,7 +473,7 @@
 #add_media_button {
     padding: 0.375rem 0.75rem;
     margin-bottom:2em;
-    width: 15%;
+    max-width: 16%;
     background-color: #ff889d;
     border-radius: 0.5em;
     margin-top: 1em;
@@ -594,7 +593,8 @@
 }
 #cancel_button {
     float:right;
-    margin-top: -1em;
+    margin-top: 0em;
+    margin-right: -6em;
 }
 #cancel_button:focus, #cancel_button:active {
     outline: none !important;
@@ -814,8 +814,8 @@
  }
 
 .addTagInput {
-    width: 45%;
-    grid-area:tag;
+    width: 15%;
+    /* grid-area:tag; */
     font-size: 80%;
     border-radius: 50px;
     display:none;
@@ -888,7 +888,6 @@
 .bottom_row {
     margin: .5em 1em 0em .5em; 
     display: block;
-    grid-area:status;
 }
 .cancel_tag_button {
     border:none;
@@ -898,13 +897,9 @@
 }
 .cancel_tag_button.active {
     display:none;
-
 }
 .card-item:hover .cancel_tag_button.active {
-    display: block;
-    margin-top: -1.5em;
-    margin-left: 0.7em;
-    
+    display: block;   
 }
 
 .cancel_tag_button:hover {
@@ -1132,16 +1127,14 @@
     object-fit: cover;
     width:100%;
     border: solid 2px;
-    border-radius: 12px;;
+    border-radius: 4px;
     
 }
 .editmediaimage {
-    max-width: 100%;
-    max-height: 550px;
-    margin-left:auto;
-    margin-right:auto;
+    width: 1050px;
+    /* max-height: 350px; */
     display: flex;
-   
+    margin-top: -1.1em;
 }
 #search_box_smaller {
     border-radius: 6px;
@@ -1251,7 +1244,7 @@
     flex-direction: column;
     max-width: 55%;
     font-family: 'Lexend Deca', 'Bootstrap-icons';  
-    background-color: #b4a1d7;
+    background-color: #c5a4ca;
     border-radius: 6px;
     box-shadow: 2px 3px 3px #9c27b0;
     margin: 0 auto;   
@@ -1277,7 +1270,7 @@
     outline: 1px solid rgb(255 180 180) !important;
 }
 #search_search_icon {
-    background-color: #b4a1d7;
+    background-color: #c5a4ca;
     border:none;
     margin-top: .3em;
 }
@@ -1386,7 +1379,7 @@
     position: relative;
 }
  #input_search {
-    background-color: #b4a1d7;  
+    background-color: #c5a4ca;  
     border-radius: 6px;
     box-shadow: 2px 3px 3px #9c27b0;
     padding: 0.4em;
@@ -1414,7 +1407,7 @@
     margin-right: auto;
     border: none;    
     font-family: 'Lexend Deca';
-    background-color: #b4a1d7;  
+    background-color: #c5a4ca;  
 }
 #search_box:focus, #search_box:active{
     border-radius: 6px;
@@ -1425,7 +1418,7 @@
     outline: 1px solid rgb(255 180 180) !important;
 }
 #nav_search_icon {
-    background-color: #b4a1d7;
+    background-color: #c5a4ca;
     border:none;
     margin-top: .1em;
 }
@@ -1519,6 +1512,7 @@
 }
 .fav-item .hearts {
     display: flex;
+    grid-area:name;
     justify-content: center;
 }
 .input-group {
@@ -1545,15 +1539,23 @@
     transform-style: preserve-3d;
 }
 .addMediaFormHeader {
-    padding: 2em;
     border-radius: 12px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 #exampleModalLabel {
     text-align: center;
 }
 .editMediaModal {
-    background-color: pink;
+    background-color: #ddc3ff;
     border-radius: 12px;
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #labelText {
     font-size: 15px;
@@ -1568,7 +1570,7 @@
     color: #98cfff;
     font-size:10px;
     font-weight: 600;
-    display: none;
+    display: contents;
 }
 .expand_edit{
     display:none;
@@ -1598,23 +1600,22 @@
 .expand_delete:hover {
     color:red;
 }
-.tag-name:hover .expand_edit {
 
-}
-.tag-name:hover .expand_delete {
-
+.reload_tags {
+    display:flex;
+    flex-wrap: wrap;
 }
 .input_tag_name {
-    padding: 1px 8px;
-    display: inline-block;
+    padding: 3px 8px;
+    /* display: none ; */
+    z-index:3;
     border: 1px solid #fbc6d1;
     border-radius: 50px;
     font-size: 13px;
-    font-weight: 600;
+    grid-area:tag;
     color: #98cfff;
     background:#00000029;
     font-family: 'Lexend Deca';
-    display:none;
 }
 .input_tag_name::placeholder {
     color: #98cfff;
@@ -1622,14 +1623,19 @@
 
 .addTagForm {
     cursor: pointer;
-    grid-area: tagInput;
+    grid-area: tag;
+    margin-top: -0.1em;
 }
 .tagForm {
-    display:grid;
-    grid-area: tagInput;
+    display:block;
+    grid-area: tag;
     justify-content: start;
+    margin-top: 0.2em;
 }
 .divtag{
     display: grid;
-    grid-area: tagInput;
+    grid-area: tag;
+}
+.modal-content {
+    font-family: 'Lexend Deca';
 }
