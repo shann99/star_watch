@@ -76,61 +76,23 @@ function unhearted(card_id, heartItem) {
     });
 }
 
-const addTag = document.getElementsByClassName("addTagForm");
+const addTag = document.getElementsByClassName("tagForm");
 const add_button = document.getElementsByClassName("plus_tag_button");
 const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
 const tag_input = document.getElementsByClassName("addTagInput");
 function openTag(item){
-    tag_input[item].style.display="block";
+    addTag[item].style.display="block";
     add_button[item].style.display="none";
     cancel_tag__button[item].classList.toggle("active");
     tag_input[item].focus();
 }
 function closeTag(item) {
-    tag_input[item].style.display="none";
+    addTag[item].style.display="none";
     add_button[item].style.display="inline";
     cancel_tag__button[item].classList.remove("active");
     tag_input[item].value="";
 }
 
-const cardIMG = document.getElementsByClassName("card-img-container");
-const tagDiv = document.getElementsByClassName("tagForm");
-const heartsDiv = document.getElementsByClassName("hearts");
-const stats = document.getElementsByClassName("bottom_row");
-const seemore = document.getElementsByClassName("see_more");
-const less = document.getElementsByClassName("see_less");
-const rating = document.getElementsByClassName("rating");
-const desc = document.getElementsByClassName("description");
-const card = document.getElementsByClassName("card-item");
-const edit_button = document.getElementsByClassName("toggleEdit");
-
-function flipCardB(item) {
-    card[item].classList.toggle("active"); 
-    card[item].classList.remove("unactive");
-    cardIMG[item].style.display="none";
-    tagDiv[item].style.display="none";
-    heartsDiv[item].style.display="none";
-    stats[item].style.display="none";
-    edit_button[item].style.display="none";
-    seemore[item].style.display="none";
-    less[item].style.display="grid";
-    rating[item].style.display="inline";
-    desc[item].style.display="inline";
-    
-}
-function flipCardA(item) {
-    card[item].classList.toggle("unactive");
-    card[item].classList.remove("active");
-    cardIMG[item].style.display="inline";
-    tagDiv[item].style.display="inline";
-    heartsDiv[item].style.display="inline";
-    stats[item].style.display="inline";
-    edit_button[item].style.display="inline";
-    seemore[item].style.display="inline";
-    less[item].style.display="none";
-    rating[item].style.display="none";
-    desc[item].style.display="none";
-}
 
 
 var upcount_card_id = '{{card.id}}';
@@ -381,7 +343,9 @@ function edit_tag(tagId, tag_card_counter, tagEditItem) {
                     "tag_update": $(input_tag[tagEditItem]).val()
                 },
                 success: function() {
-                    $(updateTagDiv[tag_card_counter]).load(' .tag:eq('+ tag_card_counter +')');   
+                    for (i = 0; i < editTagFormDiv.length; ++i) {
+                        $(editTagForm[i]).load(' .tag:eq('+ i +')');
+                    }
                 }
             });  
             e.preventDefault();  
@@ -397,9 +361,8 @@ function delete_tag(tagId, tagDeleteItem) {
             url: "/delete_tag",
             data: {"tag_id": tagId},
             success: function() {
-                $(updateTagDiv[tagDeleteItem]).load(' .tag:eq('+ tagDeleteItem +')');   
-                for (let i = 0; i < cars.length; i++) {
-                    text += cars[i] + "<br>";
+                for (i = 0; i < editTagFormDiv.length; ++i) {
+                    $(editTagForm[i]).load(' .tag:eq('+ i +')');
                   }
                 $('.addTagWrapper:eq(' + tagDeleteItem +')').load(' .addTagForm:eq(' + tagDeleteItem +')');
 
@@ -413,7 +376,7 @@ var tag_number = document.getElementsByClassName('tag_num');
 const newCount = document.getElementsByClassName('tagCount');
 const divtag = document.getElementsByClassName('divtag');
 const tagForm = document.getElementsByClassName('tagForm');
-
+var editTagFormDiv = document.querySelectorAll('.editTagForm');
 $(document).ready(function() {
     $(".tagForm").on('submit', function(event) {
         var tagItem = $(this).find(newCount).val();
@@ -429,15 +392,65 @@ $(document).ready(function() {
                     "new_tag": $(this).find(newT).val() 
                 },
                 success: function(data) {
-                    $(editTagForm[tagItem]).load(' .tag:eq('+ tagItem +')');
+                    for (i = 0; i < editTagFormDiv.length; ++i) {
+                        $(editTagForm[i]).load(' .tag:eq('+ i +')');
+                      }
                     $('.addTagWrapper:eq(' + tagItem +')').load(' .addTagForm:eq(' + tagItem +')');
-                    // closeTag(tagItem);
                 }
             });  
-        }
-        else {
-            alert("Error: The tag you tried to enter was blank! Please add one or more characters and try again!");
         }
         event.preventDefault();
     });
 });
+
+
+const cardIMG = document.getElementsByClassName("card-img-container");
+const tagDiv = document.getElementsByClassName("tagForm");
+const heartsDiv = document.getElementsByClassName("hearts");
+const stats = document.getElementsByClassName("bottom_row");
+const seemore = document.getElementsByClassName("see_more");
+const less = document.getElementsByClassName("see_less");
+const rating = document.getElementsByClassName("rating");
+const desc = document.getElementsByClassName("description");
+const card = document.getElementsByClassName("card-item");
+const edit_button = document.getElementsByClassName("toggleEdit");
+
+function flipCardB(item) {
+    card[item].classList.toggle("active"); 
+    card[item].classList.remove("unactive");
+    setTimeout(() => {
+        cardIMG[item].style.display="none";
+        tagDiv[item].style.display="none";
+        heartsDiv[item].style.display="none";
+        stats[item].style.display="none";
+        edit_button[item].style.display="none";
+        seemore[item].style.display="none";
+        editTagForm[item].style.display='none';
+    }, 132)
+    setTimeout( () => {
+        less[item].style.display="grid";
+        rating[item].style.display="inline";
+        desc[item].style.display="inline";
+    }, 150)
+   
+}
+function flipCardA(item) {
+    card[item].classList.toggle("unactive");
+    card[item].classList.remove("active");
+    setTimeout(() => {
+        less[item].style.display="none";
+        rating[item].style.display="none";
+        desc[item].style.display="none";
+    }, 135)
+    
+    setTimeout( () => {    
+        cardIMG[item].style.display="inline";
+        tagDiv[item].style.display="inline";
+        heartsDiv[item].style.display="inline";
+        stats[item].style.display="inline";
+        edit_button[item].style.display="inline";
+        seemore[item].style.display="inline";
+        editTagForm[item].style.display='inline';
+    }, 150)
+    
+}

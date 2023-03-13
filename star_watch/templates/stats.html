@@ -6,22 +6,174 @@
 <div class = "page-title">
     <h2> Account Statistics </h2>
 </div>
-<div class="list_stats">
-<h3> Count </h3>
-<div class="list_count"> 
-    <ul> 
-        <li>  Currently watching: {{watch_count}} </li> 
-        <li>  Planning List: {{plan_count}} </li> 
-        <li>  Paused List: {{pause_count}} </li> 
-        <li> Completed List: {{complete_count}} </li> 
-    </ul>
-</div></div>
+<div class="countChartWrapper">
+    <canvas id="countChart"></canvas>
+</div>
+<script>
+    var count_ctx = document.getElementById('countChart').getContext("2d");
+    var pieChart = new Chart(count_ctx, {
+        type: "pie",
+        data: {
+            labels: ['Watching', 'Planning', 'Paused', 'Completed'],
+            datasets: [ 
+                {
+                    label: "Count",
+                    data: ['{{watch_count}}','{{plan_count}}', '{{pause_count}}', '{{complete_count}}'],
+                    fill: false,
+                    borderColor: "rgb(255, 147, 156)",
+                    backgroundColor: [
+                    'rgb(0, 204, 204)',
+                    'rgb(255, 157, 128)',
+                    'rgb(246, 0, 128)',
+                    'rgb(172, 230, 0)'
+                  ],
+                    lineTension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'List Distribution'
+                }
+            }
+        }
+    });
+</script>
 <!-- if favorites is greaters than 12  -->
-
+<br>
+<div class="langChartWrapper">
+    <canvas id="langChart"></canvas>
+</div>
+<script>
+    var lang_ctx = document.getElementById('langChart').getContext("2d");
+    var lineChart = new Chart(lang_ctx, {
+        type: "line",
+        data: {
+            labels: {{ langs | safe }},
+            datasets: [ 
+                {
+                    label: "Amount",
+                    data: {{ nums | safe}},
+                    fill: false,
+                    borderColor: "rgb(255, 147, 156)",
+                    lineTension: 0.2
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: false,
+            plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Language Distribution'
+                }
+            }
+        }
+    });
+</script>
 <!-- else show regular favorites heading -->
 <br><br>
-<h3> Most Common Tags </h3>
-<br> <br>
-test : {{numbers}} <br>
-<img src = '{{plot_url}}' alt = 'pie chart'>
+<div class="mediaChartWrapper">
+    <canvas id="mediaChart"></canvas>
+</div>
+<script>
+    var media_ctx = document.getElementById('mediaChart').getContext("2d");
+    var mediaChart = new Chart(media_ctx, {
+        type: "pie",
+        data: {
+            labels: {{ type | safe }},
+            datasets: [ 
+                {
+                    label: "Count",
+                    data: {{ amt | safe}},
+                    fill: false,
+                    borderColor: "rgb(255, 147, 156)",
+                    backgroundColor: [
+                    'rgb(229,171,131)',
+                    'rgb(131,165,229)',
+                    'rgb(172, 230, 0)',
+                    'rgb(242,200,215)',
+                    'rgb(251,255,85)',
+                    'rgb(246, 0, 67)'
+                  ],
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: false,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                  position: 'top',
+                },
+                title: {
+                  display: true,
+                  text: 'Media Type Distribution'
+                }
+            }
+        }
+    });
+</script>
+<br><br>
+<div class="tagChartWrapper">
+    <canvas id="tagChart"></canvas>
+</div>
+<script>
+    var tag_ctx = document.getElementById('tagChart').getContext("2d");
+    var tagChart = new Chart(tag_ctx, {
+        type: "bar",
+        data: {
+            labels: {{ tag_name | safe }},
+            datasets: [ 
+                {
+                    axis: 'y',
+                    label: "Count",
+                    data: {{ tag_num | safe}},
+                    fill: false,
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                  display: true,
+                  text: 'Top 15 Tags'
+                }
+            }
+        }
+    });
+</script>
 {%endblock%}

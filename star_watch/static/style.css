@@ -180,6 +180,8 @@
     transition: 0.5s ease;
     cursor: pointer;
     z-index: 0;
+    height: 500px;
+
     background:linear-gradient(160deg, #e94462 0%, #5900ff 100%);
 }
 .card-img-container {
@@ -423,7 +425,7 @@
     text-align: center;
 }
 .alert{
-    margin-top: -2em;
+    margin-top: -1.7em;
 }
 .btn-close{
     float:right;
@@ -815,18 +817,15 @@
 
 .addTagInput {
     width: 15%;
-    /* grid-area:tag; */
     font-size: 80%;
     border-radius: 50px;
-    display:none;
     margin-top: .25em;
-    /* float:left; */
     border: 1px solid #fbc6d1;
     margin-right: 0.5em;
     text-align: center;
 }
 .card-item:hover .addTagInput {
-    display:none;
+    display:inline;
 }
 .page_numbers {
     margin-bottom: 1em;
@@ -896,7 +895,7 @@
     display:none;
 }
 .cancel_tag_button.active {
-    display:none;
+    display:block;
 }
 .card-item:hover .cancel_tag_button.active {
     display: block;   
@@ -939,7 +938,7 @@
 .card-item.active {
     animation: flipB 0.5s;
     background: linear-gradient(21deg, #f28397 1%, #5900ff 100%);
-    height: 454px;
+    height: 500px;
 }
 .see_less {
     display:none;
@@ -1009,6 +1008,7 @@
 
 .card-item.unactive {
     animation: flipA  0.5s;
+    height: 500px;
 }
 
 @keyframes flipB {
@@ -1400,6 +1400,7 @@
     background:linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);
     height: 8em;
     margin-top: -2em;
+    border-radius: 3px;
 }
 #search_box {
     text-align: left;
@@ -1419,6 +1420,7 @@
 }
 #nav_search_icon {
     background-color: #c5a4ca;
+    font-family: "Bootstrap-icons";
     border:none;
     margin-top: .1em;
 }
@@ -1627,7 +1629,7 @@
     margin-top: -0.1em;
 }
 .tagForm {
-    display:block;
+    display:none;
     grid-area: tag;
     justify-content: start;
     margin-top: 0.2em;
@@ -1638,4 +1640,67 @@
 }
 .modal-content {
     font-family: 'Lexend Deca';
+}
+.page_dots {
+    font-size: 17px;
+    margin-top: 10px;
+}
+#langChart{
+    height: 400px;
+    width: 900px;
+    margin-left:auto;
+    margin-right:auto;
+   
+}
+.langChartWrapper {
+    background: #dfe2d4; 
+    margin-left:auto;
+    margin-right:auto;
+    border-radius: 12px;
+    width: 1250px;
+    padding:50px;
+}
+.countChartWrapper {
+    background: #dfe2d4; 
+    margin-left:auto;
+    margin-right:auto;
+    border-radius: 12px;
+    width: 1250px;
+    padding:50px;
+}
+#countChart {
+    margin-left:auto;
+    margin-right:auto;
+    height: 300px;
+    width: 450px;
+    
+}
+.mediaChartWrapper {
+    background: #dfe2d4; 
+    margin-left:auto;
+    margin-right:auto;
+    border-radius: 12px;
+    width: 1250px;
+    padding:50px;
+}
+#mediaChart {
+    margin-left:auto;
+    margin-right:auto;
+    height: 300px;
+    width: 550px;
+}
+.tagChartWrapper {
+    background: #dfe2d4; 
+    margin-left:auto;
+    margin-right:auto;
+    border-radius: 12px;
+    width: 1250px;
+    padding:50px;
+    
+}
+#tagChart {
+    margin-left:auto;
+    margin-right:auto;
+    height: 750px;
+    width: 950px;
 }

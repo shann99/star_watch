@@ -118,20 +118,6 @@ def settings():
         
     return render_template("settings.html", user=current_user)
 
-# @app.route('/pie', methods=['GET'])
-# def plot():
-#     user=current_user
-#     language_count = Card.query.with_entities(Card.language, func.count(Card.language)).join(User).filter(User.id==user.id).group_by(Card.language).all()
-#     languages = [lang[0] for lang in language_count]
-#     nums = [num[1] for num in language_count]
-#     print(nums)
-#     arr = np.array(nums)
-#     fig, ax = plt.subplots()
-#     # ax.bar(languages,nums)
-#     ax.pie(nums, labels=languages)
-#     plt.savefig("/static/pie.png")
-#     return render_template('stats.html', user=current_user, plot_url='/static/pie.png', numbers=nums)
-
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
 def stats():
@@ -141,18 +127,23 @@ def stats():
     planning_count = Card.query.filter(Card.status=='Planning').join(User).filter(User.id==user.id).count()
     paused_count = Card.query.filter(Card.status=='Paused').join(User).filter(User.id==user.id).count()
     completed_count = Card.query.filter(Card.status=='Completed').join(User).filter(User.id==user.id).count()
-    # language_count = Card.query.with_entities(Card.language, func.count(Card.language)).join(User).filter(User.id==user.id).group_by(Card.language).all()
-    # languages = [lang[0] for lang in language_count]
-    # nums = [num[1] for num in language_count]
-    # print(nums)
-    # arr = np.array(nums)
-    # fig = plt.figure()
-    # # fig, ax = plt.subplots()
-    # # ax.bar(languages,nums)
-    # plt.pie(nums, labels=languages)
-    # filename = 'pie.png'
-    # plt.savefig("static/images/pie.png")
-    return render_template("stats.html", user=current_user, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
+    
+    #language count
+    language_count = Card.query.with_entities(Card.language, func.count(Card.language)).join(User).filter(User.id==user.id).group_by(Card.language).all()
+    languages = [lang[0] for lang in language_count]
+    nums = [num[1] for num in language_count]
+
+    #media count
+    media_count = Card.query.with_entities(Card.media_type, func.count(Card.media_type)).join(User).filter(User.id==user.id).group_by(Card.media_type).all()
+    type = [med[0] for med in media_count]
+    amt = [num[1] for num in media_count]
+
+    #tags count
+    tag_count = Tags.query.with_entities(Tags.name, func.count(Tags.name)).join(Card, Tags.card_id==Card.id).join(User).filter(Card.user_id==user.id).group_by(Tags.name).order_by(func.count(Tags.name).desc()).limit(15)
+    tag_name = [tagname[0] for tagname in tag_count]
+    tag_num = [tagnum[1] for tagnum in tag_count]
+
+    return render_template("stats.html", user=current_user, langs=languages, nums=nums, tag_name=tag_name, tag_num=tag_num, type=type, amt=amt, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
 
 @app.route("/favorites", methods=['GET','POST'])
 @login_required
@@ -401,8 +392,16 @@ def search():
     user = current_user
     if request.method == 'GET':
         name = request.args.get("q")
-        search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.asc()).all()
-        return render_template("search.html", user=current_user, cards=search_cards, search_query=name)
+        page = request.args.get('page', 1, type=int)
+        search_cards = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=9)
+        search_amt = Card.query.filter(Card.title.like(f'%{name}%')).join(User).filter(User.id==user.id).order_by(Card.title.asc()).all()
+        prev_page = search_cards.prev_num
+        next_page = search_cards.next_num
+        total_pgs = search_cards.pages
+        if next_page == '/search':
+            next_page = total_pgs
+        return render_template("search.html", user=current_user, cards=search_cards, search_query=name, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, card_amount=search_amt)
+
 
 @app.route("/dark-mode", methods=['POST'])
 @login_required
