@@ -24,10 +24,10 @@ it will definitely get tedious to go through multiple pages to find a show or mo
 
 ## Images:
 
-![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page.png)
+![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_light.png)
 <br/><br/>
 
-![Dark Mode Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/dark_mode.png)
+![Dark Mode Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_dark.png)
 <br/><br/><br/>
 
 Edit Modal
