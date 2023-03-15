@@ -76,25 +76,6 @@ function unhearted(card_id, heartItem) {
     });
 }
 
-const addTag = document.getElementsByClassName("tagForm");
-const add_button = document.getElementsByClassName("plus_tag_button");
-const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
-const tag_input = document.getElementsByClassName("addTagInput");
-function openTag(item){
-    addTag[item].style.display="block";
-    add_button[item].style.display="none";
-    cancel_tag__button[item].classList.toggle("active");
-    tag_input[item].focus();
-}
-function closeTag(item) {
-    addTag[item].style.display="none";
-    add_button[item].style.display="inline";
-    cancel_tag__button[item].classList.remove("active");
-    tag_input[item].value="";
-}
-
-
-
 var upcount_card_id = '{{card.id}}';
 var upcountItem = "{{counter.count}}";
 const ep_on = document.getElementsByClassName("ep-on");
@@ -370,6 +351,26 @@ function delete_tag(tagId, tagDeleteItem) {
         });
     });
 }
+
+const addTag = document.getElementsByClassName("tagForm");
+const add_button = document.getElementsByClassName("plus_tag_button");
+const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
+const tag_input = document.getElementsByClassName("addTagInput");
+function openTag(item){
+    addTag[item].style.display="block";
+    add_button[item].style.display="none";
+    cancel_tag__button[item].classList.toggle("active");
+    tag_input[item].focus();
+}
+function closeTag(item) {
+    addTag[item].style.display="none";
+    add_button[item].style.display="inline";
+    cancel_tag__button[item].classList.remove("active");
+    tag_input[item].value="";
+}
+
+
+
 const newT = document.getElementsByClassName('addTagInput');
 const newC = document.getElementsByClassName('cardID');
 var tag_number = document.getElementsByClassName('tag_num');
@@ -395,7 +396,11 @@ $(document).ready(function() {
                     for (i = 0; i < editTagFormDiv.length; ++i) {
                         $(editTagForm[i]).load(' .tag:eq('+ i +')');
                       }
+                     
                     $('.addTagWrapper:eq(' + tagItem +')').load(' .addTagForm:eq(' + tagItem +')');
+                    setTimeout( () => {
+                        addTag[tagItem].style.display="none";
+                    }, 132)
                 }
             });  
         }
@@ -451,6 +456,7 @@ function flipCardA(item) {
         edit_button[item].style.display="inline";
         seemore[item].style.display="inline";
         editTagForm[item].style.display='inline';
+        addTag[item].style.display="none";
     }, 150)
     
 }

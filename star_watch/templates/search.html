@@ -17,6 +17,11 @@
       </div>
     </div>
 </form>
+{%if card_amount|length == 0 %}
+<br><br>
+<h3 class="search_text"> No items found matching search "{{search_query}}"
+<br> <br> Please try again</h3>
+{%else%}
 <div class = "page-header">
   <div class="page_numbers">
     {% if prev_page != '/search' %}
@@ -44,12 +49,9 @@
     {%endif%}
   </div>
 </div>
-{%set counter = namespace(count=0, tag=0)%}  
-{%if card_amount|length == 0 %}
-<br><br>
-<h3 class="search_text"> No items found matching search "{{search_query}}"
-<br> <br> Please try again</h3>
 {%endif%}
+{%set counter = namespace(count=0, tag=0)%}  
+
 <div class = "card-container"> 
 {%for card in cards.items %} 
   <div class="card-item">
