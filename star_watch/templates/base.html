@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js" type="module"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/helpers.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -113,17 +114,17 @@
             {% if category == 'error' %}
                 <div class = "alert alert-danger alert-dismissible fade show" role="alert">
                     {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close alert_close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {%elif category == 'success'%}
                 <div class = "alert alert-success alert-dismissable fade show" role="alert">
                     {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close alert_close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {%else%}
                 <div class = "alert alert-info alert-dismissable fade show" role="alert">
                     {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="btn-close alert_close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {%endif%}
         {%endfor%}

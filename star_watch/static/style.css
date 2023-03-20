@@ -1704,3 +1704,7 @@
     height: 750px;
     width: 950px;
 }
+.alert_close:focus, .alert_close:active {
+    outline: none !important;
+    box-shadow: none;
+ }
