@@ -78,9 +78,14 @@ function unhearted(card_id, heartItem) {
 
 var upcount_card_id = '{{card.id}}';
 var upcountItem = "{{counter.count}}";
+var card_title = "{{card.title}}";
 const ep_on = document.getElementsByClassName("ep-on");
 const currentepDiv = document.getElementsByClassName('upcountDiv');
-function upcountFunc(upcount_card_id, upcountItem) {
+var inputCurrentEp = document.getElementsByClassName('inputCurrentEp');
+var modalCurrentEp = document.getElementsByClassName('modalCurrentEp');
+var currentEp = document.getElementsByClassName('currentEp');
+var totalEp = document.getElementsByClassName('totalEp');
+function upcountFunc(upcount_card_id, upcountItem, cardTitle) {
     $(document).ready(function() {
         $.ajax({
             type: "POST",
@@ -88,11 +93,42 @@ function upcountFunc(upcount_card_id, upcountItem) {
             data: {"card_id": upcount_card_id},
             success: function() {
                 $(currentepDiv[upcountItem]).load(' .ep-on:eq('+upcountItem+')');
+                $(modalCurrentEp[upcountItem]).load(' .inputCurrentEp:eq('+upcountItem+')');
+                $('.hidden_input1:eq('+upcountItem+')').load(' .currentEp:eq('+upcountItem+')');
+                testCall(upcountItem, cardTitle, upcount_card_id);
             }
         });
     });
+}      
+const upcountButton = document.getElementsByClassName('upcount');
+function testCall(upcountItem, cardTitle, upcount_card_id) {
+    var epX = +currentEp[upcountItem].value;
+    var new_ep = epX + 1;
+    if (totalEp[upcountItem].value != "?") {
+        var totalX = Number(totalEp[upcountItem].value);
+        if (new_ep == totalX) {
+            upcountButton[upcountItem].style.display='none'; 
+            setTimeout( () => {
+                let text = cardTitle + " seems to be completed. do you want to move " + cardTitle + " to your completed list?";
+                if (confirm(text) == true) {
+                    changeStatus(upcount_card_id)
+                }
+            }, 100);           
+        }
+    }
 }
-
+function changeStatus(upcount_card_id) {
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "/change-status",
+            data: {"card_id": upcount_card_id},
+            success: function() {
+                window.location.reload();
+            }
+        });
+    });    
+}
 
 var user_id = '{{user.id}}';
 const theme_name = document.getElementById("theme_title");
@@ -168,18 +204,20 @@ if(search_search_form){
         search_search_form.classList.remove('active');
     });
 }
-const edit_description = document.getElementById("edit_description");
-const active_desc_count = document.getElementById("active_desc_count");
-const total_desc_count = document.getElementById('total_desc_count');
-function countEditDesc() {
+const edit_description = document.getElementsByClassName("edit_description");
+const active_desc_count = document.getElementsByClassName("active_desc_count");
+const total_desc_count = document.getElementsByClassName('total_desc_count');
+var edit_card_count = '{{counter.count}}'
+function countEditDesc(edit_card_count) {
     const maxChara = 850;
-    if(edit_description.value.length < maxChara) {
-        active_desc_count.innerText = (maxChara - edit_description.value.length);
-        total_desc_count.style.display='block';
+    console.log(edit_card_count);
+    if(edit_description[edit_card_count].value.length < maxChara) {
+        active_desc_count[edit_card_count].innerText = (maxChara - edit_description[edit_card_count].value.length);
+        total_desc_count[edit_card_count].style.display='block';
     }
     else {
-        active_desc_count.innerText = "You're at the limit!";
-        total_desc_count.style.display='none';
+        active_desc_count[edit_card_count].innerText = "You're at the limit!";
+        total_desc_count[edit_card_count].style.display='none';
     }
 }
 const add_description = document.getElementById("add_description");
@@ -281,17 +319,20 @@ if (carouselbgImg) {
 
 var tagCounterId = "{{counter.tag}}";
 const expand_tag = document.getElementsByClassName("expand_more");
+const expand_exta = document.getElementsByClassName("expand_extra");
 const expand_edit = document.getElementsByClassName("expand_edit")
 const expand_delete = document.getElementsByClassName("expand_delete")
 function expandMoreTag(tagCounterId) {
-    expand_tag[tagCounterId].classList.toggle('active');
+    expand_tag[tagCounterId].classList.toggle("active");
     if(expand_tag[tagCounterId].classList.contains("active")) {
+        expand_exta[tagCounterId].innerText="chevron_left";
         expand_edit[tagCounterId].style.display='contents';
         expand_delete[tagCounterId].style.display='contents';
     }
     else {
         expand_edit[tagCounterId].style.display='none';
         expand_delete[tagCounterId].style.display='none';
+        expand_exta[tagCounterId].innerText="chevron_right";
     }
 }
 const updateTagInput = document.getElementsByClassName('input_tag_name');
@@ -312,7 +353,6 @@ function edit_tag(tagId, tag_card_counter, tagEditItem) {
     input_tag[tagEditItem].setAttribute('type','text');
     input_tag[tagEditItem].setAttribute('size', input_tag[tagEditItem].getAttribute('placeholder').length);
     input_tag[tagEditItem].focus();
-    console.log(tagId);
     $(editTagForm[tag_card_counter]).on('keypress', function(e) {
         var key = e.which;
         if (key == 13 && input_tag[tagEditItem].value != "") {
@@ -383,7 +423,6 @@ $(document).ready(function() {
         var tagItem = $(this).find(newCount).val();
         var test_tag = $(this).find(newT).val();
         var tag_num = $(this).find(tag_number).val();
-        console.log(tagItem);
         if (test_tag !== "") {
            $.ajax({
                 type: "POST",

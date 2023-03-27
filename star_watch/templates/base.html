@@ -8,10 +8,9 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js" type="module"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/helpers.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.js" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/helpers.js" type="module"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -281,144 +280,143 @@
     </div>
 </div>
 {%endif%}
-
+{%set counter = namespace(count=0)%} 
 {%if user.is_authenticated%}
     {%if cards is defined%}
         {%for card in cards.items %}
-        <div  class="modal fade" id="editMedia_{{card.id}}">  
+        <div class="modal fade" id="editMedia_{{card.id}}">  
             <div class="modal-dialog">
-            <div class="modal-content editMediaModal">
-                <div class="modal-header">   
-                <div class="addMediaFormHeader">
-                    <div class="editmediaimage">
-                    <img class="edit-img" src="{{card.image}}"> </div>
-                    <br>
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1>
+                <div class="modal-content editMediaModal">
+                    <div class="modal-header">   
+                        <div class="addMediaFormHeader">
+                            <div class="editmediaimage">
+                                <img class="edit-img" src="{{card.image}}"> 
+                            </div>
+                            <br>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1>
+                        </div> 
                     </div> 
-                </div> 
-                <br>
-                <div class="modal-body">
-                <form action="/edit/card/{{card.id}}" method="POST">
-                    <div class="row g-2">
-                    <div class="col-md">
-                        <div class="form-floating mb-2">
-                        <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="{{card.title}}" name = "edit_title">
-                        <label for="edit_title"  id="labelText" class="form-label"> Title</label>
+                    <div class="modal-body">
+                    <form action="/edit/card/{{card.id}}" method="POST">
+                        <div class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating mb-2">
+                            <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="{{card.title}}" name = "edit_title">
+                            <label for="edit_title"  id="labelText" class="form-label"> Title</label>
+                            </div>
                         </div>
-                    <br>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating mb-2">
-                            <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
-                            <label   id="labelText" for="edit_image_form"  class="form-label"> Image Link</label>
+                        <div class="col-md">
+                            <div class="form-floating mb-2">
+                                <input type="text" class="form-control add-input" id="floatingInput" autocomplete="off"  placeholder="add image source (https://...jpg, .png, jpeg)" name = "edit_image_form">
+                                <label   id="labelText" for="edit_image_form"  class="form-label"> Image Link</label>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    <div class="row g-2">
-                    <div class="col-md">
-                        <div class="form-floating">
-                        <select class="form-select" aria-label="Default select example"  id="floatingSelect" name = "edit_status">
-                            <option selected>{{card.status}}</option>
-                            <option value="Planning">Planning</option>
-                            <option value="Watching">Watching</option>
-                            <option value="Paused">Paused</option>
-                            <option value="Completed">Completed</option>
+                        </div>
+                        <div class="row g-2">
+                        <div class="col-md">
+                            <div class="form-floating">
+                            <select class="form-select" aria-label="Default select example"  id="floatingSelect" name = "edit_status">
+                                <option selected>{{card.status}}</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Watching">Watching</option>
+                                <option value="Paused">Paused</option>
+                                <option value="Completed">Completed</option>
+                                </select>
+                            <label id="labelText" for="edit_status"  class="form-label">Status</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating">
+                            <select class="form-select add-input" id="floatingSelect" name="edit_rating" aria-label="Default select example">
+                                <option selected>{{card.rating}}</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
                             </select>
-                        <label id="labelText" for="edit_status"  class="form-label">Status</label>
+                            <label  id="labelText" class="form-label" for="edit_rating">Rating</label>
+                            </div>
+                        </div>   
+                        <div class="col-md">
+                            <div class="form-floating">
+                                <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_type">
+                                    <option selected>{{card.media_type}}</option>
+                                    <option value="Show">Show</option>
+                                    <option value="Movie">Movie</option>
+                                    <option value="Anime">Anime</option>
+                                    <option value="Donghua">Donghua</option>
+                                    <option value="Animation/Cartoon">Animation/Cartoon</option>
+                                    <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <label   id="labelText" for="edit_type">Type</label>
+                            </div> 
                         </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                        <select class="form-select add-input" id="floatingSelect" name="edit_rating" aria-label="Default select example">
-                            <option selected>{{card.rating}}</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <label  id="labelText" class="form-label" for="edit_rating">Rating</label>
-                        </div>
-                    </div>   
-                    <div class="col-md">
-                        <div class="form-floating">
-                            <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_type">
-                                <option selected>{{card.media_type}}</option>
-                                <option value="Show">Show</option>
-                                <option value="Movie">Movie</option>
-                                <option value="Anime">Anime</option>
-                                <option value="Donghua">Donghua</option>
-                                <option value="Animation/Cartoon">Animation/Cartoon</option>
-                                <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
+                        <div class="col-md">
+                            <div class="form-floating">
+                            <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_language">
+                                <option selected>{{card.language}}</option>
+                                <option value="English">English</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Korean">Korean</option>
+                                <option value="Chinese">Chinese</option>
+                                <option value="German">German</option>
+                                <option value="Swedish">Swedish</option>
+                                <option value="Thai">Thai</option>
+                                <option value="Multi">Multi</option>
                                 <option value="other">Other</option>
                             </select>
-                            <label   id="labelText" for="edit_type">Type</label>
-                        </div> 
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating">
-                        <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_language">
-                            <option selected>{{card.language}}</option>
-                            <option value="English">English</option>
-                            <option value="Japanese">Japanese</option>
-                            <option value="Korean">Korean</option>
-                            <option value="Chinese">Chinese</option>
-                            <option value="German">German</option>
-                            <option value="Swedish">Swedish</option>
-                            <option value="Thai">Thai</option>
-                            <option value="Multi">Multi</option>
-                            <option value="other">Other</option>
-                        </select>
-                        <label id="labelText" for="edit_language" class="form-label">Language</label>
+                            <label id="labelText" for="edit_language" class="form-label">Language</label>
+                            </div>
                         </div>
-                    </div>
-                    </div>
-                    <br>
-                    <div class="row g-2">
-                    <div class="col-md">
-                        <div class="form-group col-auto">
-                        <label for="edit_current_ep" >Current Episode </label>
-                        {%if card.current_ep == ""%}
-                            <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off"   name = "edit_current_ep" value="0">
-                        {%else%}
-                            <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off"  name = "edit_current_ep" value={{card.current_ep}}>
-                        {%endif%}
                         </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-group col-auto">
-                        <label for="edit_total_eps">Total Episode Count</label>
-                        {%if card.total_eps == ""%}
-                            <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
-                        {%else%}
-                            <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
-                        {%endif%}
-                        </div> 
-                    </div>
-                    </div>
-                    <br>
-                    <div class="mb-3">
-                        <label for="edit_description" class="form-label"> Description</label>
-                        <textarea class="form-control" name="edit_description" placeholder='{{card.description}}' onkeyup="countEditDesc()" id="edit_description" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
-                        <div id="descHelpBlock" class="form-text">
-                        <p id="active_desc_count">850</p>
-                        <p id="total_desc_count"> out of 850 characters </p>
+                        <br>
+                        <div class="row g-2">
+                            <div class="col-md modalCurrentEp">
+                                <div class="form-group col-auto inputCurrentEp">
+                                <label for="edit_current_ep" >Current Episode </label>
+                                {%if card.current_ep == ""%}
+                                    <input type="number" step="1" min="0" class="form-control add-input " autocomplete="off"   name = "edit_current_ep" value="0">
+                                {%else%}
+                                    <input type="number" step="1" min="0" class="form-control add-input " autocomplete="off"  name = "edit_current_ep" value={{card.current_ep}}>
+                                {%endif%}
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-group col-auto">
+                                    <label for="edit_total_eps">Total Episode Count</label>
+                                    {%if card.total_eps == ""%}
+                                        <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
+                                    {%else%}
+                                        <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
+                                    {%endif%}
+                                </div> 
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" id= "edit_media_button" class="btn btn-primary">Update</button>               
+                        <div class="mb-3">
+                            <label for="edit_description" class="form-label"> Description</label>
+                            <textarea class="form-control edit_description" name="edit_description" placeholder='{{card.description}}' onkeyup="countEditDesc('{{counter.count}}')" rows="3" maxlength="850" aria-describedby="descHelpBlock"></textarea>
+                                <div id="descHelpBlock" class="form-text">
+                                <p class="active_desc_count">850</p>
+                                <p class="total_desc_count"> out of 850 characters </p>
+                            </div>
+                        </div>
+                        <button type="submit" id= "edit_media_button" class="btn btn-primary">Update</button>               
+                        <br>
+                        <button type="button" id="delete_button" aria-label="delete" class="btn btn-primary" data-bs-target="#deleteMedia__{{card.id}}" data-bs-toggle="modal">Delete</button>
+                    </form> 
                     <br>
-                    <button type="button" id="delete_button" aria-label="delete" class="btn btn-danger" data-bs-target="#deleteMedia__{{card.id}}" data-bs-toggle="modal">Delete</button>
-                </form> 
-                <br>
-                </div>         
-            </div>
+                    </div>         
+                </div>
             </div> 
         </div>
+        {% set counter.count = counter.count + 1 %}
         {%endfor%}
         {%for card in cards.items %}
         <div class="modal fade" id="deleteMedia__{{card.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
@@ -433,6 +431,7 @@
             </div>  
             </div> 
         </div> 
+        
         {%endfor%}
     {%endif%}
 {%endif%}
@@ -448,7 +447,6 @@
     </div> 
     {%endif%}
     <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-
     <script src="{{url_for('static', filename='script.js')}}"></script>
     <script type="module" src="{{url_for('static', filename='node_modules/vanilla-tilt/src/vanilla-tilt.js')}}"></script> <!-- Load Tilt.js library -->
 </section>

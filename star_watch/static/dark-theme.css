@@ -63,12 +63,7 @@ body {
 .next-btns:hover{
     color: #ff758f;
 }
-.carousel-prev {
-    color:white;
-}
-.carousel-next {
-    color:white;
-}
+
 #account-title {
     font-family: 'Lexend Deca';
     padding-top: 1em;

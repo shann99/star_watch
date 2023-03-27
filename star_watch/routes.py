@@ -1,4 +1,4 @@
-from flask import render_template, request, session, url_for, flash, redirect, get_flashed_messages, jsonify, send_file, send_from_directory
+from flask import render_template, request, make_response, session, url_for, flash, redirect, get_flashed_messages, jsonify, send_file, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from sqlalchemy import func
@@ -23,12 +23,12 @@ def index():
     item_list = Card.query.with_entities(Card.image).filter(Card.status=='Watching').join(User).filter(User.id==user.id).all()
     #retrieving the image itself without the extra parenthesis and commas from the query list
     images = [image[0] for image in item_list]
-    #remove image if it equals default background image so it's not put into the carousel
-    for image in images:
-        if image == '/background.jpg':
-            images.remove(image)
-
+    new_images = []
     np.random.shuffle(images)
+    for image in images:
+        if image != "/background.jpg":
+            new_images.append(image)
+
     page = request.args.get('page', 1, type=int)
     watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
 
@@ -37,8 +37,7 @@ def index():
     total_pgs = watching_list.pages
     if next_page == '/index':
         next_page = total_pgs
-
-    return render_template("index.html", user=current_user, cards=watching_list, images=images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    return render_template("index.html", user=current_user, cards=watching_list, images=new_images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
@@ -429,6 +428,17 @@ def system_mode():
         user.mode = 'system';
         db.session.commit() 
         return '', 204  
+      
+@app.route("/change-status", methods=['POST'])
+@login_required
+def change_status():
+    if request.method == 'POST':
+        update_status = request.form['card_id']
+        card = Card.query.get(update_status)
+        card.status = 'Completed';
+        card.date_edited = datetime.now(timezone.utc)
+        db.session.commit() 
+        flash(f'{card.title} was moved to Completed!', category="success")
+        return '', 204  
     
-
 

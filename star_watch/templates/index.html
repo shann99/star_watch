@@ -117,7 +117,9 @@
           <div class="tag">  
             {%for tag in card.tags %} 
               <span class="tag-name"> {{tag.name}} 
-                <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">&#xe5cc;</button>
+                <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+                  <span class="material-symbols-outlined expand_extra">chevron_right</span>
+                </button>
                 <button type="button" class="expand_edit" onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i class="bi bi-pencil-square"></i></button>
                 <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i class="bi bi-trash"></i></button>
               </span> 
@@ -171,12 +173,19 @@
           <div class="upcountDiv">
             <p class="ep-on">{{card.current_ep}}</p> 
           </div>
-          <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}')" id="upcount">+</button> 
+          <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}', '{{card.title}}')" class="upcount">+</button> 
+          <div class="hidden_input1">
+            <input type="hidden" class="currentEp" name="currentEp" value="{{card.current_ep}}">
+          </div>
+          <div class="hidden_input2">
+            <input type="hidden" class="totalEp" name="totalEp" value="{{card.total_eps}}">
+          </div>
+        
           <p id="divider"> / </p>
-          <p id="ep-total">{{card.total_eps}}</p>
+          <p id="ep-total">{{card.total_eps}}</p> 
         </div>
       </div>
-
+      
       <div class="see_more">
         <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
           <i class="bi bi-arrow-up-left-square"></i>

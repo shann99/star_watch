@@ -66,8 +66,23 @@
     .heart_filled.animate::after {
         left: 57%;
     }
+    /* .editmediaimage {
+        width: 111%;
+    } */
+    #delete_button {
+        width: 40%;
+    }
+    #edit_media_button {
+        width: 40%;
+    }
+    .toggleEdit {
+        margin-left: 91%;
+    }
+    .editButtonB {
+        margin-left: 91%;
+    }
 }
-@media screen and (min-width:375px) and (max-width:425px) {
+@media screen and (min-width:375px) and (max-width:424px) {
     .nav-item {
         margin-left: 0em;
     }
@@ -142,6 +157,21 @@
     }
     .heart_filled.animate::after {
         left: 57%;
+    }
+    /* .editmediaimage {
+        width: 244px;
+    } */
+    #delete_button {
+        width: 40%;
+    }
+    #edit_media_button {
+        width: 40%;
+    }
+    .toggleEdit {
+        margin-left: 91%;
+    }
+    .editButtonB {
+        margin-left: 91%;
     }
 }
 @media screen and (min-width:425px) and (max-width:767px) {
@@ -220,6 +250,22 @@
     .heart_filled.animate::after {
         left: 37%;
     }
+    /* .editmediaimage {
+        width: 287px;
+    } */
+    #delete_button {
+        width: 40%;
+    }
+    #edit_media_button {
+        width: 40%;
+    }
+    .toggleEdit {
+        margin-left: 93%;
+    }
+    .editButtonB {
+        margin-left: 93%;
+    }
+    
 }
 @media screen and (min-width:768px) and (max-width:1023px) { 
     #search_button {
@@ -277,6 +323,16 @@
     .right_navigation {
         width: 100%;
     }
+    /* .editmediaimage {
+        width: 504px;
+    } */
+    #delete_button {
+        width: 23%;
+    }
+    #edit_media_button {
+        width: 23%;
+    }
+    
 } 
 @media screen and (min-width: 1024px) and (max-width:1439px) {
     .login-nav {
@@ -316,6 +372,21 @@
     .heart_filled.animate::after {
         left: 27%;
     }
+    /* .editmediaimage {
+        width: 678px;
+    } */
+    #delete_button {
+        width: 16%;
+    }
+    #edit_media_button {
+        width: 16%;
+    }
+    .toggleEdit {
+        margin-left: 94%;
+    }
+    .editButtonB {
+        margin-left: 94%;
+    }
 } 
 
 @media screen and (min-width: 1440px) and (max-width:1919px) {
@@ -340,6 +411,12 @@
     }
     .heart_filled.animate::after {
         left: 27%;
+    }
+    .toggleEdit {
+        margin-left: 93%;
+    }
+    .editButtonB {
+        margin-left: 93%;
     }
 }
 

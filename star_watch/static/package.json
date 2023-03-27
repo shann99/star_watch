@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/shann99/star_watch#readme",
   "dependencies": {
+    "@kurkle/color": "^0.3.2",
     "vanilla-tilt": "^1.8.0"
   }
 }

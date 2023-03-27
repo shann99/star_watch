@@ -68,7 +68,9 @@
          <div class="tag">  
            {%for tag in card.tags %} 
              <span class="tag-name"> {{tag.name}} 
-               <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">&#xe5cc;</button>
+              <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+                <span class="material-symbols-outlined expand_extra">chevron_right</span>
+              </button>
                <button type="button" class="expand_edit" onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i class="bi bi-pencil-square"></i></button>
                <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i class="bi bi-trash"></i></button>
              </span> 
