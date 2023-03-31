@@ -119,7 +119,13 @@
       </div>
       
       <div class="bottom_row">
-        <p id="status" class="status_paused">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Releasing on") or card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released") %}
+          <p id="status" class="status_paused"><i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}</p>
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_paused"><i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}</p>
+        {%else%}
+          <p id="status" class="status_paused"> #{{card.status}}</p>
+        {%endif%}
         <div class="ep-tracker">
           <p class="ep-on">{{card.current_ep}}</p>
           <p id="divider"> / </p>

@@ -9,7 +9,26 @@
 <div class="countChartWrapper">
     <canvas id="countChart"></canvas>
 </div>
-<script>
+
+<br>
+<div class="langChartWrapper">
+    <canvas id="langChart"></canvas>
+</div>
+
+
+<br><br>
+<div class="mediaChartWrapper">
+    <canvas id="mediaChart"></canvas>
+</div>
+
+
+<br><br>
+<div class="tagChartWrapper">
+    <canvas id="tagChart"></canvas>
+</div>
+
+
+<script>    
     var count_ctx = document.getElementById('countChart').getContext("2d");
     var pieChart = new Chart(count_ctx, {
         type: "pie",
@@ -44,13 +63,6 @@
             }
         }
     });
-</script>
-<!-- if favorites is greaters than 12  -->
-<br>
-<div class="langChartWrapper">
-    <canvas id="langChart"></canvas>
-</div>
-<script>
     var lang_ctx = document.getElementById('langChart').getContext("2d");
     var lineChart = new Chart(lang_ctx, {
         type: "line",
@@ -80,13 +92,6 @@
             }
         }
     });
-</script>
-<!-- else show regular favorites heading -->
-<br><br>
-<div class="mediaChartWrapper">
-    <canvas id="mediaChart"></canvas>
-</div>
-<script>
     var media_ctx = document.getElementById('mediaChart').getContext("2d");
     var mediaChart = new Chart(media_ctx, {
         type: "pie",
@@ -124,12 +129,6 @@
             }
         }
     });
-</script>
-<br><br>
-<div class="tagChartWrapper">
-    <canvas id="tagChart"></canvas>
-</div>
-<script>
     var tag_ctx = document.getElementById('tagChart').getContext("2d");
     var tagChart = new Chart(tag_ctx, {
         type: "bar",
@@ -174,5 +173,6 @@
             }
         }
     });
+    
 </script>
 {%endblock%}

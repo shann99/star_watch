@@ -53,12 +53,12 @@ function hearted(card_id, heartItem) {
             success: function() {
                 $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
                 test =  $(".hearts").find(".heart_filled");
-                setTimeout( () => {
-                    $(hearts[heartItem]).find(".heart_filled").toggleClass('animate');
-                }, 40)
-                setTimeout(() => {
-                    $(hearts[heartItem]).find(".heart_filled").removeClass('animate');  
-                }, 340)
+                // setTimeout( () => {
+                //     $(hearts[heartItem]).find(".heart_filled").toggleClass('animate');
+                // }, 40)
+                // setTimeout(() => {
+                //     $(hearts[heartItem]).find(".heart_filled").removeClass('animate');  
+                // }, 500)
             }
         });
     });
@@ -109,7 +109,7 @@ function testCall(upcountItem, cardTitle, upcount_card_id) {
         if (new_ep == totalX) {
             upcountButton[upcountItem].style.display='none'; 
             setTimeout( () => {
-                let text = cardTitle + " seems to be completed. do you want to move " + cardTitle + " to your completed list?";
+                let text = cardTitle + " seems to be completed. Would you like to move " + cardTitle + " to your completed list?";
                 if (confirm(text) == true) {
                     changeStatus(upcount_card_id)
                 }
@@ -316,7 +316,49 @@ if (carouselbgImg) {
         }, 70);
     });
 }
+carouselbgImg1 = document.getElementById("myCarousel1");
+if (carouselbgImg1) {
+    var lesser_img_src0 = document.getElementById('lesser-img-active0').src;
+    var lesser_img0 = `url(${lesser_img_src0})`;
+    var lesser_img_src1 = document.getElementById("lesser-img-active1").src;
+    var lesser_img1 = `url(${lesser_img_src1})`;
+    var lesser_img_src2 = document.getElementById("lesser-img-active2").src;
+    var lesser_img2 = `url(${lesser_img_src2})`;
 
+    carouselbgImg1.style.backgroundImage=lesser_img0;
+
+    carouselbgImg1.addEventListener('slide.bs.carousel', event => {
+        setTimeout(function(){
+            var src = $('.active').find('img').attr('src'); 
+            if (event.direction == 'left') {
+                switch(src) {
+                    case lesser_img_src0:
+                        carouselbgImg1.style.backgroundImage=lesser_img1;
+                        break;
+                    case lesser_img_src1:
+                        carouselbgImg1.style.backgroundImage=lesser_img2;
+                        break;
+                    case lesser_img_src2:
+                        carouselbgImg1.style.backgroundImage=lesser_img0;
+                        break;
+                }
+            }
+            else {
+                switch(src) {
+                    case lesser_img_src0:
+                        carouselbgImg1.style.backgroundImage=lesser_img2;
+                        break;
+                    case lesser_img_src2:
+                        carouselbgImg1.style.backgroundImage=lesser_img1;
+                        break;
+                    case lesser_img_src1:
+                        carouselbgImg1.style.backgroundImage=lesser_img0;        
+                        break;
+                }
+            }
+        }, 70);
+    });
+}
 var tagCounterId = "{{counter.tag}}";
 const expand_tag = document.getElementsByClassName("expand_more");
 const expand_exta = document.getElementsByClassName("expand_extra");

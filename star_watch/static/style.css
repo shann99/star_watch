@@ -220,7 +220,7 @@
     display:block;
 }
 .tag {
-    margin-top: -0.5em;
+    margin-top: -0.1em;
     display:flex;
     flex-wrap: wrap;
     grid-area: tag;
@@ -447,9 +447,9 @@
     border: solid;
     padding: 3em 4em 2em 3em;
     margin: 0 auto;
-    background-color: #e3a6ff; 
+    background-color: #ddc3ff; 
     border-radius: 10px;
-    max-width: 950px;
+    max-width: 850px;
     flex-direction: column;
 }
 .add-input {
@@ -622,7 +622,7 @@
     flex-direction:column;
 }
 .heart {
-    width: 5%;
+    width: 2%;
     grid-area:name;
     background: transparent;
     border:none;
@@ -635,7 +635,7 @@
    transform: scale(1.3);
 }
 .heart_filled {
-    width: 5%;
+    width: 2%;
     grid-area:name;
     background: transparent;
     color: #ff889d;
@@ -647,62 +647,7 @@
     display:inline;
 }
 
-/* https://www.youtube.com/watch?v=F7iFnhSZe7o */
-.heart_filled::before, .heart_filled::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    left: 0%;
-    width: 150%;
-    z-index: -1;
-    background-repeat: no-repeat;
-}
-.heart_filled.animate::before {
-    top: -58%;
-    left: 13%;
-    background-image: radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, pink 20%, transparent 30%), 
-    radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, lightcoral 20%, transparent 30%), 
-    radial-gradient(circle, plum 20%, transparent 20%), 
-    radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, red 20%, transparent 30%);
-    background-size: 10% 2%, 10% 46%, 17% 7%, 14% 20%, 14% 5%, 9% 26%, 11% 5%, 14% 13%;
-    background-position: 19% 108%, 19% 134%, 21% 113%, 24% 120%, 29% 96%, 37% 104%, 37% 108%;
-    animation: top 0.7s ease-in-out forwards;
-}
-@keyframes top {
-    50% {
-        background-position: 5% 90%, 10% 90%, 15% 90%, 25% 90%, 30% 90%, 40% 90%, 50% 90%;
-    }
-    100% {
-        background-position: 5% 80%, 10% 70%, 15% 70%, 25% 70%, 30% 70%, 40% 70%, 50% 70%;
-        background-size:  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;;
-    }
-}
-.heart_filled.animate::after {
-    bottom: -68%;
-    left: 12%;
-    background-image: radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, pink 20%, transparent 30%), 
-    radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, lightcoral 20%, transparent 30%), 
-    radial-gradient(circle, plum 20%, transparent 20%), 
-    radial-gradient(circle, red 20%, transparent 20%), 
-    radial-gradient(circle, transparent 20%, red 20%, transparent 30%);
-    background-size: 10% 2%, 10% 46%, 17% 7%, 14% 20%, 14% 5%, 9% 26%, 11% 5%, 14% 13%;
-    background-position: 16% -8%, 24% -4%, 28% -3%, 28% -5%, 29% -6%, 31% -4%, 32% -8%;
-    animation: bottom 0.7s ease-in-out forwards;
-}
-@keyframes bottom {
-    50% {
-        background-position: 5% 4%, 10% 3%, 15% 3%, 25% 3%, 30% 3%, 40% 3%, 50% 3%;
-    }
-    100% {
-        background-position: 5% 10%, 10% 10%, 15% 10%, 25% 10%, 30% 10%, 40% 10%, 50% 10%;
-        background-size:  0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;;
-    }
-}
+
 #delete_button {
     width: 12%;
     height: 11%;
@@ -749,7 +694,7 @@
     border:none;
     margin-top: -4em;
     margin-left: 8em;
-    height: 10%;
+    height: 28%;
     color: black;
 }
 #confirm_check:hover {
@@ -1254,7 +1199,8 @@
     flex-direction: column;
     max-width: 55%;
     font-family: 'Lexend Deca', 'Bootstrap-icons';  
-    background-color: #c5a4ca;
+    background: linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);;  
+    ;
     border-radius: 6px;
     box-shadow: 2px 3px 3px #9c27b0;
     margin: 0 auto;   
@@ -1268,6 +1214,7 @@
     margin-left: auto;
     margin-right: auto;
     border: none;    
+    color: rgb(251, 216, 216);
     font-family: 'Lexend Deca';  
     background-color: transparent;
 }
@@ -1280,7 +1227,7 @@
     outline: 1px solid rgb(255 180 180) !important;
 }
 #search_search_icon {
-    background-color: #c5a4ca;
+    background-color: transparent;
     border:none;
     margin-top: .3em;
 }
@@ -1389,7 +1336,7 @@
     position: relative;
 }
  #input_search {
-    background-color: #c5a4ca;  
+    background: linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);;  
     border-radius: 6px;
     box-shadow: 2px 3px 3px #9c27b0;
     padding: 0.4em;
@@ -1407,7 +1354,7 @@
     border: none;
 }
 .modal_bg {
-    background:linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);
+    background:transparent;
     height: 8em;
     margin-top: -2em;
     border-radius: 3px;
@@ -1416,20 +1363,25 @@
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    border: none;    
+    border: none;        
+    color: rgb(251, 216, 216);
     font-family: 'Lexend Deca';
-    background-color: #c5a4ca;  
+    background: transparent;
 }
 #search_box:focus, #search_box:active{
     border-radius: 6px;
     outline: none;
     box-shadow: none;
 }
+
+#search_box::placeholder {
+    color: rgb(251, 216, 216);
+}
 #nav_search.active {
     outline: 1px solid rgb(255 180 180) !important;
 }
 #nav_search_icon {
-    background-color: #c5a4ca;
+    background: transparent;
     font-family: "Bootstrap-icons";
     border:none;
     margin-top: .1em;
@@ -1438,6 +1390,7 @@
     border: none;    
     background: transparent;
     margin-top: .25em;
+    font-family: 'Bootstrap-icons';
     color: pink;
 }
 #nav_search_clear {
@@ -1720,7 +1673,138 @@
     font-size: 10px;
     font-weight: 700;
 }
-.carousel-prev, .carousel-next, .carousel-prev:hover, .carousel-next:hover, .carousel-control-next:focus, .carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover{
+.carousel-prev, .carousel-next, .carousel-prev:hover, .carousel-next:hover, .carousel-control-next:focus, 
+.carousel-control-next:hover, .carousel-control-prev:focus, .carousel-control-prev:hover{
     color: #ffb4b8;
     font-size: 40px;
+}
+.release_symbol {
+    font-size: 12px;
+}
+.release_info {
+    position: relative;
+    display: inline-block;
+    
+}
+  
+/* Tooltip text */
+.release_info .release_info_text {
+    visibility: hidden;
+    width: 286px;
+    background-color: #3f3e3ee0;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 13px 15px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;  
+    margin-top: -12.5em;
+    margin-left: -10.59em;
+    font-size: 14px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.release_info:hover .release_info_text {
+    visibility: visible;
+}
+.release_info .release_info_text::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.bell_releasing {
+    color: rgb(64, 255, 64);
+}
+.bell_unaired {
+    color: rgb(240, 139, 73);
+}
+.releasing_status_more {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.releasing_status_more .releasing_status_text_more {
+    visibility: hidden;
+    width: 160px;
+    background-color: rgba(240, 140, 73, 0.797);
+    color: #fff;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    font-size: 12px;
+    margin-top: -4.2em;
+    margin-left: -13.76em;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.releasing_status_more:hover .releasing_status_text_more {
+    visibility: visible;
+}
+
+.releasing_status {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.releasing_status .releasing_status_text {
+    visibility: hidden;
+    width: 160px;
+    background-color: rgba(240, 140, 73, 0.797);
+    color: #fff;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    font-size: 12px;
+    margin-top: -3.2em;
+    margin-left: -13.2em;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.releasing_status:hover .releasing_status_text {
+    visibility: visible;
+}
+
+.releasing_status_airing {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.releasing_status_airing .releasing_status_text_airing {
+    visibility: hidden;
+    width: 160px;
+    background-color: rgb(64 255 64 / 82%);
+    color: #fff;
+    text-align: center;
+    padding: 5px 13px;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    font-size: 12px;
+    margin-top: -3.2em;
+    margin-left: -13.7em;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.releasing_status_airing:hover .releasing_status_text_airing {
+    visibility: visible;
 }

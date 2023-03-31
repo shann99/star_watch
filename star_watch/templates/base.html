@@ -8,9 +8,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.js" type="module"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js" type="module"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/helpers.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
@@ -72,6 +70,7 @@
                 <div class="login-nav">
                     <a class="user-welcome">Hi 👋 , {{user.name}} </a>
                     <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
+                    <a class="account-item" href="/release_statuses"> <i class="bi bi-bell-fill"></i> Release Status </a>
                     <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
                     <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
                     <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
@@ -131,19 +130,20 @@
  {%endwith%}
 <form action='/search' method="GET"  class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal_bg">
-    <div class="modal-dialog">
-        <div class="modal-content"> 
-            <div class="form-group" id="input_search">
-                <div class="input-group">
-                    <div class="input-group-text" id="nav_search_icon">&#xF52A;</div>
-                        <input type="text" class="form-control" id="search_box" placeholder="Search..." onkeyup="countSearchBox()" autocomplete="off" name="q"></input>
-                        <div id="nav_search_clear">
-                            <button type="button" class="input-group-text" id="nav_search_clear_btn">&#xF659;</button>
+        <div class="modal-dialog">
+            <div class="modal-content"> 
+                <div class="form-group" id="input_search">
+                    <div class="input-group">
+                        <div class="input-group-text" id="nav_search_icon">&#xF52A;</div>
+                            <input type="text" class="form-control" id="search_box" placeholder="Search..." onkeyup="countSearchBox()" autocomplete="off" name="q">
+                            <div id="nav_search_clear">
+                                <button type="button" class="input-group-text" id="nav_search_clear_btn">&#xF659;</button>
+                            </div>
                         </div>
-                </div>
-            </div> 
+                    </div>
+                </div> 
+            </div>
         </div>
-    </div></div>
 </form> 
 
 
@@ -173,6 +173,7 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating">
@@ -188,7 +189,7 @@
                         <div class="col-md">
                             <div class="form-floating">
                                 <select class="form-select add-input" name="rating" aria-label="Default select example">
-                                    <option selected>Rating</option>
+                                    <option selected>Choose a Rating</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -204,7 +205,7 @@
                             </div>
                         </div>
                     </div> 
-                    <br>
+                    <br><br>
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating">
@@ -214,6 +215,7 @@
                                     <option value="Movie">Movie</option>
                                     <option value="Anime">Anime</option>
                                     <option value="Donghua">Donghua</option>
+                                    <option value="Animation/Cartoon">Animation/Cartoon</option>
                                     <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
                                     <option value="other">Other</option>
                                 </select>
@@ -223,7 +225,7 @@
                         <div class="col-md">
                             <div class="form-floating">
                                 <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "language">
-                                    <option selected >Language</option>
+                                    <option selected >Select Language</option>
                                     <option value="English">English</option>
                                     <option value="Japanese">Japanese</option>
                                     <option value="Korean">Korean</option>
@@ -243,10 +245,6 @@
                             <div class="currentEpLabelDiv">
                                 <label for="current_ep"  class="form-label add-form-text">What episode are you currently on?</label>
                                 <div class="currentEpDiv">
-                                    <span id="currentEpIcon"> 
-                                        <i class="bi bi-question-circle" ></i>
-                                    </span>
-                                    <p id="currentEpText"> Defaults to planning when left blank</p>
                                 </div>
                             </div>
                             <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off" name = "current_ep">
@@ -263,6 +261,18 @@
                             </div>
                             <input type="text"  class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
                         </div>
+                    </div>
+                    <br>
+                    <div class="col-md">
+                        <div class="form-group col-auto">
+                            <div class="release_info">
+                                <label for="release_status">Release Status <i class="bi bi-info-circle release_symbol"></i></label>
+                                <span class="release_info_text">Release status of media. This can be anything. Default will be released but for media that are currently
+                                    releasing you can write information such as "weekly on Wednesdays" or for unaired media you can write "Airing on April 11, 2023"
+                                </span>
+                            </div>
+                                <input type="text" class="form-control add-input" autocomplete="off"  name = "release_status" aria-describedby="mediaHelp">
+                        </div> 
                     </div>
                     <br>
                     <div class="form-floating">
@@ -293,9 +303,10 @@
                                 <img class="edit-img" src="{{card.image}}"> 
                             </div>
                             <br>
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1><br>
                         </div> 
                     </div> 
+                    
                     <div class="modal-body">
                     <form action="/edit/card/{{card.id}}" method="POST">
                         <div class="row g-2">
@@ -398,6 +409,17 @@
                                     {%endif%}
                                 </div> 
                             </div>
+                            <div class="col-md">
+                                <div class="form-group col-auto">
+                                    <div class="release_info">
+                                        <label for="edit_release_status">Release Status <i class="bi bi-info-circle release_symbol"></i></label>
+                                        <span class="release_info_text">Release status of media. This can be anything. Default will be released but for media that are currently
+                                            releasing you can write information such as "weekly on Wednesdays" or for unaired media you can write "Airing on April 11, 2023"
+                                        </span>
+                                    </div>
+                                        <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_release_status" aria-describedby="mediaHelp" placeholder="{{card.release_status}}">
+                                </div> 
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="edit_description" class="form-label"> Description</label>
@@ -426,7 +448,7 @@
                     <h4 class = "delete_text"> Are you sure you'd like to delete "{{card.title}}"?</h4>
                     <br>        
                     <form action="{{url_for('delete', card_id=card.id)}}" method="POST"><button type="submit" id="confirm_check" class="btn btn-info" >Delete</button></form>
-                    <button id="cancel_check" class="btn btn-secondary" type="button"  data-bs-dismiss="modal">Cancel</button>
+                    <button id="cancel_check" class="btn btn-primary" type="button"  data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>  
             </div> 

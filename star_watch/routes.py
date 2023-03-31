@@ -212,13 +212,17 @@ def add_media():
             language = request.form.get('language')
         else: 
             language = 'unknown'
+        if request.form.get('release_status') != "":
+            release_status = request.form.get('release_status')
+        else:
+            release_status = "Released"
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
         fav = False
        
 
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, media_type=media_type, language=language, user=current_user)
+        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, release_status=release_status, media_type=media_type, language=language, user=current_user)
         
         db.session.add(card)
         db.session.commit()
@@ -247,6 +251,8 @@ def editMedia(card_id):
             card.media_type = request.form.get('edit_type')
         if request.form.get('edit_language') != "":
             card.language = request.form.get('edit_language')
+        if request.form.get('edit_release_status') != "":
+            card.release_status = request.form.get('edit_release_status')
         if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
             card.date_edited = datetime.now(timezone.utc)

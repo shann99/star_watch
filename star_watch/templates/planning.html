@@ -116,7 +116,21 @@
       </div>
       
       <div class="bottom_row">
-        <p id="status" class="status_planning">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released")%}
+        <p id="status" class="status_planning releasing_status">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text">{{card.release_status}}</span>
+        </p> 
+       {%elif card.release_status.startswith("Releasing on")%}
+        <p id="status" class="status_planning releasing_status_more">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text_more">{{card.release_status}}</span>
+        </p> 
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_planning"><i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}</p>
+        {%else%}
+          <p id="status" class="status_planning"> #{{card.status}}</p>
+        {%endif%}
         <div class="ep-tracker">
           <p class="ep-on">{{card.current_ep}}</p>
           <p id="divider"> / </p>

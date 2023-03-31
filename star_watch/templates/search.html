@@ -10,7 +10,7 @@
     <div class="form-group">
       <div class="input-group">
           <div class="input-group-text" id="search_search_icon">&#xF52A;</div>
-          <input type="text" class="form-control" id="search_search_box" value="{{search_query}}" onkeyup="countSearch()" autocomplete="off" name="q"></input>
+          <input type="text" class="form-control" id="search_search_box" value="{{search_query}}" onkeyup="countSearch()" autocomplete="off" name="q">
           <div id="search_clear">
             <button type="button" class="input-group-text" id="search_clear_btn">&#xF659;</button>
           </div>
@@ -72,7 +72,9 @@
       <div class="tag">  
         {%for tag in card.tags %} 
           <span class="tag-name"> {{tag.name}} 
-            <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">&#xe5cc;</button>
+            <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+              <span class="material-symbols-outlined expand_extra">chevron_right</span>
+            </button>
             <button type="button" class="expand_edit" onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i class="bi bi-pencil-square"></i></button>
             <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i class="bi bi-trash"></i></button>
           </span> 
@@ -121,13 +123,63 @@
     
     <div class="bottom_row">
       {%if card.status == 'Planning'%}
-        <p id="status" class="status_planning">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released")%}
+        <p id="status" class="status_planning releasing_status">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text">{{card.release_status}}</span>
+        </p> 
+      {%elif card.release_status.startswith("Releasing on")%}
+        <p id="status" class="status_planning releasing_status_more">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text_more">{{card.release_status}}</span>
+        </p> 
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_planning"><i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}</p>
+        {%else%}
+          <p id="status" class="status_planning"> #{{card.status}}</p>
+        {%endif%}
       {%elif card.status == 'Paused'%}
-        <p id="status" class="status_paused">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Releasing on") or card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released") %}
+          <p id="status" class="status_paused"><i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}</p>
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_paused"><i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}</p>
+        {%else%}
+          <p id="status" class="status_paused"> #{{card.status}}</p>
+        {%endif%}
       {%elif card.status == 'Watching'%}
-      <p id="status" class="status_watching">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released")%}
+        <p id="status" class="status_watching releasing_status">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text">{{card.release_status}}</span>
+        </p> 
+       {%elif card.release_status.startswith("Releasing on")%}
+        <p id="status" class="status_watching releasing_status_more">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text_more">{{card.release_status}}</span>
+        </p>  
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_watching releasing_status_airing">
+            <i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}
+            <span class="releasing_status_text_airing">{{card.release_status}}</span></p>
+        {%else%}
+          <p id="status" class="status_watching"> #{{card.status}}</p>
+        {%endif%}
       {%else%}
-      <p id="status" class="status_completed">#{{card.status}}</p>
+        {%if card.release_status != "Released" and card.release_status.startswith("Unaired") or card.release_status.startswith("Not yet released")%}
+        <p id="status" class="status_completed releasing_status">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text">{{card.release_status}}</span>
+        </p> 
+       {%elif card.release_status.startswith("Releasing on")%}
+        <p id="status" class="status_completed releasing_status_more">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text_more">{{card.release_status}}</span>
+        </p> 
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_completed"><i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}</p>
+        {%else%}
+          <p id="status" class="status_completed"> #{{card.status}}</p>
+        {%endif%}
       {%endif%}
       <div class="ep-tracker">
         <p class="ep-on">{{card.current_ep}}</p>

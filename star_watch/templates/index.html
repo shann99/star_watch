@@ -46,24 +46,25 @@
   </div>
   {%else %}
     {%if images|length > 2 and images|length < 5 %}
-    <div id = "myCarousel" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">
+    <div id = "myCarousel1" class = "carousel slide" data-bs-ride = "carousel" data-bs-wrap="true" data-bs-keyboard="true">
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="2000">
-          <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}}>
+          <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}} id="lesser-img-active0">
         </div>
         <div class="carousel-item">
-          <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}}>
+          <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}} id="lesser-img-active1">
         </div>
         <div class="carousel-item">
-          <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}}>
+          <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}} id="lesser-img-active2">
         </div>
-        <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel1" data-bs-slide="prev">
           <i class="bi bi-caret-left-fill"></i>
         </button>
-        <button id="slider_buttons" class="carousel-control-next carousel-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <button id="slider_buttons" class="carousel-control-next carousel-next" type="button" data-bs-target="#myCarousel1" data-bs-slide="next">
             <i class="bi bi-caret-right-fill"></i>
         </button>
-  </div>
+      </div>
+    </div>
   {%endif%}
 {%endif%}
 <div class = "page-title">
@@ -168,7 +169,23 @@
       </div>
       
       <div class="bottom_row">
-        <p id="status" class="status_watching">#{{card.status}}</p>
+        {%if card.release_status != "Released" and "Unaired" in card.release_status or card.release_status.startswith("Not yet released")%}
+        <p id="status" class="status_watching releasing_status">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text">{{card.release_status}}</span>
+        </p> 
+       {%elif "Releasing on" in card.release_status%}
+        <p id="status" class="status_watching releasing_status_more">
+          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <span class="releasing_status_text_more">{{card.release_status}}</span>
+        </p>  
+        {%elif card.release_status != "Released"%}
+          <p id="status" class="status_watching releasing_status_airing">
+            <i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}
+            <span class="releasing_status_text_airing">{{card.release_status}}</span></p>
+        {%else%}
+          <p id="status" class="status_watching"> #{{card.status}}</p>
+        {%endif%}
         <div class="ep-tracker">
           <div class="upcountDiv">
             <p class="ep-on">{{card.current_ep}}</p> 
