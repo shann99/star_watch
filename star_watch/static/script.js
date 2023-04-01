@@ -541,3 +541,48 @@ function flipCardA(item) {
     }, 150)
     
 }
+const releaseStatInput = document.getElementById("release_input");
+$(document).ready(function() {
+    $("#releaseStatSelect").on('change', function(){
+        if ($(this).val() == "Currently Releasing") {
+            releaseStatInput.placeholder="Enter the release schedule (ex. Weekly on Wednesdays)";
+            releaseStatInput.setAttribute('type','text');
+        }
+        else if (($(this).val() == "Scheduled Release")) {
+            releaseStatInput.placeholder="Enter the release date (ex. April 11, 2023)";
+            releaseStatInput.setAttribute('type','text');
+        }
+        else {
+            releaseStatInput.setAttribute('type','hidden');
+        }
+    });   
+});
+
+const editreleaseStatInput = document.getElementsByClassName("editReleaseInput");
+const editReleaseStatClass = document.getElementsByClassName("edit_releaseStatSelect");
+$(document).ready(function() {
+    for(let i = 0; i < editReleaseStatClass.length; i++){
+            editReleaseStatClass[i].addEventListener("click", function() {
+                $(editReleaseStatClass[i]).on('change', function(){
+                if ($(editReleaseStatClass[i]).val() == "Currently Releasing") {
+                    if (editreleaseStatInput[i].placeholder == "") {
+                        editreleaseStatInput[i].placeholder = "Enter the release schedule (ex. Weekly on Wednesdays)";
+                    }
+                    editreleaseStatInput[i].setAttribute('type','text');
+                }
+                else if (($(editReleaseStatClass[i]).val() == "Scheduled Release")) {
+                    if (editreleaseStatInput[i].placeholder == "") {
+                        editreleaseStatInput[i].placeholder = "Enter the release date (ex. April 11, 2023)";
+                    }
+                    editreleaseStatInput[i].setAttribute('type','text');
+                }
+                else {
+                    editreleaseStatInput[i].setAttribute('type','hidden');
+                }
+            }); 
+        })
+    
+    
+    }
+      
+});

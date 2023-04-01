@@ -1,0 +1,68 @@
+{%extends "base.html"%}
+{%block header%}
+ <h1>{%block title%}Releases{%endblock%}</h1>
+{%endblock%}
+{%block body%}
+<div class = "page-title">
+    <h2> Releases </h2> 
+</div>
+{%if releases == 0%}
+        <h3 class="no_media"> There doesn't seem to be anything on your list that has not been released already or is currently releasing. </h3>
+{%else%}
+
+<div class="pagenum_header">
+    <div class="page_numbers">
+      {% if prev_page != '/releases' %}
+        <a class='prev-btns' href="{{prev_page}}"> 
+          <i class="bi bi-arrow-left-square"></i>
+        </a>
+      {%endif%}
+      {%for page_num in cards.iter_pages() %}
+        {%if page_num%}
+          {%if cards.page == page_num %}
+            <a class="btn btn-primary" href="{{url_for('releases', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+          {%else%}
+            <a class="pagenum_button btn btn-outline-primary " href="{{url_for('releases', page=page_num)}}">{{page_num}}</a>
+          {%endif%}
+        {%endif%}
+      {%endfor%}
+      {% if page != total_pgs %}
+      <a class='next-btns' href="{{next_page}}"> 
+        <i class="bi bi-arrow-right-square"></i>
+      </a>
+    {%endif%}
+    </div>
+  </div>
+<div class = "releases-container"> 
+{%for card in cards %} 
+    <div class="releases-item">
+        <div class="releasesEdit">
+            <button type="button" class="releases_edit_button" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+            </button>
+          </div>
+        <div class="releases-img-container"> 
+        <img src = {{card.image}} class="card-image" alt="{{card.title}}">
+        </div>
+        <div class="hearts">
+            <div class="heart_buttons">
+                <p id="name">{{card.title}}</p> 
+            </div>
+        </div>
+        <div class="info_release">
+            <p class = "lower_row">
+                {{card.release_status}} 
+                {%if card.release_information is not none and card.release_information != "" %}
+                    : {{card.release_information}}
+                {%endif%}
+            </p> 
+           
+        </div>
+    </div>
+{%endfor%}  
+</div> 
+{%endif%} 
+{%endblock%}

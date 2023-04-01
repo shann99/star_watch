@@ -169,20 +169,20 @@
       </div>
       
       <div class="bottom_row">
-        {%if card.release_status != "Released" and "Unaired" in card.release_status or card.release_status.startswith("Not yet released")%}
+        {%if card.release_status == "Not yet released"%}
         <p id="status" class="status_watching releasing_status">
-          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
+          <i class="bi bi-hourglass bell_unaired"></i> {{card.status}}
           <span class="releasing_status_text">{{card.release_status}}</span>
         </p> 
-       {%elif "Releasing on" in card.release_status%}
+       {%elif card.release_status == "Scheduled Release" %}
         <p id="status" class="status_watching releasing_status_more">
-          <i class="bi bi-bell-fill bell_unaired"></i> {{card.status}}
-          <span class="releasing_status_text_more">{{card.release_status}}</span>
+          <i class="bi bi-hourglass-split bell_scheduled"></i> {{card.status}}
+          <span class="releasing_status_text_more">Releasing on {{card.release_information}}</span>
         </p>  
-        {%elif card.release_status != "Released"%}
+        {%elif card.release_status == "Currently Releasing"%}
           <p id="status" class="status_watching releasing_status_airing">
-            <i class="bi bi-bell-fill bell_releasing"></i> {{card.status}}
-            <span class="releasing_status_text_airing">{{card.release_status}}</span></p>
+            <i class="bi bi-calendar2-week-fill bell_releasing"></i> {{card.status}}
+            <span class="releasing_status_text_airing">{{card.release_information}}</span></p>
         {%else%}
           <p id="status" class="status_watching"> #{{card.status}}</p>
         {%endif%}

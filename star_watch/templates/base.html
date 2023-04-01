@@ -69,10 +69,12 @@
                 </button> 
                 <div class="login-nav">
                     <a class="user-welcome">Hi 👋 , {{user.name}} </a>
+                    <hr>
                     <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
-                    <a class="account-item" href="/release_statuses"> <i class="bi bi-bell-fill"></i> Release Status </a>
-                    <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
+                    <a class="account-item" href="/releases"> <i class="bi bi-bell-fill"></i> Releases </a>
                     <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
+                    <hr>
+                    <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
                     <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
                 </div>  
             </div>
@@ -267,11 +269,19 @@
                         <div class="form-group col-auto">
                             <div class="release_info">
                                 <label for="release_status">Release Status <i class="bi bi-info-circle release_symbol"></i></label>
-                                <span class="release_info_text">Release status of media. This can be anything. Default will be released but for media that are currently
-                                    releasing you can write information such as "weekly on Wednesdays" or for unaired media you can write "Airing on April 11, 2023"
+                                <span class="release_info_text"> Defaults to Released if nothing is selected. Not yet released means there is no known release date. Scheduled 
+                                    Release means that the release date is known. When prompted only enter in the date of the release (ex. April, 11, 2023 or 4/11/2023).
                                 </span>
                             </div>
-                                <input type="text" class="form-control add-input" autocomplete="off"  name = "release_status" aria-describedby="mediaHelp">
+                            <select class="form-select" id="releaseStatSelect"  aria-label="Default select example" name = "release_status">
+                                <option selected >Select Release Status</option>
+                                <option value="Released">Released</option>
+                                <option value="Not yet released">Not yet released</option>
+                                <option value="Currently Releasing">Currently Releasing </option>
+                                <option value="Scheduled Release">Scheduled Release </option>
+                            </select>  
+                            <br>
+                            <input type="hidden" class="form-control add-input" id="release_input" autocomplete="off"  name = "release_information" aria-describedby="mediaHelp">
                         </div> 
                     </div>
                     <br>
@@ -411,13 +421,20 @@
                             </div>
                             <div class="col-md">
                                 <div class="form-group col-auto">
-                                    <div class="release_info">
-                                        <label for="edit_release_status">Release Status <i class="bi bi-info-circle release_symbol"></i></label>
-                                        <span class="release_info_text">Release status of media. This can be anything. Default will be released but for media that are currently
-                                            releasing you can write information such as "weekly on Wednesdays" or for unaired media you can write "Airing on April 11, 2023"
-                                        </span>
-                                    </div>
-                                        <input type="text" class="form-control add-input" autocomplete="off"  name = "edit_release_status" aria-describedby="mediaHelp" placeholder="{{card.release_status}}">
+                                    <label for="release_status">Release Status </label>
+                                    <select class="form-select edit_releaseStatSelect" id="formSelect" aria-label="Default select example" name = "edit_release_status">
+                                        <option selected >{{card.release_status}}</option>
+                                        <option value="Released">Released</option>
+                                        <option value="Not yet released">Not yet released </option>
+                                        <option value="Currently Releasing">Currently Releasing </option>
+                                        <option value="Scheduled Release">Scheduled Release </option>
+                                    </select>  
+                                    <br>
+                                    {% if card.release_information != "" or card.release_information is not none %}
+                                        <input type="hidden" class="form-control add-input editReleaseInput" autocomplete="off"  name = "edit_release_information" placeholder="{{card.release_information}}" aria-describedby="mediaHelp">
+                                    {% else %}
+                                        <input type="hidden" class="form-control add-input editReleaseInput" autocomplete="off"  name = "edit_release_information" placeholder="" aria-describedby="mediaHelp">
+                                    {%endif%}
                                 </div> 
                             </div>
                         </div>

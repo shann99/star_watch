@@ -162,6 +162,23 @@ def favorites():
 
     return render_template("favorites.html", user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
 
+@app.route("/releases", methods=['GET','POST'])
+@login_required
+def releases():
+    user = current_user;
+    releases = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).count()
+    #releases pagination
+    page = request.args.get('page', 1, type=int) 
+    
+    releases_list = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=12)
+        
+    prev_page = url_for('releases', page=releases_list.prev_num)
+    next_page = url_for('releases', page=releases_list.next_num)
+    total_pgs = releases_list.pages
+    if next_page == '/releases':
+        next_page = total_pgs
+    return render_template("releases.html", user=current_user, cards=releases_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, releases=releases)
+
 @app.route("/delete_tag", methods=['POST'])
 @login_required
 def delete_tag():
@@ -212,17 +229,20 @@ def add_media():
             language = request.form.get('language')
         else: 
             language = 'unknown'
-        if request.form.get('release_status') != "":
+        if request.form.get('release_status') != "" or request.form.get('release_status') != 'Select Release Status':
             release_status = request.form.get('release_status')
         else:
             release_status = "Released"
+        if request.form.get("release_information") != "":
+            release_information = request.form.get("release_information")
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
         fav = False
        
 
-        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, release_status=release_status, media_type=media_type, language=language, user=current_user)
+        card = Card(title=title, image=image, current_ep=current_ep, total_eps=total_eps, status=status, description=description, rating=rating, fav=fav, release_status=release_status, release_information=release_information,
+                media_type=media_type, language=language, user=current_user)
         
         db.session.add(card)
         db.session.commit()
@@ -253,6 +273,9 @@ def editMedia(card_id):
             card.language = request.form.get('edit_language')
         if request.form.get('edit_release_status') != "":
             card.release_status = request.form.get('edit_release_status')
+        if request.form.get('edit_release_information') != card.release_information or request.form.get('edit_release_information') != "":
+            print(request.form.get('edit_release_information'))
+            card.release_information = request.form.get('edit_release_information')
         if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
             card.date_edited = datetime.now(timezone.utc)
@@ -442,6 +465,7 @@ def change_status():
         update_status = request.form['card_id']
         card = Card.query.get(update_status)
         card.status = 'Completed';
+        card.release_status="Released";
         card.date_edited = datetime.now(timezone.utc)
         db.session.commit() 
         flash(f'{card.title} was moved to Completed!', category="success")

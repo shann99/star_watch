@@ -30,7 +30,7 @@
     text-decoration: none !important;
     transition: 0.7s ease;
     color: #00d4ff;
-    font-size: 14px;
+    font-size: 16px;
 }
 .nav a.active{
     background-color: transparent;
@@ -614,7 +614,7 @@
     color: #ff76fd !important;
 }
 .status_planning {
-    color: #ffa832 !important;
+    color: #ffc000 !important;
 }
 .heart_buttons {
     display:flex;
@@ -1441,7 +1441,6 @@
     padding-right: 1em; 
     grid-template-columns: auto auto auto auto;
     justify-content: center;
-    background-color: #d9baff99;
     border-radius: 15px;
 }
 
@@ -1720,10 +1719,16 @@
 }
 
 .bell_releasing {
-    color: rgb(64, 255, 64);
+    color: rgb(255 0 249);
+    font-size: 17px;
 }
 .bell_unaired {
-    color: rgb(240, 139, 73);
+    color: rgb(126 226 215);
+    font-size: 17px;
+}
+.bell_scheduled {
+    color: rgb(241 188 120);
+    font-size: 17px;
 }
 .releasing_status_more {
     position: relative;
@@ -1734,7 +1739,7 @@
 .releasing_status_more .releasing_status_text_more {
     visibility: hidden;
     width: 160px;
-    background-color: rgba(240, 140, 73, 0.797);
+    background-color: rgb(232 166 80);
     color: #fff;
     text-align: center;
     padding: 5px 15px;
@@ -1762,7 +1767,7 @@
 .releasing_status .releasing_status_text {
     visibility: hidden;
     width: 160px;
-    background-color: rgba(240, 140, 73, 0.797);
+    background-color: rgb(83 130 125);
     color: #fff;
     text-align: center;
     padding: 5px 15px;
@@ -1790,7 +1795,7 @@
 .releasing_status_airing .releasing_status_text_airing {
     visibility: hidden;
     width: 160px;
-    background-color: rgb(64 255 64 / 82%);
+    background-color: rgb(255 0 249);
     color: #fff;
     text-align: center;
     padding: 5px 13px;
@@ -1807,4 +1812,89 @@
 /* Show the tooltip text when you mouse over the tooltip container */
 .releasing_status_airing:hover .releasing_status_text_airing {
     visibility: visible;
+}
+.edit_releaseStatSelect {
+    padding: 0.7em;
+}
+
+.releases-container {
+    margin-top: 30px;
+    display:grid;
+    margin-left: auto;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-right: auto;
+    padding-right: 1em; 
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.releases-item {
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid #d6c5f2;
+    margin: 1em 3em 1em 4em;
+    display: grid;
+    grid-template-columns: 540px;
+    grid-template-rows: auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "image" "name";   
+    transition: 0.5s ease;
+    cursor: pointer;
+    z-index: 0;
+    background:linear-gradient(160deg, #ffffff 0%, #7100fb 100%);
+}
+.releases-img-container {
+    width: 540px;
+    height: 300px;
+    grid-area: image;
+}
+.releases-image {
+    width: 100%;
+    border-radius: 6px;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 1px 2px 4px black;
+}
+.releases-item #name {
+    font-size: 25px;
+}
+.releases-item .hearts {
+    display: flex;
+    grid-area:name;
+    justify-content: center;
+    font-family: 'Lexend Deca' !important;
+
+}
+.lower_row {
+    color: #fec9e9;    
+    font-family: 'Lexend Deca';
+    display: flex;
+    justify-content: space-around;
+}
+.releasesEdit {
+    grid-area: image;
+    position: absolute;
+    z-index: 1; 
+    width: 0%;
+    margin-left: 95%;
+    margin-top: -0.24em; 
+}
+.releases_edit_button {
+    height: 1%;
+    background-color: transparent;
+    border: transparent;
+    display:none;
+    color: white;
+}
+.releases_edit_button:hover {
+    color: #fd7070;
+    transition: all 0.3s ease-out;
+}
+.releases-item:hover .releases_edit_button {
+    display:block;
+}
+.releases-item:hover {
+    transform: scale(1.07);
 }
