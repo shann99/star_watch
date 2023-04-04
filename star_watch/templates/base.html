@@ -68,7 +68,7 @@
                     </div>
                 </button> 
                 <div class="login-nav">
-                    <a class="user-welcome">Hi 👋 , {{user.name}} </a>
+                    <a class="user-welcome">Hi <div class="hand_wave"> 👋 </div>, {{user.name}} </a>
                     <hr>
                     <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
                     <a class="account-item" href="/releases"> <i class="bi bi-bell-fill"></i> Releases </a>
@@ -76,6 +76,7 @@
                     <hr>
                     <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
                     <a class="account-item" href="/logout"> <i class="bi bi-box-arrow-right"></i> Logout </a>
+                    <br>
                 </div>  
             </div>
         </div>
@@ -211,7 +212,7 @@
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "type">
+                                <select class="form-select" id="floatingSelect1"  aria-label="Default select example" name = "type">
                                     <option selected>Media Type</option>
                                     <option value="Show">Show</option>
                                     <option value="Movie">Movie</option>
@@ -226,7 +227,7 @@
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select" id="floatingSelect"  aria-label="Default select example" name = "language">
+                                <select class="form-select" id="floatingSelect2"  aria-label="Default select example" name = "language">
                                     <option selected >Select Language</option>
                                     <option value="English">English</option>
                                     <option value="Japanese">Japanese</option>
@@ -336,7 +337,7 @@
                         <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating">
-                            <select class="form-select" aria-label="Default select example"  id="floatingSelect" name = "edit_status">
+                            <select class="form-select" aria-label="Default select example"  id="floatingSelect3" name = "edit_status">
                                 <option selected>{{card.status}}</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Watching">Watching</option>
@@ -348,7 +349,7 @@
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
-                            <select class="form-select add-input" id="floatingSelect" name="edit_rating" aria-label="Default select example">
+                            <select class="form-select add-input" id="floatingSelect4" name="edit_rating" aria-label="Default select example">
                                 <option selected>{{card.rating}}</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -366,7 +367,7 @@
                         </div>   
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_type">
+                                <select class="form-select add-input" aria-label="Default select example" id="floatingSelect5" name = "edit_type">
                                     <option selected>{{card.media_type}}</option>
                                     <option value="Show">Show</option>
                                     <option value="Movie">Movie</option>
@@ -381,7 +382,7 @@
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
-                            <select class="form-select add-input" aria-label="Default select example" id="floatingSelect" name = "edit_language">
+                            <select class="form-select add-input" aria-label="Default select example" id="floatingSelect6" name = "edit_language">
                                 <option selected>{{card.language}}</option>
                                 <option value="English">English</option>
                                 <option value="Japanese">Japanese</option>
@@ -470,7 +471,6 @@
             </div>  
             </div> 
         </div> 
-        
         {%endfor%}
     {%endif%}
 {%endif%}

@@ -6,27 +6,24 @@
 <div class = "page-title">
     <h2> Account Statistics </h2>
 </div>
-<div class="countChartWrapper">
-    <canvas id="countChart"></canvas>
+<div class="chart-container">
+    <div class="countChartWrapper">
+        <canvas id="countChart"></canvas>
+    </div>
+    <hr>
+    <br><br>
+    <div class="mediaChartWrapper">
+        <canvas id="mediaChart"></canvas>
+    </div>
 </div>
-
 <br>
 <div class="langChartWrapper">
     <canvas id="langChart"></canvas>
 </div>
-
-
-<br><br>
-<div class="mediaChartWrapper">
-    <canvas id="mediaChart"></canvas>
-</div>
-
-
 <br><br>
 <div class="tagChartWrapper">
     <canvas id="tagChart"></canvas>
 </div>
-
 
 <script>    
     var count_ctx = document.getElementById('countChart').getContext("2d");
@@ -104,11 +101,11 @@
                     fill: false,
                     borderColor: "rgb(255, 147, 156)",
                     backgroundColor: [
-                    'rgb(229,171,131)',
-                    'rgb(131,165,229)',
-                    'rgb(172, 230, 0)',
-                    'rgb(242,200,215)',
-                    'rgb(251,255,85)',
+                    'rgb(237,177,120)',
+                    'rgb(126,204,210)',
+                    'rgb(131,238,174)',
+                    'rgb(244,176,177)',
+                    'rgb(201,107,234)',
                     'rgb(246, 0, 67)'
                   ],
                     borderWidth: 2

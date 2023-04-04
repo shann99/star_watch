@@ -438,17 +438,20 @@ const addTag = document.getElementsByClassName("tagForm");
 const add_button = document.getElementsByClassName("plus_tag_button");
 const cancel_tag__button = document.getElementsByClassName("cancel_tag_button");
 const tag_input = document.getElementsByClassName("addTagInput");
-function openTag(item){
-    addTag[item].style.display="block";
-    add_button[item].style.display="none";
-    cancel_tag__button[item].classList.toggle("active");
-    tag_input[item].focus();
+var tagCounterItem = "{{counter.count}}";
+function openTag(tagCounterItem){
+    console.log("open tag", tagCounterItem);
+    addTag[tagCounterItem].style.display="block";
+    add_button[tagCounterItem].style.display="none";
+    cancel_tag__button[tagCounterItem].classList.toggle("active");
+    tag_input[tagCounterItem].focus();
 }
-function closeTag(item) {
-    addTag[item].style.display="none";
-    add_button[item].style.display="inline";
-    cancel_tag__button[item].classList.remove("active");
-    tag_input[item].value="";
+function closeTag(tagCounterItem) {
+    console.log("close tag", tagCounterItem);
+    addTag[tagCounterItem].style.display="none";
+    add_button[tagCounterItem].style.display="inline";
+    cancel_tag__button[tagCounterItem].classList.remove("active");
+    tag_input[tagCounterItem].value="";
 }
 
 
@@ -550,7 +553,7 @@ $(document).ready(function() {
         }
         else if (($(this).val() == "Scheduled Release")) {
             releaseStatInput.placeholder="Enter the release date (ex. April 11, 2023)";
-            releaseStatInput.setAttribute('type','text');
+            releaseStatInput.setAttribute('type','date');
         }
         else {
             releaseStatInput.setAttribute('type','hidden');
@@ -564,17 +567,18 @@ $(document).ready(function() {
     for(let i = 0; i < editReleaseStatClass.length; i++){
             editReleaseStatClass[i].addEventListener("click", function() {
                 $(editReleaseStatClass[i]).on('change', function(){
-                if ($(editReleaseStatClass[i]).val() == "Currently Releasing") {
+                if ($(editReleaseStatClass[i]).val() == "Currently Releasing") {                    
+                    editreleaseStatInput[i].setAttribute('type','text');
+
                     if (editreleaseStatInput[i].placeholder == "") {
                         editreleaseStatInput[i].placeholder = "Enter the release schedule (ex. Weekly on Wednesdays)";
                     }
-                    editreleaseStatInput[i].setAttribute('type','text');
                 }
                 else if (($(editReleaseStatClass[i]).val() == "Scheduled Release")) {
                     if (editreleaseStatInput[i].placeholder == "") {
                         editreleaseStatInput[i].placeholder = "Enter the release date (ex. April 11, 2023)";
                     }
-                    editreleaseStatInput[i].setAttribute('type','text');
+                    editreleaseStatInput[i].setAttribute('type','date');
                 }
                 else {
                     editreleaseStatInput[i].setAttribute('type','hidden');
@@ -586,3 +590,79 @@ $(document).ready(function() {
     }
       
 });
+const containerRA_Right = document.getElementById("currentreleasesMoreRight");
+const containerRA_Left = document.getElementById("currentreleasesMoreLeft");
+const containerRA_Div = document.getElementById("currenteleasesArrowsDiv");
+const releaseContainerA = document.getElementById("releases-containerA");
+
+var scrollAmount = 0;
+var scrollMin = 0
+if (containerRA_Div) {
+    containerRA_Left.onclick = function () {
+        releaseContainerA.scrollTo({
+            top: 0,
+            left: scrollAmount -= 1200,
+            behavior: 'smooth'
+        });
+    };
+
+    containerRA_Right.onclick = function () {
+        releaseContainerA.scrollTo({
+            top: 0,
+            left: scrollAmount += 1200,
+            behavior: 'smooth'
+        });
+    };
+    
+}
+    
+
+const containerRB_Right = document.getElementById("schedreleasesMoreRight");
+const containerRB_Left = document.getElementById("schedreleasesMoreLeft");
+const containerRB_Div = document.getElementById("schedreleasesArrowsDiv");
+const releaseContainerB = document.getElementById("releases-containerB");
+
+if(containerRB_Div) {
+    containerRB_Left.onclick = function () {
+        releaseContainerB.scrollTo({
+            top: 0,
+            left: scrollAmount -= 1200,
+            behavior: 'smooth'
+        });
+    };
+
+    containerRB_Right.onclick = function () {
+        releaseContainerB.scrollTo({
+            top: 0,
+            left: scrollAmount += 1200,
+            behavior: 'smooth'
+        });
+    };
+}
+
+const containerRC_Right = document.getElementById("unreleasedMoreRight");
+const containerRC_Left = document.getElementById("unreleasedMoreLeft");
+const containerRC_Div = document.getElementById("unreleasedArrowsDiv");
+const releaseContainerC = document.getElementById("releases-containerC");
+
+if (containerRC_Div) {
+    containerRC_Left.onclick = function () {
+        releaseContainerC.scrollTo({
+            top: 0,
+            left: scrollAmount -= 1200,
+            behavior: 'smooth'
+        });
+    };
+
+    containerRC_Right.onclick = function () {
+        releaseContainerC.scrollTo({
+            top: 0,
+            left: scrollAmount += 1200,
+            behavior: 'smooth'
+        });
+    };  
+}
+
+
+    
+  

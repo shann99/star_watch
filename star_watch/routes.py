@@ -152,7 +152,7 @@ def favorites():
     #favorites
     page = request.args.get('page', 1, type=int) 
     
-    favorites_list = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=12)
+    favorites_list = Card.query.filter(Card.fav==True).join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=16)
         
     prev_page = url_for('favorites', page=favorites_list.prev_num)
     next_page = url_for('favorites', page=favorites_list.next_num)
@@ -168,16 +168,22 @@ def releases():
     user = current_user;
     releases = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).count()
     #releases pagination
-    page = request.args.get('page', 1, type=int) 
+    page = request.args.get('page', 1, type=int)
+
+    super_releases = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).paginate(page=page, per_page=100)
+
+    unreleased_list = Card.query.filter(Card.release_status=="Not yet released").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    unreleased_count = Card.query.filter(Card.release_status=="Not yet released").join(User).filter(User.id==user.id).count()
+
     
-    releases_list = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=12)
-        
-    prev_page = url_for('releases', page=releases_list.prev_num)
-    next_page = url_for('releases', page=releases_list.next_num)
-    total_pgs = releases_list.pages
-    if next_page == '/releases':
-        next_page = total_pgs
-    return render_template("releases.html", user=current_user, cards=releases_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, releases=releases)
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_count = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).count()
+
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    currentRelease_count = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).count()
+
+
+    return render_template("releases.html", user=current_user, cards = super_releases, unreleased = unreleased_list, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
 
 @app.route("/delete_tag", methods=['POST'])
 @login_required
@@ -235,6 +241,8 @@ def add_media():
             release_status = "Released"
         if request.form.get("release_information") != "":
             release_information = request.form.get("release_information")
+        else: 
+            release_information = ""
         description = request.form.get('description')
         rating = request.form.get('rating')
         status = request.form.get('status')
@@ -248,7 +256,7 @@ def add_media():
         db.session.commit()
         
         flash('Your new media has sucessfully been added!', category="success")
-        return redirect(url_for("index"))
+        return redirect(request.referrer)
     
 @app.route("/edit/card/<int:card_id>", methods=['GET','POST'], strict_slashes=False)
 @login_required
@@ -273,11 +281,13 @@ def editMedia(card_id):
             card.language = request.form.get('edit_language')
         if request.form.get('edit_release_status') != "":
             card.release_status = request.form.get('edit_release_status')
-        if request.form.get('edit_release_information') != card.release_information or request.form.get('edit_release_information') != "":
-            print(request.form.get('edit_release_information'))
+            if request.form.get('edit_release_status') == "Released":
+                card.release_information = ""
+        if request.form.get('edit_release_information') != "":
             card.release_information = request.form.get('edit_release_information')
         if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
+
             card.date_edited = datetime.now(timezone.utc)
         card.id = card_id 
         db.session.commit()
@@ -294,7 +304,7 @@ def delete(card_id):
     db.session.delete(card)
     db.session.commit()
     flash('Your media has been deleted', category="info")
-    return redirect(url_for("index"))
+    return redirect(request.referrer)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -465,7 +475,8 @@ def change_status():
         update_status = request.form['card_id']
         card = Card.query.get(update_status)
         card.status = 'Completed';
-        card.release_status="Released";
+        if card.release_status != "Scheduled Release":
+            card.release_status="Released";
         card.date_edited = datetime.now(timezone.utc)
         db.session.commit() 
         flash(f'{card.title} was moved to Completed!', category="success")

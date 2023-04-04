@@ -1,6 +1,6 @@
 @media (prefers-color-scheme: light) {
   body {
-    background-color: rgb(245 205 213);
+    background-color: rgb(248 196 206);
     margin: -2em 0 0 0em;
     padding-bottom: 800px; 
   }
@@ -68,7 +68,9 @@
       text-align: center;
       color: black;
   }
-
+  .releasesTitle {
+    color: #19070a !important;
+  }
 }
 @media (prefers-color-scheme: dark) {
   body {
@@ -144,5 +146,20 @@
   }
   .search_text {
         color: #d9d9d9;
+  }
+  .releasesTitle {
+    color: #e5e5e5 !important;
+  }
+  #schedreleasesArrowsDiv {
+    color: white;
+  }
+  #unreleasedArrowsDiv {
+    color: white;
+  }
+  #currentreleasesArrowsDiv {
+    color: white;
+  }
+  hr {
+    color:white;
   }
 }

@@ -3,7 +3,7 @@
  <h1>{%block title%}Home{%endblock%}</h1>
  {%endblock%}
 {%block body %}
-<br>
+
 <!-- https://getbootstrap.com/docs/5.2/components/carousel/ -->
 {%set counter = namespace(value=0, count=0, tag=0)%} 
   {%for card in user.cards %} 
@@ -38,10 +38,10 @@
         </div>
     </div>
     <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <i class="bi bi-caret-left-fill"></i>
+      <i class="bi bi-caret-left-square"></i>
     </button>
     <button id="slider_buttons" class="carousel-control-next carousel-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-        <i class="bi bi-caret-right-fill"></i>
+      <i class="bi bi-caret-right-square"></i>
     </button>
   </div>
   {%else %}
@@ -58,15 +58,16 @@
           <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}} id="lesser-img-active2">
         </div>
         <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel1" data-bs-slide="prev">
-          <i class="bi bi-caret-left-fill"></i>
+          <i class="bi bi-caret-left-square"></i>
         </button>
         <button id="slider_buttons" class="carousel-control-next carousel-next" type="button" data-bs-target="#myCarousel1" data-bs-slide="next">
-            <i class="bi bi-caret-right-fill"></i>
+          <i class="bi bi-caret-right-square"></i>
         </button>
       </div>
     </div>
   {%endif%}
 {%endif%}
+<br>
 <div class = "page-title">
   <h2> Currently Watching </h2>
 </div>

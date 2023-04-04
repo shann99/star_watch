@@ -74,3 +74,15 @@ body {
 .search_text {
     color: #d9d9d9;
 }
+.releasesTitle {
+    color: #e5e5e5 ;
+}
+#schedreleasesArrowsDiv {
+    color: white;
+}
+#unreleasedArrowsDiv {
+    color: white;
+}
+#currentreleasesArrowsDiv {
+    color: white;
+}

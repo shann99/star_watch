@@ -13,12 +13,13 @@
 .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 0.7em;
+    margin-top: 0.4em;
 }
 .nav-ul {
     list-style: none;
     display: flex;
     margin-top: 2.1em;
+    margin-left: -9em;
     
 } 
 .nav-item {
@@ -30,7 +31,7 @@
     text-decoration: none !important;
     transition: 0.7s ease;
     color: #00d4ff;
-    font-size: 16px;
+    font-size: 15px;
 }
 .nav a.active{
     background-color: transparent;
@@ -51,10 +52,11 @@
 /* account access CSS for logout, login, etc. */
 .account-item {
     text-decoration: none !important; 
-    margin: 16px 0;
+    margin-top: 16px;
+    margin-bottom: 7px;
     padding-right: 0.5em;
     padding-left: 0.5em;
-    color: #2900ff;
+    color: #19245f;
     transition: 0.3s ease;
 }
 .account-item:hover {
@@ -64,19 +66,45 @@
 }
 .user-welcome {
     text-decoration: none !important;
-    color: #2900ff; 
-    margin: 16px 0;
+    color: #9515a1; 
+    margin-top: 19px;
+    margin-bottom: 1px;
     transition: 0.3s ease;
     padding-right: 0.5em;
     padding-left: 0.5em;
+    display: flex;
+    justify-content: center;
 }
 .user-welcome:hover {
     background-color: none;
     color:#ffd0eb;
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.user-welcome:hover .hand_wave {
+    animation: rotate_hand 3s infinite;
+}
+@keyframes rotate_hand {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(60deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(60deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+
+    
 }
 /* account access stuff for dropdown of profile pic */
-
 .login-nav {
     display: none;
     list-style: none;
@@ -84,14 +112,14 @@
     transition: 0.5s ease;
     margin-top: 5.8em;
     text-align: center; 
-    border: solid #f5d5e0;
+    border: 1px solid black;
     flex-direction: column; 
     margin-left: -4.5em;
     border-radius: 7px;
-    box-shadow: 1px 1px 1px 1px rgb(47, 47, 47);
+    box-shadow: 3px 3px 5px 1px rgb(47, 47, 47);
     z-index: 2;
     width:225px;
-    border: none;
+    /* border: none; */
 }
 
 .login-nav.active {
@@ -178,7 +206,6 @@
     grid-template-rows: auto;
     grid-template-areas: "image" "tag" "name" "status";   
     transition: 0.5s ease;
-    cursor: pointer;
     z-index: 0;
     height: 500px;
 
@@ -207,6 +234,7 @@
 }
 .edit_button {
     height: 1%;
+    cursor: pointer;
     background-color: transparent;
     border: transparent;
     display:none;
@@ -840,18 +868,19 @@
 .cancel_tag_button {
     border:none;
     background: transparent;
-    color:#E1241E;
+    color: pink;
     display:none;
 }
 .cancel_tag_button.active {
-    display:block;
+    display:flex;
 }
 .card-item:hover .cancel_tag_button.active {
-    display: block;   
+    display: flex;   
+   
 }
 
 .cancel_tag_button:hover {
-    transform: scale(1.1);
+    transform: scale(1.3);
 }
 .flip_card_more {
     border: none;
@@ -1407,7 +1436,7 @@
     float:right;
     font-size: 15px;
     font-family: "Bootstrap-icons";
-    margin-top: 2.1em;
+    margin-top: 1.7em;
 }
 #nav_search_clear_back {
     background: none;
@@ -1547,6 +1576,7 @@
 }
 .tag-name:hover .expand_more {
     display: contents;
+    cursor: pointer;
 }
 .expand_more:hover {
     color: rgb(186, 186, 212);
@@ -1607,40 +1637,47 @@
 }
 #langChart{
     height: 400px;
-    width: 900px;
+    width: 1200px;
     margin-left:auto;
     margin-right:auto;
    
 }
 .langChartWrapper {
-    background: #dfe2d4; 
+    background: #c1e1c5; 
     margin-left:auto;
     margin-right:auto;
     border-radius: 12px;
-    width: 1250px;
+    width: 1500px;
     padding:50px;
 }
+
+.chart-container {
+    display:flex;
+    justify-content: center;
+    background: #c1e1c5;    
+    border-radius: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1500px;
+
+}
 .countChartWrapper {
-    background: #dfe2d4; 
     margin-left:auto;
     margin-right:auto;
-    border-radius: 12px;
-    width: 1250px;
+    width: 100%;
     padding:50px;
 }
 #countChart {
     margin-left:auto;
     margin-right:auto;
     height: 300px;
-    width: 450px;
+    width: 550px;
     
 }
 .mediaChartWrapper {
-    background: #dfe2d4; 
     margin-left:auto;
     margin-right:auto;
-    border-radius: 12px;
-    width: 1250px;
+    width: 100%;
     padding:50px;
 }
 #mediaChart {
@@ -1650,11 +1687,11 @@
     width: 550px;
 }
 .tagChartWrapper {
-    background: #dfe2d4; 
+    background: #c1e1c5; 
     margin-left:auto;
     margin-right:auto;
     border-radius: 12px;
-    width: 1250px;
+    width: 1500px;
     padding:50px;
     
 }
@@ -1662,7 +1699,7 @@
     margin-left:auto;
     margin-right:auto;
     height: 750px;
-    width: 950px;
+    width: 1200px;
 }
 .alert_close:focus, .alert_close:active {
     outline: none !important;
@@ -1720,15 +1757,15 @@
 
 .bell_releasing {
     color: rgb(255 0 249);
-    font-size: 17px;
+    font-size: 20px;
 }
 .bell_unaired {
-    color: rgb(126 226 215);
-    font-size: 17px;
+    color: black;
+    font-size: 20px;
 }
 .bell_scheduled {
     color: rgb(241 188 120);
-    font-size: 17px;
+    font-size: 20px;
 }
 .releasing_status_more {
     position: relative;
@@ -1767,7 +1804,7 @@
 .releasing_status .releasing_status_text {
     visibility: hidden;
     width: 160px;
-    background-color: rgb(83 130 125);
+    background-color: rgb(53 56 56);
     color: #fff;
     text-align: center;
     padding: 5px 15px;
@@ -1817,26 +1854,48 @@
     padding: 0.7em;
 }
 
-.releases-container {
+#releases-containerA, #releases-containerB, #releases-containerC{
     margin-top: 30px;
-    display:grid;
-    margin-left: auto;
+    display:flex;
+    flex-wrap:nowrap;
+    flex-direction: row;
+    overflow: auto;
     padding-top: 1em;
     padding-bottom: 1em;
-    margin-right: auto;
     padding-right: 1em; 
-    grid-template-columns: auto auto auto;
+    justify-content: start;
+    height: 500px;
+    border-radius: 15px;
+    background-color: #bfa6c9a1;
+    margin-left: 3em;
+    margin-right: 3em;
+}
+
+#smaller-releases-containerA, #smaller-releases-containerB, #smaller-releases-containerC{
+    margin-top: 30px;
+    display:flex;
+    flex-wrap:nowrap;
+    flex-direction: row;
+    overflow: hidden;
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em; 
     justify-content: center;
     border-radius: 15px;
+    background-color: #bfa6c9a1;
+    margin-left: 3em;
+    margin-right: 3em;
 }
 
 .releases-item {
     padding: 3px;
+    flex: 0 0 auto; 
     border-radius: 10px;
     border: 1px solid #d6c5f2;
     margin: 1em 3em 1em 4em;
     display: grid;
-    grid-template-columns: 540px;
+    grid-template-columns: 450px;
     grid-template-rows: auto;
     grid-template-rows: auto auto auto;
     grid-template-areas: "image" "name";   
@@ -1846,7 +1905,7 @@
     background:linear-gradient(160deg, #ffffff 0%, #7100fb 100%);
 }
 .releases-img-container {
-    width: 540px;
+    width: 450px;
     height: 300px;
     grid-area: image;
 }
@@ -1878,8 +1937,8 @@
     position: absolute;
     z-index: 1; 
     width: 0%;
-    margin-left: 95%;
-    margin-top: -0.24em; 
+    margin-left: 94.5%;
+    margin-top: -0.26em;
 }
 .releases_edit_button {
     height: 1%;
@@ -1897,4 +1956,67 @@
 }
 .releases-item:hover {
     transform: scale(1.07);
+}
+.releasesTitle {
+    display:flex;
+    justify-content: center;
+    font-family: "Lexend Deca";
+    padding-top: 1em;
+}
+#schedreleasesMoreRight {
+    display: flex;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#schedreleasesMoreLeft {
+    display: flex;
+    margin-right: 1em;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#schedreleasesArrowsDiv {
+    display:flex;
+    justify-content: flex-end;
+    margin-right: 4em;
+    margin-bottom: -1em;
+}
+#currentreleasesMoreRight {
+    display: flex;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#currentreleasesMoreLeft {
+    display: flex;
+    margin-right: 1em;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#currentreleasesArrowsDiv {
+    display:flex;
+    justify-content: flex-end;
+    margin-right: 4em;
+    margin-bottom: -1em;
+}
+#unreleasedMoreRight {
+    display: flex;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#unreleasedMoreLeft {
+    display: flex;
+    margin-right: 1em;
+    float: right;
+    cursor: pointer;
+    font-size:20px;
+}
+#unreleasedArrowsDiv {
+    display:flex;
+    justify-content: flex-end;
+    margin-right: 4em;
+    margin-bottom: -1em;
 }
