@@ -39,7 +39,7 @@ class Card(db.Model):
     release_information = db.Column(db.String(10000))
     date_edited = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
     def __repr__(self):
-        return f"Card('{self.id}','{self.title}','{self.date_added}','{self.image}','{self.user_id}')"
+        return f"Card('{self.id}','{self.title}','{self.date_added}','{self.image}','{self.user_id}', '{self.release_information}')"
 
 class Tags(db.Model):
     id = db.Column(db.Integer, primary_key=True)

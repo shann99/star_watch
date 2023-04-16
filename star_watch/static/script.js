@@ -592,7 +592,7 @@ $(document).ready(function() {
 });
 const containerRA_Right = document.getElementById("currentreleasesMoreRight");
 const containerRA_Left = document.getElementById("currentreleasesMoreLeft");
-const containerRA_Div = document.getElementById("currenteleasesArrowsDiv");
+const containerRA_Div = document.getElementById("currentreleasesArrowsDiv");
 const releaseContainerA = document.getElementById("releases-containerA");
 
 var scrollAmount = 0;

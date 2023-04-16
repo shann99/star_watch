@@ -1228,9 +1228,8 @@
     flex-direction: column;
     max-width: 55%;
     font-family: 'Lexend Deca', 'Bootstrap-icons';  
-    background: linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);;  
-    ;
-    border-radius: 6px;
+    background: linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);  
+    border-radius: 48px;
     box-shadow: 2px 3px 3px #9c27b0;
     margin: 0 auto;   
     z-index: 1;
@@ -1366,10 +1365,13 @@
 }
  #input_search {
     background: linear-gradient(142deg, #c33a63 0%, #4c0f91 100%);;  
-    border-radius: 6px;
+    border-radius: 48px;
     box-shadow: 2px 3px 3px #9c27b0;
     padding: 0.4em;
     margin-top: 2em;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
  #exampleModal {
     font-family: 'Lexend Deca', 'Bootstrap-icons', 'Material Icons';  

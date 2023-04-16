@@ -107,8 +107,12 @@
           <div class="info_release">
               <p class = "lower_row">
                   {{item.release_status}} 
-                  {%if item.release_information is not none and item.release_information != "" %}
-                      : {{item.release_information}}
+                  {%if item.release_information is not none and item.release_information != ""%}
+                    {%for date in releases_dates%}
+                        {%if date.strftime("%Y-%m-%d") == item.release_information%}
+                            : {{date.strftime("%b %-d, %Y")}}
+                        {%endif%}
+                    {%endfor%}
                   {%endif%}
               </p> 
           </div>
@@ -139,7 +143,11 @@
               <p class = "lower_row">
                   {{item.release_status}} 
                   {%if item.release_information is not none and item.release_information != "" %}
-                      : {{item.release_information}}
+                    {%for date in releases_dates%}
+                        {%if date.strftime("%Y-%m-%d") == item.release_information%}
+                            : {{date.strftime("%b %-d, %Y")}}
+                        {%endif%}
+                    {%endfor%}
                   {%endif%}
               </p> 
           </div>

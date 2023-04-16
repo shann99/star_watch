@@ -30,7 +30,7 @@ def index():
             new_images.append(image)
 
     page = request.args.get('page', 1, type=int)
-    watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.date_edited.desc()).paginate(page=page, per_page=9)
+    watching_list = Card.query.filter(Card.status=='Watching').join(User).filter(User.id==user.id).order_by(Card.title.asc()).paginate(page=page, per_page=9)
 
     prev_page = url_for('index', page=watching_list.prev_num)
     next_page = url_for('index', page=watching_list.next_num)
@@ -179,11 +179,20 @@ def releases():
     scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
     scheduledRelease_count = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).count()
 
+
     currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
     currentRelease_count = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).count()
 
 
-    return render_template("releases.html", user=current_user, cards = super_releases, unreleased = unreleased_list, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item is not None and item is not "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object)
+
+    return render_template("releases.html", user=current_user, cards = super_releases, unreleased = unreleased_list, releases_dates=releases_dates, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
 
 @app.route("/delete_tag", methods=['POST'])
 @login_required
