@@ -101,8 +101,6 @@
     100% {
         transform: rotate(0deg);
     }
-
-    
 }
 /* account access stuff for dropdown of profile pic */
 .login-nav {
@@ -1459,6 +1457,9 @@
 .arrows {
     margin-bottom:-0.5em;
 }
+.arrows.indicator_on {
+    margin-left: -0.9em;
+}
 .search_text {
     text-align: center;
 }
@@ -1961,9 +1962,12 @@
 }
 .releasesTitle {
     display:flex;
-    justify-content: center;
+    /* justify-content: center; */
+    float:left;
+    margin-left: 2em;
     font-family: "Lexend Deca";
     padding-top: 1em;
+    margin-bottom:1em;
 }
 #schedreleasesMoreRight {
     display: flex;
@@ -2021,4 +2025,109 @@
     justify-content: flex-end;
     margin-right: 4em;
     margin-bottom: -1em;
+}
+#release_button {
+    background: transparent;
+    border: none; 
+    color:#e400ff;
+    display:none;
+}
+.account-item #release_button{
+    animation: shake_bell 2.3s infinite;
+}
+@keyframes shake_bell {
+    0% {
+        transform: rotate(-20deg);
+    }
+    25% {
+        transform: rotate(20deg);
+    }
+    50% {
+        transform: rotate(-20deg);
+    }
+    75% {
+        transform: rotate(20deg);
+    }
+    100% {
+        transform: rotate(-20deg);
+    }
+}
+#releases_dot {
+    font-size: 48px;
+    margin-bottom: -28px;
+    margin-left: -13px;
+    color:#bf7bc7;
+    display:none;
+}
+#release_updates {
+    float:left;
+    font-family:'Lexend Deca';
+    background-color: #d08ec3f7;
+    margin-left: 1em;
+    padding:.3em .5em .3em .5em;
+    border-radius: 6px;
+    box-shadow: -3px 3px 5px 2px purple;
+}
+#releases_panel {
+    background:transparent;
+    border: none;
+}
+#release_updates:hover {
+    background-color:#e8b3ff;
+}
+#release_updates:active {
+    background-color:#ac5f9df7;
+    transform: scale(0.95) !important;
+
+}
+.offcanvas-start {
+    width: 550px;
+    
+}
+.offcanvas {
+    background-color:rgb(161 76 223);
+    font-family: 'Lexend Deca';
+}
+#offcanvas_exit {
+    padding-right: 4em;
+}
+
+.updates-item {
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid #d6c5f2;
+    margin: 1em 3em 3em 4em;
+    display: flex;
+    /* justify-content: center; */
+    background:linear-gradient(350deg, #cf7575 0%, #933bff 100%);
+}
+.update_title {
+    margin-left:auto;
+    margin-right:auto;
+}
+#update_read {
+    background: #de6593;
+    border: none;
+    padding: 0.5em;
+    width: 25%;
+    border-radius: 6px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+    font-family: 'Lexend Deca';
+    box-shadow: 2px 1px 1px 1px purple;
+}
+
+#update_read:active {
+    background:#c16588;
+    transform: scale(0.94);
+}
+#offcanvasWithBothOptionsLabel {
+    margin-left:auto;
+    margin-right:4em;
+}
+.update_title #name {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 16px;
 }

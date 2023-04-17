@@ -9,7 +9,7 @@ import base64
 import numpy as np
 import os
 from io import StringIO
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 import random, json
 from star_watch.models import User, Card, Tags
 from star_watch import app, db
@@ -37,7 +37,17 @@ def index():
     total_pgs = watching_list.pages
     if next_page == '/index':
         next_page = total_pgs
-    return render_template("index.html", user=current_user, cards=watching_list, images=new_images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+   
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("index.html", user=current_user, cards=watching_list, today=today, releases_dates=releases_dates, images=new_images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
@@ -53,7 +63,16 @@ def planning():
     if next_page == '/planning':
         next_page = total_pgs
 
-    return render_template("planning.html", user=current_user, cards=planning_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("planning.html", user=current_user, cards=planning_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/paused", methods=['GET','POST'])
 @login_required
@@ -68,7 +87,16 @@ def paused():
     if next_page == '/paused':
         next_page = total_pgs
     
-    return render_template("paused.html", user=current_user, cards=paused_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("paused.html", user=current_user, cards=paused_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 
 @app.route("/completed", methods=['GET','POST'])
@@ -85,7 +113,17 @@ def completed():
     if next_page == '/completed':
         next_page = total_pgs
     
-    return render_template("completed.html", user=current_user, cards=completed_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("completed.html", user=current_user, cards=completed_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/settings", methods=['GET','POST'])
 @login_required
@@ -115,7 +153,16 @@ def settings():
             flash(success_message, category="success")
             return redirect(url_for("index"))
         
-    return render_template("settings.html", user=current_user)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("settings.html", user=current_user, releases_dates=releases_dates, today=today)
 
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
@@ -142,7 +189,17 @@ def stats():
     tag_name = [tagname[0] for tagname in tag_count]
     tag_num = [tagnum[1] for tagnum in tag_count]
 
-    return render_template("stats.html", user=current_user, langs=languages, nums=nums, tag_name=tag_name, tag_num=tag_num, type=type, amt=amt, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+
+    today = date.today()
+
+    return render_template("stats.html", user=current_user, today=today, releases_dates=releases_dates, langs=languages, nums=nums, tag_name=tag_name, tag_num=tag_num, type=type, amt=amt, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
 
 @app.route("/favorites", methods=['GET','POST'])
 @login_required
@@ -160,7 +217,16 @@ def favorites():
     if next_page == '/favorites':
         next_page = total_pgs
 
-    return render_template("favorites.html", user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+
+    return render_template("favorites.html", today=today, releases_dates=releases_dates, user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
 
 @app.route("/releases", methods=['GET','POST'])
 @login_required
@@ -188,11 +254,11 @@ def releases():
     dates = [date[0] for date in dates_list]
     releases_dates = []
     for item in dates:
-        if item is not None and item is not "" and item.startswith("Weekly") is False:
+        if item != None and item != "" and item.startswith("Weekly") is False:
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
-            releases_dates.append(datetime_object)
-
-    return render_template("releases.html", user=current_user, cards = super_releases, unreleased = unreleased_list, releases_dates=releases_dates, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+    return render_template("releases.html", today=today, user=current_user, cards = super_releases, unreleased = unreleased_list, releases_dates=releases_dates, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
 
 @app.route("/delete_tag", methods=['POST'])
 @login_required

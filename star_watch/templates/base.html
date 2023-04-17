@@ -63,6 +63,8 @@
             <div class="account-access">
                 <button type="button" class="profile-button">
                     <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
+                    <div id="releases_dot">
+                    <i class="bi bi-dot"></i></div>
                     <div class="arrows">
                         <span  class="arrow_down"> &#xe5c5;</span>
                     </div>
@@ -71,7 +73,10 @@
                     <a class="user-welcome">Hi <div class="hand_wave"> 👋 </div>, {{user.name}} </a>
                     <hr>
                     <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
-                    <a class="account-item" href="/releases"> <i class="bi bi-bell-fill"></i> Releases </a>
+                    <a class="account-item" href="/releases" id="release_item"> 
+                        <i class="bi bi-bell" id="no_update"></i> 
+                        <i class="bi bi-bell-fill" id="release_button"></i> 
+                        Releases </a>
                     <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
                     <hr>
                     <a class="account-item" href="/settings"> <i class="bi bi-person-gear"></i> Settings </a>   
@@ -301,7 +306,7 @@
     </div>
 </div>
 {%endif%}
-{%set counter = namespace(count=0)%} 
+{%set counter = namespace(count=0, toggles=0)%} 
 {%if user.is_authenticated%}
     {%if cards is defined%}
         {%for card in cards.items %}
@@ -473,6 +478,15 @@
         </div> 
         {%endfor%}
     {%endif%}
+    {%for date in releases_dates%}
+
+        {%if date == today%}
+        {% set counter.toggles = counter.toggles + 1 %}
+        <input type="hidden" id="toggleIndicators" value="{{counter.toggles}}"> 
+
+        {%endif%} 
+    {%endfor%}
+        
 {%endif%}
 <section class = "content">
     {% block body %}

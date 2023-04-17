@@ -662,7 +662,38 @@ if (containerRC_Div) {
         });
     };  
 }
+var date = document.getElementById("date_value");
+const releases_button = document.getElementById("release_button");
+const no_update = document.getElementById("no_update");
+const indicator = document.getElementById("releases_dot");
+const arrows2 = document.getElementsByClassName("arrows");
+
+var toggleIndicators = document.getElementById("toggleIndicators");
 
 
+function alertMedia() {
+    no_update.style.display="none";
+    releases_button.style.display="inline-block";
+    indicator.style.display="block";
+    arrows2[0].classList.toggle('indicator_on');
+}    
+
+const update_read = document.getElementById("update_read");
+if(update_read) {
+   update_read.onclick = function() {markRead()}; 
+}
+
+function markRead() {
+    no_update.style.display="inline-block";
+    releases_button.style.display="none";
+    indicator.style.display="none";
+    arrows2[0].classList.remove('indicator_on');
+    toggleIndicators.value=0
+    console.log(toggleIndicators.value)
+    update_read.setAttribute("disabled", "");
     
-  
+}
+console.log(toggleIndicators.value)
+if(toggleIndicators.value >= 1) {
+    alertMedia();
+}
