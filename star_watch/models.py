@@ -13,9 +13,10 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150),nullable=False)
     password = db.Column(db.String(150),nullable=False)
     profile_pic = db.Column(db.String(20), nullable=False, server_default='/default.png')
-    mode = db.Column(db.String(10), nullable=False, default="light")
+    mode = db.Column(db.String(10), nullable=False, default="light") 
+    alert = db.Column(db.Integer, nullable=False, default=0)
     cards = db.relationship('Card', backref='user', cascade="all, delete", lazy=True)
-
+   
     
     def __repr__(self):
         return f"User('{self.id}','{self.name}','{self.email}','{self.profile_pic}')"

@@ -64,18 +64,97 @@
                 <button type="button" class="profile-button">
                     <img class = "profile-pic" src={{user.profile_pic}} alt="profile pic">
                     <div id="releases_dot">
-                    <i class="bi bi-dot"></i></div>
+                    </div>
                     <div class="arrows">
                         <span  class="arrow_down"> &#xe5c5;</span>
                     </div>
                 </button> 
                 <div class="login-nav">
                     <a class="user-welcome">Hi <div class="hand_wave"> 👋 </div>, {{user.name}} </a>
+                    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                        <div class="offcanvas-header">
+                          <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"><u> Updates</u></h3>
+                          <button type="button" class="btn-close" id="offcanvas_exit" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                          {%for date in releases_dates%}
+                              {%if date == today%}
+                                  {%for item in scheduled %} 
+                                      {%if date.strftime("%Y-%m-%d") == item.release_information%}
+                                          <div class="updates-item">
+                                              <div class="update_title">
+                                                      <p id="name">{{item.title}} has released</p> 
+                                                  </div> 
+                                              </div>
+                                          
+                                      {%endif%}
+                                  {%endfor%}
+                              {%endif%}
+                          {%endfor%} 
+                          {%for item in currentRel %} 
+                              {%if "Sunday" in item.release_information and "Sunday" == today.strftime("%A")%}
+                                  <div class="updates-item">
+                                      <div class="update_title">
+                                              <p id="name">{{item.title}} aired a new episode </p> 
+                                          </div> 
+                                      </div>
+                              {%endif%}
+                              {%if "Monday" in item.release_information and "Monday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                              {%if "Tuesday" in item.release_information and "Tuesday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                              {%if "Wednesday" in item.release_information and "Wednesday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                              {%if "Thursday" in item.release_information and "Thursday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                              {%if "Friday" in item.release_information and "Friday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                              {%if "Saturday" in item.release_information and "Saturday" == today.strftime("%A")%}
+                              <div class="updates-item">
+                                  <div class="update_title">
+                                          <p id="name">{{item.title}} aired a new episode </p> 
+                                      </div> 
+                                  </div>
+                              {%endif%}
+                          {%endfor%} 
+                      </div> 
+                          <button type="button" id="update_read">Mark as Read</button>
+                        </div>
+                       
+                      
+                      
+                      <button id="release_updates" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"> 
+                        <h6> Updates <i class="" id="updates_icon"></i> </h6>
+                      </button>
                     <hr>
                     <a class="account-item" href="/favorites"> <i class="bi bi-hearts"></i> Favorites </a>
                     <a class="account-item" href="/releases" id="release_item"> 
-                        <i class="bi bi-bell" id="no_update"></i> 
-                        <i class="bi bi-bell-fill" id="release_button"></i> 
+                        <i class="bi bi-bell"></i> 
                         Releases </a>
                     <a class="account-item" href="/statistics"> <i class="bi bi-bar-chart-line-fill"></i> Stats </a>
                     <hr>
@@ -306,7 +385,7 @@
     </div>
 </div>
 {%endif%}
-{%set counter = namespace(count=0, toggles=0)%} 
+{%set counter = namespace(count=0)%} 
 {%if user.is_authenticated%}
     {%if cards is defined%}
         {%for card in cards.items %}
@@ -478,15 +557,9 @@
         </div> 
         {%endfor%}
     {%endif%}
-    {%for date in releases_dates%}
+    <input type="hidden" id="toggleIndicators" value="{{user.alert}}"> 
+    <input type="hidden" id="user_info" value="{{user.id}}"> 
 
-        {%if date == today%}
-        {% set counter.toggles = counter.toggles + 1 %}
-        <input type="hidden" id="toggleIndicators" value="{{counter.toggles}}"> 
-
-        {%endif%} 
-    {%endfor%}
-        
 {%endif%}
 <section class = "content">
     {% block body %}

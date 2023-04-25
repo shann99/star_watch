@@ -6,91 +6,9 @@
 {%if releases == 0%}
         <h3 class="no_media"> There doesn't seem to be anything on your list that has not been released already or is currently releasing. </h3>
 {%else%}
-
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-  <div class="offcanvas-header">
-    <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"><u> Updates</u></h3>
-    <button type="button" class="btn-close" id="offcanvas_exit" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    {%for date in releases_dates%}
-        {%if date == today%}
-            {%for item in scheduled %} 
-                {%if date.strftime("%Y-%m-%d") == item.release_information%}
-                    <div class="updates-item">
-                        <div class="update_title">
-                                <p id="name">{{item.title}} has released</p> 
-                            </div> 
-                        </div>
-                    
-                {%endif%}
-            {%endfor%}
-        {%endif%}
-    {%endfor%} 
-    {%for item in currentRel %} 
-        {%if "Sunday" in item.release_information and "Sunday" == today.strftime("%A")%}
-            <div class="updates-item">
-                <div class="update_title">
-                        <p id="name">{{item.title}} aired a new episode </p> 
-                    </div> 
-                </div>
-        {%endif%}
-        {%if "Monday" in item.release_information and "Monday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-        {%if "Tuesday" in item.release_information and "Tuesday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-        {%if "Wednesday" in item.release_information and "Wednesday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-        {%if "Thursday" in item.release_information and "Thursday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-        {%if "Friday" in item.release_information and "Friday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-        {%if "Saturday" in item.release_information and "Saturday" == today.strftime("%A")%}
-        <div class="updates-item">
-            <div class="update_title">
-                    <p id="name">{{item.title}} aired a new episode </p> 
-                </div> 
-            </div>
-        {%endif%}
-    {%endfor%} 
-</div> 
-    <button type="button" id="update_read">Mark as Read</button>
-  </div>
- 
-
-
-<button id="release_updates" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"> 
-  <h3> Updates</h3>
-</button>
 <br>
-<br><br>
 <h3 class="releasesTitle" id="currentlyReleasing"><u>Currently Releasing</u></h3>
-<br><br>
+<br><br><br>
 {%if currentcount >= 4%}
 <div id="currentreleasesArrowsDiv">
   <div id="currentreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>

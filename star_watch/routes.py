@@ -2,17 +2,62 @@ from flask import render_template, request, make_response, session, url_for, fla
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from sqlalchemy import func
-import matplotlib
-import matplotlib.pyplot as plt
-matplotlib.use('Agg')
-import base64
 import numpy as np
 import os
+import time
+from main import dateChecker
 from io import StringIO
 from datetime import datetime, timezone, date
 import random, json
 from star_watch.models import User, Card, Tags
 from star_watch import app, db
+
+# @app.before_request
+# def user():
+#     user = current_user
+
+#     print(user)
+#     return user
+
+# def dateChecker():
+#     user=current_user
+#     scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+#     currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+#     dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+#     dates = [date[0] for date in dates_list]
+#     releases_dates = []
+#     for item in dates:
+#         if item != None and item != "" and item.startswith("Weekly") is False:
+#             datetime_object = datetime.strptime(item, '%Y-%m-%d')
+#             releases_dates.append(datetime_object.date())
+#     today = date.today()
+
+#     weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+#     weekly_releasing = []
+#     for item in dates:
+#         for weekday in weekdays:
+#             if item != None and item != "" and weekday in item:
+#                 weekly_releasing.append(weekday)
+
+#     counter = 0
+#     for dated in releases_dates:
+#         if dated == today:
+#             counter += 1
+
+#     for releasing in weekly_releasing:
+#         if releasing == today.strftime("%A"):
+#             counter += 1
+#     user.alert = counter
+#     db.session.commit()
+#     # for dated in releases_dates:
+#     #     if dated == today:
+#     #         user.alert = counter
+#     #         db.session.commit()
+
+#     # for releasing in weekly_releasing:
+#     #     if releasing == today.strftime("%A"):
+#     #         user.alert = counter
+#     #         db.session.commit()
 
 
 @app.route("/",  methods=['GET','POST'])
@@ -46,8 +91,10 @@ def index():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("index.html", user=current_user, cards=watching_list, today=today, releases_dates=releases_dates, images=new_images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    return render_template("index.html", user=current_user, cards=watching_list, today=today, currentRel = currentRelease_list, scheduled=scheduledRelease_list, releases_dates=releases_dates, images=new_images, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/planning", methods=['GET','POST'])
 @login_required
@@ -71,8 +118,10 @@ def planning():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("planning.html", user=current_user, cards=planning_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    return render_template("planning.html", user=current_user, cards=planning_list, today=today, currentRel = currentRelease_list, scheduled=scheduledRelease_list, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/paused", methods=['GET','POST'])
 @login_required
@@ -95,8 +144,10 @@ def paused():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("paused.html", user=current_user, cards=paused_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    return render_template("paused.html", user=current_user, cards=paused_list, today=today, currentRel = currentRelease_list, scheduled=scheduledRelease_list, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 
 @app.route("/completed", methods=['GET','POST'])
@@ -122,14 +173,17 @@ def completed():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("completed.html", user=current_user, cards=completed_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
+    return render_template("completed.html", user=current_user, scheduled = scheduledRelease_list, cards=completed_list,  currentRel = currentRelease_list, today=today, releases_dates=releases_dates, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page)
 
 @app.route("/settings", methods=['GET','POST'])
 @login_required
 def settings():
+    user = current_user;
     if request.method == "POST":
-        user = current_user;
+        
         update_user = User.query.get(user.id)
 
         password = request.form.get("update_password")
@@ -161,8 +215,10 @@ def settings():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("settings.html", user=current_user, releases_dates=releases_dates, today=today)
+    return render_template("settings.html", user=current_user, scheduled = scheduledRelease_list, releases_dates=releases_dates, today=today, currentRel = currentRelease_list)
 
 @app.route("/statistics", methods=['GET','POST'])
 @login_required
@@ -198,8 +254,10 @@ def stats():
             releases_dates.append(datetime_object.date())
 
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("stats.html", user=current_user, today=today, releases_dates=releases_dates, langs=languages, nums=nums, tag_name=tag_name, tag_num=tag_num, type=type, amt=amt, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
+    return render_template("stats.html", user=current_user, today=today, currentRel = currentRelease_list, scheduled=scheduledRelease_list, releases_dates=releases_dates, langs=languages, nums=nums, tag_name=tag_name, tag_num=tag_num, type=type, amt=amt, watch_count=watching_count, plan_count=planning_count, pause_count=paused_count, complete_count=completed_count)
 
 @app.route("/favorites", methods=['GET','POST'])
 @login_required
@@ -225,13 +283,15 @@ def favorites():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
 
-    return render_template("favorites.html", today=today, releases_dates=releases_dates, user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
+    return render_template("favorites.html", today=today, releases_dates=releases_dates, currentRel = currentRelease_list, scheduled=scheduledRelease_list, user=current_user, cards=favorites_list, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, fav_count=favorites_count)
 
 @app.route("/releases", methods=['GET','POST'])
 @login_required
 def releases():
-    user = current_user;
+    user = current_user
     releases = Card.query.filter(Card.release_status!="Released").join(User).filter(User.id==user.id).count()
     #releases pagination
     page = request.args.get('page', 1, type=int)
@@ -258,7 +318,44 @@ def releases():
             datetime_object = datetime.strptime(item, '%Y-%m-%d')
             releases_dates.append(datetime_object.date())
     today = date.today()
+
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    weekly_releasing = []
+    for item in dates:
+        for weekday in weekdays:
+            if item != None and item != "" and weekday in item:
+                weekly_releasing.append(weekday)
+
+    # counter = 0
+
+    # for dated in releases_dates:
+    #     if dated == today:
+    #         counter += 1
+
+    # for releasing in weekly_releasing:
+    #     if releasing == today.strftime("%A"):
+    #         counter += 1
+
+
+    # for dated in releases_dates:
+    #     if dated == today:
+    #         user.alert = counter
+    #         db.session.commit()
+
+    # for releasing in weekly_releasing:
+    #     if releasing == today.strftime("%A"):
+    #         user.alert = counter
+    #         db.session.commit()
+
     return render_template("releases.html", today=today, user=current_user, cards = super_releases, unreleased = unreleased_list, releases_dates=releases_dates, scheduled=scheduledRelease_list, currentRel = currentRelease_list, releases=releases, unrelcount=unreleased_count, schedcount=scheduledRelease_count, currentcount=currentRelease_count)
+
+@app.route("/alerts", methods=['POST'])
+@login_required
+def alerts():
+    curr_user = User.query.get(request.form['user_id'])
+    curr_user.alert = 0
+    db.session.commit()
+    return '', 204
 
 @app.route("/delete_tag", methods=['POST'])
 @login_required
@@ -287,7 +384,7 @@ def update_tag():
 @app.route("/add_media", methods=['POST'])
 @login_required
 def add_media(): 
-    user = current_user;
+    user = current_user
     if request.method == "POST":
         if request.form.get('add_image_form') != "":
             image = request.form.get('add_image_form')
@@ -329,7 +426,7 @@ def add_media():
         
         db.session.add(card)
         db.session.commit()
-        
+        dateChecker()
         flash('Your new media has sucessfully been added!', category="success")
         return redirect(request.referrer)
     
@@ -362,11 +459,10 @@ def editMedia(card_id):
             card.release_information = request.form.get('edit_release_information')
         if request.form.get('edit_status') != card.status:
             card.status = request.form.get('edit_status')
-
             card.date_edited = datetime.now(timezone.utc)
         card.id = card_id 
         db.session.commit()
-
+        dateChecker()
         flash(f'{card.title} was updated!', category="success")
         return redirect(request.referrer)
 
@@ -378,6 +474,7 @@ def delete(card_id):
     card = Card.query.get(card_id)
     db.session.delete(card)
     db.session.commit()
+    dateChecker()
     flash('Your media has been deleted', category="info")
     return redirect(request.referrer)
 
@@ -503,6 +600,16 @@ def upcount():
 @login_required
 def search(): 
     user = current_user
+    dates_list = Card.query.with_entities(Card.release_information).join(User).filter(User.id==user.id).all()
+    dates = [date[0] for date in dates_list]
+    releases_dates = []
+    for item in dates:
+        if item != None and item != "" and item.startswith("Weekly") is False:
+            datetime_object = datetime.strptime(item, '%Y-%m-%d')
+            releases_dates.append(datetime_object.date())
+    today = date.today()
+    currentRelease_list = Card.query.filter(Card.release_status=="Currently Releasing").join(User).filter(User.id==user.id).order_by(Card.title.asc())
+    scheduledRelease_list = Card.query.filter(Card.release_status=="Scheduled Release").join(User).filter(User.id==user.id).order_by(Card.title.asc())
     if request.method == 'GET':
         name = request.args.get("q")
         page = request.args.get('page', 1, type=int)
@@ -513,7 +620,7 @@ def search():
         total_pgs = search_cards.pages
         if next_page == '/search':
             next_page = total_pgs
-        return render_template("search.html", user=current_user, cards=search_cards, search_query=name, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, card_amount=search_amt)
+        return render_template("search.html", user=current_user, cards=search_cards,today=today, currentRel = currentRelease_list, scheduled=scheduledRelease_list, releases_dates=releases_dates, search_query=name, next_page=next_page, prev_page=prev_page, total_pgs=total_pgs, page=page, card_amount=search_amt)
 
 
 @app.route("/dark-mode", methods=['POST'])

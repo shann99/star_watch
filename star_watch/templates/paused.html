@@ -127,7 +127,13 @@
       {%elif card.release_status == "Scheduled Release"%}
         <p id="status" class="status_paused releasing_status_more">
           <i class="bi bi-hourglass-split bell_scheduled"></i> {{card.status}}
-          <span class="releasing_status_text_more">Releasing on {{card.release_information}}</span>
+          <span class="releasing_status_text_more">Releasing on 
+            {%for date in releases_dates%}
+              {%if date.strftime("%Y-%m-%d") == card.release_information%}
+                  {{date.strftime("%b %-d, %Y")}}
+                {%endif%}
+            {%endfor%}
+          </span>
         </p>  
         {%elif card.release_status == "Currently Releasing"%}
           <p id="status" class="status_paused releasing_status_airing">

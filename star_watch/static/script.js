@@ -663,37 +663,81 @@ if (containerRC_Div) {
     };  
 }
 var date = document.getElementById("date_value");
-const releases_button = document.getElementById("release_button");
 const no_update = document.getElementById("no_update");
 const indicator = document.getElementById("releases_dot");
+const notif_num = document.getElementById("notif_num");
 const arrows2 = document.getElementsByClassName("arrows");
-
+const updates_icon = document.getElementById("updates_icon");
 var toggleIndicators = document.getElementById("toggleIndicators");
+var user_info = document.getElementById("user_info");
 
-
+let has_run;
 function alertMedia() {
-    no_update.style.display="none";
-    releases_button.style.display="inline-block";
-    indicator.style.display="block";
-    arrows2[0].classList.toggle('indicator_on');
-}    
+    if (toggleIndicators.value >= 1) {
+        switch(toggleIndicators.value) {
+            case "1":
+                document.getElementById("releases_dot").innerHTML="&#xF797;";
+                updates_icon.setAttribute("class", "bi bi-1-circle");
+                break;
+            case "2":
+                document.getElementById("releases_dot").innerHTML="&#xF79D;";
+                updates_icon.setAttribute("class", "bi bi-2-circle");                
+                break;
+            case "3":
+                document.getElementById("releases_dot").innerHTML="&#xF7A3;";
+                updates_icon.setAttribute("class", "bi bi-3-circle");
+                break;
+            case "4":
+                document.getElementById("releases_dot").innerHTML="&#xF7A9;";
+                updates_icon.setAttribute("class", "bi bi-4-circle");
+                break;  
+            case "5":
+                document.getElementById("releases_dot").innerHTML="&#xF7AF;";
+                updates_icon.setAttribute("class", "bi bi-5-circle");
+                break;      
+            case "6":
+                document.getElementById("releases_dot").innerHTML="&#xF7B5;";
+                updates_icon.setAttribute("class", "bi bi-6-circle");
+                break;
+            case "7":
+                document.getElementById("releases_dot").innerHTML="&#xF7BB;";
+                updates_icon.setAttribute("class", "bi bi-7-circle");
+                break;      
+            case "8":
+                document.getElementById("releases_dot").innerHTML="&#xF7C1;";
+                updates_icon.setAttribute("class", "bi bi-8-circle");
+                break;   
+            case "9":
+                document.getElementById("releases_dot").innerHTML="&#xF7C7;";
+                updates_icon.setAttribute("class", "bi bi-9-circle");
+                break; 
+        }
+        indicator.style.display="block";
+        arrows2[0].classList.toggle('indicator_on');
+        updates_icon.style.display="inline-block";
+        setInterval(alertMedia, 1000 * 60 * 60 * 24);
+    }
+    else {
+        setInterval(alertMedia, 1000 * 60 * 60 * 24);
+    }
+}   
+alertMedia();
 
 const update_read = document.getElementById("update_read");
-if(update_read) {
-   update_read.onclick = function() {markRead()}; 
-}
 
-function markRead() {
-    no_update.style.display="inline-block";
-    releases_button.style.display="none";
-    indicator.style.display="none";
-    arrows2[0].classList.remove('indicator_on');
-    toggleIndicators.value=0
-    console.log(toggleIndicators.value)
-    update_read.setAttribute("disabled", "");
-    
-}
-console.log(toggleIndicators.value)
-if(toggleIndicators.value >= 1) {
-    alertMedia();
-}
+update_read.addEventListener("click", (event) => {
+    $(document).ready(function() { 
+        $.ajax({
+            type: "POST",
+            url: "/alerts",
+            data: {"user_id": user_info.value},
+            success: function() {
+                indicator.style.display="none";
+                arrows2[0].classList.remove('indicator_on');
+                updates_icon.style.display="none";
+            }
+        });
+    })
+});
+   
+
