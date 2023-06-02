@@ -1,0 +1,97 @@
+body {
+    background-color:rgb(42 41 41) !important;
+    margin: -2em 0 0 0em !important;
+    padding-bottom: 800px !important; 
+}
+.page-header {
+    font-family: 'Poppins', sans-serif;
+    padding-top: 1em;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: space-around;
+    color: #e5e5e5;
+}
+.page-title {
+    font-family: 'Lexend Deca';
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+    color: #e5e5e5;
+}
+
+.pagenum_button {
+    color: white;
+    background-color: #c67f8d;
+    border:none !important;
+}
+#currentpage_btn {
+    color:white !important;
+    border:none !important;
+    background-color: #e86981 !important;
+    /* #dd8092 */
+}
+.pagenum_button:hover {
+    color: white !important;
+    background-color: #e86981;
+}
+.pagenum_button:focus, .pagenum_button:active {
+    outline: none !important;
+    box-shadow: none !important;
+ }
+ #currentpage_btn:focus, #currentpage_btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+ }
+ .prev-btns {
+    color: #f39eaec4;
+    margin-top: 0.1em;
+    transform: scale(0.7);
+
+}
+.next-btns {
+    color: #f39eaec4; 
+    margin-top: 0.1em;
+    transform: scale(0.7);
+
+}
+.prev-btns:hover {
+    color: #ff758f;
+}
+.next-btns:hover{
+    color: #ff758f;
+}
+
+#account-title {
+    font-family: 'Lexend Deca';
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align: center;
+    color: white;
+}
+.search_text {
+    color: #d9d9d9;
+}
+.releasesTitle {
+    color: #e5e5e5 ;
+}
+#schedreleasesArrowsDiv {
+    color: white;
+}
+#unreleasedArrowsDiv {
+    color: white;
+}
+#currentreleasesArrowsDiv {
+    color: white;
+}
+.tagChartWrapper {
+    background: #39384bb5; 
+}
+.langChartWrapper {
+    background: #39384bb5; 
+}
+.chart-container {
+    background: #39384bb5; 
+}

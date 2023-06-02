@@ -1,188 +1,181 @@
 {%extends "base.html"%}
 {%block header%}
- <h1>{%block title%}Paused{%endblock%}</h1>
- {%endblock%}
+<h1>{%block title%}Paused{%endblock%}</h1>
+{%endblock%}
 {%block body%}
 
 
-<div class = "page-header">
+<div class="page-header">
   <h2> Paused </h2>
   <br>
-  {%set counter = namespace(value=0)%} 
-  {%for card in user.cards %} 
-   {%if card.status == 'Paused' %}
-      {% set counter.value = counter.value + 1 %}
-    {%endif%} 
-  {%endfor%}  
-{%if counter.value == 0%}
-        <h3 class="no_media"> There doesn't seem to be anything on your paused list.</h3>
-        <h5 class="no_media"> Click on the plus button to add some media to your watch list!  </h5> 
-{%else%} 
-<div class="page_numbers">
-  {% if prev_page != '/paused' %}
-    <a class='prev-btns' href="{{prev_page}}"> 
-      <i class="bi bi-arrow-left-square"></i>
-    </a>
-  {%endif%}
-  {%for page_num in cards.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-  {%if page_num%}
-      {%if cards.page == page_num %}
-        <a class="btn btn-primary" href="{{url_for('paused', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
-      {%else%}
-      <a class="btn btn-outline-primary pagenum_button" href="{{url_for('paused', page=page_num)}}">{{page_num}}</a>
-      {%endif%}
-    {%else%}
-      <div class="page_dots">
-        <i class="bi bi-three-dots"></i>
-      </div>
+  {%set counter = namespace(value=0)%}
+  {%for card in user.cards %}
+  {%if card.status == 'Paused' %}
+  {% set counter.value = counter.value + 1 %}
   {%endif%}
   {%endfor%}
-  {% if page != total_pgs %}
-    <a class='next-btns' href="{{next_page}}"> 
+  {%if counter.value == 0%}
+  <h3 class="no_media"> There doesn't seem to be anything on your paused list.</h3>
+  <h5 class="no_media"> Click on the plus button to add some media to your watch list! </h5>
+  {%else%}
+  <div class="page_numbers">
+    {% if prev_page != '/paused' %}
+    <a class='prev-btns' href="{{prev_page}}">
+      <i class="bi bi-arrow-left-square"></i>
+    </a>
+    {%endif%}
+    {%for page_num in cards.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {%if page_num%}
+    {%if cards.page == page_num %}
+    <a class="btn btn-primary" href="{{url_for('paused', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+    {%else%}
+    <a class="btn btn-outline-primary pagenum_button" href="{{url_for('paused', page=page_num)}}">{{page_num}}</a>
+    {%endif%}
+    {%else%}
+    <div class="page_dots">
+      <i class="bi bi-three-dots"></i>
+    </div>
+    {%endif%}
+    {%endfor%}
+    {% if page != total_pgs %}
+    <a class='next-btns' href="{{next_page}}">
       <i class="bi bi-arrow-right-square"></i>
     </a>
-  {%endif%}
+    {%endif%}
   </div>
 </div>
 <br>
 
 
 {%set counter = namespace(count=0, tag=0)%}
-<div class = "card-container">
-  {%for card in cards.items %} 
-    <div class="card-item">
-      <div class="toggleEdit">
-        <button type="button" class="edit_button" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+<div class="card-container">
+  {%for card in cards.items %}
+  <div class="card-item">
+    <div class="toggleEdit">
+      <button type="button" class="edit_button" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
+          viewBox="0 0 16 16">
+          <path
+            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+          <path fill-rule="evenodd"
+            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
         </svg>
-        </button>
-      </div>
-      <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0"> 
-        <img src = {{card.image}} class="card-image"  alt='{{card.title}}'>
-      </div>
-      
-      <form action="" method="POST" class="editTagForm">  
-        <div class="tagTest">  
-         <div class="tag">  
-           {%for tag in card.tags %} 
-             <span class="tag-name"> {{tag.name}} 
-              <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
-                <span class="material-symbols-outlined expand_extra">chevron_right</span>
-              </button>
-               <button type="button" class="expand_edit" onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i class="bi bi-pencil-square"></i></button>
-               <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i class="bi bi-trash"></i></button>
-             </span> 
-             <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
-             <input type="hidden" class="updateTagCounter" name="updateTagCounter" value="{{counter.count}}">
-             <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
-             <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}"> 
-             {% set counter.tag = counter.tag + 1 %}
-           {%endfor%} 
-           <div class="divtag">
-             <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><i class="bi bi-plus-circle-fill"></i></button> 
-             <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><i class="bi bi-x-circle-fill"></i></button>
-           </div> 
-         </div> 
-      </div>
-      </form>      
-       <form action="" method="POST" class="tagForm"> 
-        <div class="addTagWrapper">     
-          <div class="addTagForm">
-            <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
-            <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
-            <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">  
-          </div> 
-        </div>     
-      </form>
- 
+      </button>
+    </div>
+    <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0">
+      <img src={{card.image}} class="card-image" alt='{{card.title}}'>
+    </div>
 
-      <div class="hearts"> 
-        <div class="heart_buttons">
-          <p id="name"><u>{{card.title}}</u>
-          {%if card.fav == False%}
-            <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart"> 
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
+    <form action="" method="POST" class="editTagForm">
+      <div class="tagTest">
+        <div class="tag">
+          {%for tag in card.tags %}
+          <span class="tag-name"> {{tag.name}}
+            <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+              <span class="material-symbols-outlined expand_extra">chevron_right</span>
             </button>
-          {%else%}
-            <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
-              <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-              </svg>
-            </button>
-          {%endif%}
-          </p> 
+            <button type="button" class="expand_edit"
+              onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i
+                class="bi bi-pencil-square"></i></button>
+            <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i
+                class="bi bi-trash"></i></button>
+          </span>
+          <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
+          <input type="hidden" class="updateTagCounter" name="updateTagCounter" value="{{counter.count}}">
+          <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
+          <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}">
+          {% set counter.tag = counter.tag + 1 %}
+          {%endfor%}
+          <div class="divtag">
+            <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><i
+                class="bi bi-plus-circle-fill"></i></button>
+            <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><i
+                class="bi bi-x-circle-fill"></i></button>
+          </div>
         </div>
       </div>
-      
-      <div class="bottom_row">
-        {%if card.release_status == "Not yet released"%}
-        <p id="status" class="status_paused releasing_status">
-          <i class="bi bi-hourglass bell_unaired"></i> {{card.status}}
-          <span class="releasing_status_text">{{card.release_status}}</span>
-        </p> 
-      {%elif card.release_status == "Scheduled Release"%}
-        <p id="status" class="status_paused releasing_status_more">
-          <i class="bi bi-hourglass-split bell_scheduled"></i> {{card.status}}
-          <span class="releasing_status_text_more">Releasing on 
-            {%for date in releases_dates%}
-              {%if date.strftime("%Y-%m-%d") == card.release_information%}
-                  {{date.strftime("%b %-d, %Y")}}
-                {%endif%}
-            {%endfor%}
-          </span>
-        </p>  
-        {%elif card.release_status == "Currently Releasing"%}
-          <p id="status" class="status_paused releasing_status_airing">
-            <i class="bi bi-calendar2-week-fill bell_releasing"></i> {{card.status}}
-            <span class="releasing_status_text_airing">{{card.release_information}}</span></p>
-        {%else%}
-          <p id="status" class="status_paused"> #{{card.status}}</p>
-        {%endif%}
-        <div class="ep-tracker">
-          <p class="ep-on">{{card.current_ep}}</p>
-          <p id="divider"> / </p>
-          <p id="ep-total">{{card.total_eps}}</p>
-        </div> 
+    </form>
+    <form action="" method="POST" class="tagForm">
+      <div class="addTagWrapper">
+        <div class="addTagForm">
+          <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
+          <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
+          <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
+        </div>
       </div>
-        
-      <div class="see_more">
-        <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
-          <i class="bi bi-arrow-up-left-square"></i>
-        </button>
-      </div>
-        
-      <div class="see_less">
-        <button type="button" class ="editButtonB" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-          </svg>
-        </button>
-        <br>
-        <h3 class="mediaTitle"> {{card.title}} </h3> <br>
-        {% if card.rating == "Rating"%}
-          <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
-        {%else%}
-          <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
-        {%endif%}
-        {%if card.description == "" %}
-          <p class="description">No current description, click on the edit button in the top right to add one!</p> 
-        {%else%}
-          <p class="description"> <b> Description: </b> <br> {{card.description}} <br> </p> 
-        {%endif%}
-          <br> 
-          <br> 
-          <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')"> 
-            <i class="bi bi-arrow-up-left-square"></i>
+    </form>
+
+
+    <div class="hearts">
+      <div class="heart_buttons">
+        <p class="name"><u>{{card.title}}</u>
+          {%if card.fav == False%}
+          <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
+              viewBox="0 0 16 16">
+              <path
+                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+            </svg>
           </button>
+          {%else%}
+          <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+            </svg>
+          </button>
+          {%endif%}
+        </p>
       </div>
     </div>
-    {% set counter.count = counter.count + 1 %}
-    {%endfor%}  
-  </div> 
-{%endif%} 
+
+    <div class="bottom_row">
+      <p class="status" class="status_paused"> #{{card.status}}</p>
+      <div class="ep-tracker">
+        <p class="ep-on">{{card.current_ep}}</p>
+        <p id="divider"> / </p>
+        <p id="ep-total">{{card.total_eps}}</p>
+      </div>
+    </div>
+
+    <div class="see_more">
+      <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
+        <i class="bi bi-arrow-up-left-square"></i>
+      </button>
+    </div>
+
+    <div class="see_less">
+      <button type="button" class="editButtonB" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
+          viewBox="0 0 16 16">
+          <path
+            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+          <path fill-rule="evenodd"
+            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+        </svg>
+      </button>
+      <br>
+      <h3 class="mediaTitle"> {{card.title}} </h3> <br>
+      {% if card.rating == "Rating" or card.rating == "Choose a Rating" %}
+      <p class="rating"> <b>Rating: </b> ? / 10 </p> <br> <br>
+      {%else%}
+      <p class="rating"> <b>Rating:</b> {{card.rating}} / 10 </p> <br> <br>
+      {%endif%}
+      {%if card.description == "" %}
+      <p class="description">No current description, click on the edit button in the top right to add one!</p>
+      {%else%}
+      <p class="desc-title">Description: </p>
+      <div class="overflow-scroll description"> {{card.description}} </div>
+      {%endif%}
+      <br>
+      <br>
+      <button class="flip_card_less" onclick="flipCardA('{{counter.count}}')">
+        <i class="bi bi-arrow-up-left-square"></i>
+      </button>
+    </div>
+  </div>
+  {% set counter.count = counter.count + 1 %}
+  {%endfor%}
+</div>
+{%endif%}
 {%endblock%}

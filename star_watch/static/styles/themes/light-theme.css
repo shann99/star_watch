@@ -1,7 +1,13 @@
 body {
-    background-color:rgb(42 41 41) !important;
-    margin: -2em 0 0 0em !important;
-    padding-bottom: 800px !important; 
+    background-color: rgb(248 196 206);
+    margin: -2em 0 0 0em;
+    padding-bottom: 800px; 
+}
+.page-title {
+    font-family: 'Lexend Deca';
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
 }
 .page-header {
     font-family: 'Poppins', sans-serif;
@@ -10,33 +16,25 @@ body {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    flex-direction: column;
     align-content: space-around;
-    color: #e5e5e5;
-}
-.page-title {
-    font-family: 'Lexend Deca';
-    padding-top: 1em;
-    padding-bottom: 1em;
-    text-align: center;
-    color: #e5e5e5;
+    flex-direction: column;
 }
 
 .pagenum_button {
-    color: white;
-    background-color: #c67f8d;
-    border:none !important;
+    color:white;
+    background-color: #fa003227;
+    border:none;
 }
 #currentpage_btn {
-    color:white !important;
-    border:none !important;
-    background-color: #e86981 !important;
-    /* #dd8092 */
+    color:white;
+    border:none;
+    background-color: #fa003152;
 }
 .pagenum_button:hover {
-    color: white !important;
-    background-color: #e86981;
+    color: white;
+    background-color: #fa003152;
 }
+
 .pagenum_button:focus, .pagenum_button:active {
     outline: none !important;
     box-shadow: none !important;
@@ -58,31 +56,27 @@ body {
 
 }
 .prev-btns:hover {
-    color: #ff758f;
+    color: #fd0d4666;
 }
 .next-btns:hover{
-    color: #ff758f;
+    color: #fd0d4666;
 }
-
 #account-title {
     font-family: 'Lexend Deca';
     padding-top: 1em;
     padding-bottom: 2em;
     text-align: center;
-    color: white;
-}
-.search_text {
-    color: #d9d9d9;
+    color: black;
 }
 .releasesTitle {
-    color: #e5e5e5 ;
+    color: #19070a;
 }
-#schedreleasesArrowsDiv {
-    color: white;
+.tagChartWrapper {
+    background: #c2c1e1b5; 
 }
-#unreleasedArrowsDiv {
-    color: white;
+.langChartWrapper {
+    background: #c2c1e1b5; 
 }
-#currentreleasesArrowsDiv {
-    color: white;
+.chart-container {
+    background: #c2c1e1b5; 
 }

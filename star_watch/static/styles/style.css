@@ -19,7 +19,7 @@
     list-style: none;
     display: flex;
     margin-top: 2.1em;
-    margin-left: -9em;
+    margin-left: 0em;
     
 } 
 .nav-item {
@@ -116,7 +116,7 @@
     border-radius: 7px;
     box-shadow: 3px 3px 5px 1px rgb(47, 47, 47);
     z-index: 2;
-    width:250px;
+    width: 220px;
     /* border: none; */
 }
 
@@ -262,16 +262,27 @@
     color: #98cfff;
     font-family: 'Lexend Deca';
 }
-#name  {
+.name  {
     font-size: 19.5px;
     float:left;
     padding-top: 8px;
     padding-left: 3px;
     grid-area: name;
     color: aliceblue;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     font-family: 'Lexend Deca';
 }
-#status {
+.name .name-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+    /* padding-right: 2em; */
+
+.status {
     grid-area: status;
     float: right;
     color: powderblue;
@@ -586,6 +597,7 @@
 .add_plus {
     width: 100%;  
     color: #ff889d;
+    font-size: 13px;
 }
 
 #accountForm {
@@ -919,15 +931,22 @@
 .see_less {
     display:none;
     position:relative;
-    grid-template-areas: "buttons" "title" "rating" "desc";
+    grid-template-areas: "buttons" "title" "rating" "desc-title" "desc";
 }
 .description {
     font-size: 14px;
     display:none;
     grid-area: desc;
     font-family: 'Lexend Deca';   
+    height: 200px;
+    background: #381b535e;
+    border-radius: 6px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
 }
 .desc-title {
+    grid-area: desc-title;
     font-weight: bold !important;
     font-family: 'Lexend Deca';   
 }
@@ -1202,8 +1221,8 @@
     color: white;
 }
 #appearance_dropdown li:hover {
-    background: #ff5a7878;
-    border-radius: 3px;
+    background: #a800ff3b;
+    border-radius: 4px;
 }
 #appearance_dropdown li button:hover a:hover{
     color:white;
@@ -1474,6 +1493,7 @@
     grid-template-columns: auto auto auto auto;
     justify-content: center;
     border-radius: 15px;
+    row-gap: 3em;
 }
 
 .fav-item {
@@ -1503,7 +1523,7 @@
     object-fit: cover;
     box-shadow: 1px 2px 4px black;
 }
-.fav-item #name {
+.fav-item .name {
     font-size: 15px;
 }
 .fav-item .hearts {
@@ -1553,7 +1573,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-#labelText {
+.labelText {
     font-size: 15px;
     font-family: 'Lexend Deca';
 
@@ -1640,28 +1660,26 @@
 }
 #langChart{
     height: 400px;
-    width: 1200px;
+    width: 920px;
     margin-left:auto;
     margin-right:auto;
    
 }
 .langChartWrapper {
-    background: #c1e1c5; 
     margin-left:auto;
     margin-right:auto;
     border-radius: 12px;
-    width: 1500px;
+    width: 1050px;
     padding:50px;
 }
 
 .chart-container {
     display:flex;
     justify-content: center;
-    background: #c1e1c5;    
     border-radius: 12px;
     margin-left: auto;
     margin-right: auto;
-    width: 1500px;
+    width: 1050px;
 
 }
 .countChartWrapper {
@@ -1673,8 +1691,8 @@
 #countChart {
     margin-left:auto;
     margin-right:auto;
-    height: 300px;
-    width: 550px;
+    height: 375px;
+    width: 375px;
     
 }
 .mediaChartWrapper {
@@ -1686,23 +1704,22 @@
 #mediaChart {
     margin-left:auto;
     margin-right:auto;
-    height: 300px;
-    width: 550px;
+    height: 375px;
+    width: 375px;
 }
 .tagChartWrapper {
-    background: #c1e1c5; 
     margin-left:auto;
     margin-right:auto;
     border-radius: 12px;
-    width: 1500px;
+    width: 1050px;
     padding:50px;
     
 }
 #tagChart {
     margin-left:auto;
     margin-right:auto;
-    height: 750px;
-    width: 1200px;
+    height: 660px;
+    width: 930px;
 }
 .alert_close:focus, .alert_close:active {
     outline: none !important;
@@ -1720,138 +1737,7 @@
 .release_symbol {
     font-size: 12px;
 }
-.release_info {
-    position: relative;
-    display: inline-block;
-    
-}
-  
-/* Tooltip text */
-.release_info .release_info_text {
-    visibility: hidden;
-    width: 286px;
-    background-color: #3f3e3ee0;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 13px 15px;
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;  
-    margin-top: -12.5em;
-    margin-left: -10.59em;
-    font-size: 14px;
-}
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.release_info:hover .release_info_text {
-    visibility: visible;
-}
-.release_info .release_info_text::after {
-    content: " ";
-    position: absolute;
-    top: 100%; /* At the bottom of the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
-}
-
-.bell_releasing {
-    color: rgb(255 0 249);
-    font-size: 20px;
-}
-.bell_unaired {
-    color: black;
-    font-size: 20px;
-}
-.bell_scheduled {
-    color: rgb(241 188 120);
-    font-size: 20px;
-}
-.releasing_status_more {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip text */
-.releasing_status_more .releasing_status_text_more {
-    visibility: hidden;
-    width: 172px;
-    background-color: rgb(232 166 80);
-    color: #fff;
-    text-align: center;
-    padding: 5px 6px;
-    border-radius: 6px;
-    position: absolute;
-    font-size: 12px;
-    margin-top: -2.6em;
-    margin-left: -13.76em;
-    z-index: 1;
-
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.releasing_status_more:hover .releasing_status_text_more {
-    visibility: visible;
-}
-
-.releasing_status {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip text */
-.releasing_status .releasing_status_text {
-    visibility: hidden;
-    width: 160px;
-    background-color: rgb(53 56 56);
-    color: #fff;
-    text-align: center;
-    padding: 5px 15px;
-    border-radius: 6px;
-
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    font-size: 12px;
-    margin-top: -3.2em;
-    margin-left: -13.2em;
-    z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.releasing_status:hover .releasing_status_text {
-    visibility: visible;
-}
-
-.releasing_status_airing {
-    position: relative;
-    display: inline-block;
-}
-
-/* Tooltip text */
-.releasing_status_airing .releasing_status_text_airing {
-    visibility: hidden;
-    width: 160px;
-    background-color: rgb(255 0 249);
-    color: #fff;
-    text-align: center;
-    padding: 5px 13px;
-    border-radius: 6px;
-
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    font-size: 12px;
-    margin-top: -3.2em;
-    margin-left: -13.7em;
-    z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.releasing_status_airing:hover .releasing_status_text_airing {
-    visibility: visible;
-}
 .edit_releaseStatSelect {
     padding: 0.7em;
 }
@@ -1918,7 +1804,7 @@
     object-fit: cover;
     box-shadow: 1px 2px 4px black;
 }
-.releases-item #name {
+.releases-item .name {
     font-size: 25px;
 }
 .releases-item .hearts {
@@ -2127,7 +2013,7 @@
     margin-left:auto;
     margin-right:4em;
 }
-.update_title #name {
+.update_title .name {
     padding-left: 15px;
     padding-right: 15px;
     font-size: 16px;
@@ -2137,4 +2023,144 @@
 }
 #updates_icon {
     display:none;
+}
+#searchresults_div {
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: auto auto auto; */
+    width: 1200px;
+    margin-left: -5em;
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 1em;
+    visibility: hidden;
+
+   
+
+}
+
+#search_results {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    border-radius: 6px;
+    margin-right: 1.3em;
+    margin-left: 1.3em;
+    visibility: hidden;
+    justify-content: start;
+    width: 100%;
+
+}
+/* #search_results img {
+ 
+} */
+
+article {
+    display: grid;
+    grid-template-columns: 116px 272px;
+    grid-template-rows: 22px 18px 79px;
+    grid-template-areas:
+        "image title "
+        ". year"
+        ". button";
+    font-family: 'Lexend Deca';
+    padding-bottom: 1em;
+
+    
+}
+/* article p {
+    grid-area: desc;
+    font-size: 10px;
+    margin-top: 4.5em;
+    padding-left: 12px;
+} */
+article h5 {
+    grid-area: title;
+    text-overflow: ellipsis;
+    margin-bottom: 0em;
+    font-size: 14px !important;
+    margin-top: 0.1em;
+    margin-left: -18px;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 2em;
+}
+
+article img {
+    grid-area: image;
+    width: 90px;
+    height: 122px;
+    border-radius: 6px;
+    margin-top: 1px;
+}
+article button {
+    grid-area: button;
+    background-color: #ffabbd;
+    font-family: 'Lexend Deca', 'Bootstrap-icons';  
+    border: 1px solid black;
+    margin-top: 6em;
+    font-size: 10px;
+    border-radius: 5px;
+    width: 66px;
+    height: 18px;
+    display: none;
+    justify-content: center;
+    margin-left: -1.5em;
+}
+article:hover button {
+    display: flex;
+}
+article span {
+    grid-area: year;
+    font-size: 12px;
+    margin-top: 1.9em;
+    margin-left: -1.5em;
+    font-style: italic;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+#tv_results {
+    padding: 1em;
+    display: none;
+    background-color: aliceblue;
+    border-radius: 6px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#movie_results {
+    padding: 1em;
+    display: none;
+    background-color: aliceblue;
+    border-radius: 6px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+} 
+#anime_results {
+    padding: 1em;
+    display: none;
+    background-color: aliceblue;
+    border-radius: 6px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#search_media {
+    margin-left: auto;
+    width: 75%;
+    margin-right: auto;
+}
+
+.div_title {
+    color: white;
+}
+#tv_title {
+    display: none;
+}
+#movie_title {
+    display: none;
+}
+#anime_title {
+    display: none;
 }

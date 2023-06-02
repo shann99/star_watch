@@ -142,7 +142,7 @@ function switch_modes_light(user_id) {
             url: "/light-mode",
             data: {"user_id": user_id},
             success: function() {
-                site_theme.href = "light-theme.css"; 
+                site_theme.href = "themes/light-theme.css"; 
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -155,7 +155,7 @@ function switch_modes_dark(user_id) {
             url: "/dark-mode",
             data: {"user_id": user_id},
             success: function() {    
-                site_theme.href = "dark-theme.css";
+                site_theme.href = "themes/dark-theme.css";
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -168,7 +168,7 @@ function system_mode(user_id) {
             url: "/system-mode",
             data: {"user_id": user_id},
             success: function() {    
-                site_theme.href = "system-theme.css";                
+                site_theme.href = "themes/system-theme.css";                
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -501,6 +501,7 @@ const seemore = document.getElementsByClassName("see_more");
 const less = document.getElementsByClassName("see_less");
 const rating = document.getElementsByClassName("rating");
 const desc = document.getElementsByClassName("description");
+const desc_title = document.getElementsByClassName("desc-title");
 const card = document.getElementsByClassName("card-item");
 const edit_button = document.getElementsByClassName("toggleEdit");
 
@@ -520,6 +521,7 @@ function flipCardB(item) {
         less[item].style.display="grid";
         rating[item].style.display="inline";
         desc[item].style.display="inline";
+        desc_title[item].style.display="inline";
     }, 150)
    
 }
@@ -530,6 +532,7 @@ function flipCardA(item) {
         less[item].style.display="none";
         rating[item].style.display="none";
         desc[item].style.display="none";
+        desc_title[item].style.display="none";
     }, 135)
     
     setTimeout( () => {    
@@ -715,7 +718,7 @@ function alertMedia() {
         indicator.style.display="block";
         arrows2[0].classList.toggle('indicator_on');
         updates_icon.style.display="inline-block";
-        setInterval(alertMedia, 1000 * 60 * 60 * 24);
+        // setInterval(alertMedia, 1000 * 60 * 60 * 24);
     }
     else {
         setInterval(alertMedia, 1000 * 60 * 60 * 24);

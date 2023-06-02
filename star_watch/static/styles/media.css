@@ -192,7 +192,7 @@
         margin-left: -8.7em;
     }
     .carousel-item {
-        height: 240px;
+        height: 450px;
     }
     #search_button {
         display: none;
@@ -391,7 +391,7 @@
 
 @media screen and (min-width: 1440px) and (max-width:1919px) {
     .tag {
-        margin-top: -0.7em;
+        margin-top: -0.4em;
     }
     .tagForm {
         margin-top: -0.8em;
@@ -401,6 +401,7 @@
     }
     .card-item {
         grid-template-columns: 390px;
+        height: 451px;
     }
     .card-img-container {
         width: 390px;
@@ -413,7 +414,7 @@
         margin-left: 8em;
     }
     .nav-menu {
-        margin-left: 1em;
+        margin-left: -8em;
     }
     .heart_filled.animate::before {
         left: 27%;
@@ -422,10 +423,21 @@
         left: 27%;
     }
     .toggleEdit {
-        margin-left: 93%;
+        margin-left: 94%;
     }
     .editButtonB {
         margin-left: 93%;
+    }
+    .fav-container {
+        grid-template-columns: auto auto auto;
+    }
+    .card-item.active {
+        grid-template-columns: 390px;
+        height: 451px;
+    }
+    .card-item.unactive {
+        animation: flipA 0.5s;
+        height: 451px;
     }
 }
 
