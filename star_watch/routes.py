@@ -37,19 +37,26 @@ def index():
     user = current_user
     # querying images where watch status equals watching
     item_list = (
-        Card.query.with_entities(Card.image)
+        Card.query.with_entities(Card.image, Card.title)
         .filter(Card.status == "Watching")
         .join(User)
         .filter(User.id == user.id)
         .all()
     )
     # retrieving the image itself without the extra parenthesis and commas from the query list
-    images = [image[0] for image in item_list]
-    new_images = []
-    np.random.shuffle(images)
-    for image in images:
-        if image != "/background.jpg":
-            new_images.append(image)
+    item_dict = dict([(key, value) for key, value in item_list])
+    item_dict = {
+        key: value for key, value in item_dict.items() if key != "/background.jpg"
+    }
+    dict_list = list(item_dict.items())
+    np.random.shuffle(dict_list)
+    shuffled_dict = dict(dict_list)
+
+    images = []
+    titles = []
+    for key, value in shuffled_dict.items():
+        images.append(key)
+        titles.append(value)
 
     page = request.args.get("page", 1, type=int)
     watching_list = (
@@ -58,7 +65,7 @@ def index():
         .filter(User.id == user.id)
         .order_by(Card.release_status)
         .order_by(Card.title.asc())
-        .paginate(page=page, per_page=9)
+        .paginate(page=page, per_page=15)
     )
 
     prev_page = url_for("index", page=watching_list.prev_num)
@@ -101,7 +108,8 @@ def index():
         currentRel=currentRelease_list,
         scheduled=scheduledRelease_list,
         releases_dates=releases_dates,
-        images=new_images,
+        images=images,
+        titles=titles,
         next_page=next_page,
         prev_page=prev_page,
         total_pgs=total_pgs,
@@ -120,7 +128,7 @@ def planning():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=9)
+        .paginate(page=page, per_page=20)
     )
 
     prev_page = url_for("planning", page=planning_list.prev_num)
@@ -180,7 +188,7 @@ def paused():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=9)
+        .paginate(page=page, per_page=20)
     )
 
     prev_page = url_for("paused", page=paused_list.prev_num)
@@ -241,7 +249,7 @@ def completed():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=9)
+        .paginate(page=page, per_page=20)
     )
 
     prev_page = url_for("completed", page=completed_list.prev_num)
@@ -485,7 +493,7 @@ def favorites():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.title.asc())
-        .paginate(page=page, per_page=16)
+        .paginate(page=page, per_page=15)
     )
 
     prev_page = url_for("favorites", page=favorites_list.prev_num)

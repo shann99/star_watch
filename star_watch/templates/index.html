@@ -12,9 +12,6 @@
 {%endif%}
 {%endfor%}
 {%if counter.value == 0%}
-<div class="page-title">
-  <h2> Currently Watching </h2>
-</div>
 <h3 class="no_media"> There doesn't seem to be anything on your watching list. </h3>
 <h5 class="no_media"> Click on the plus button to add some media to your watch list! </h5>
 {%else%}
@@ -23,24 +20,34 @@
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="2000">
       <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}} id="img-active0">
+      <h1 class="carousel_titles">{{titles[0]}}</h1>
     </div>
     <div class="carousel-item">
       <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}} id="img-active1">
+      <h1 class="carousel_titles">{{titles[1]}}</h1>
+
     </div>
     <div class="carousel-item">
       <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}} id="img-active2">
+      <h1 class="carousel_titles">{{titles[2]}}</h1>
+
     </div>
     <div class="carousel-item">
       <img src="{{images[3]}}" class="carousel-img" alt={{images[3]}} id="img-active3">
+      <h1 class="carousel_titles">{{titles[3]}}</h1>
+
     </div>
     <div class="carousel-item">
       <img src="{{images[4]}}" class="carousel-img" alt={{images[4]}} id="img-active4">
+      <h1 class="carousel_titles">{{titles[4]}}</h1>
+
     </div>
   </div>
-  <button class="carousel-control-prev carousel-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+  <button class="carousel-control-prev carousel-prev" id="button-back" type="button" data-bs-target="#myCarousel"
+    data-bs-slide="prev">
     <i class="bi bi-caret-left-square"></i>
   </button>
-  <button id="slider_buttons" class="carousel-control-next carousel-next" type="button" data-bs-target="#myCarousel"
+  <button class="carousel-control-next carousel-next" id="button-forward" type="button" data-bs-target="#myCarousel"
     data-bs-slide="next">
     <i class="bi bi-caret-right-square"></i>
   </button>
@@ -51,9 +58,15 @@
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="2000">
       <img src="{{images[0]}}" class="carousel-img" alt={{images[0]}} id="lesser-img-active0">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="carousel_titles">{{titles[0]}}</h5>
+      </div>
     </div>
     <div class="carousel-item">
       <img src="{{images[1]}}" class="carousel-img" alt={{images[1]}} id="lesser-img-active1">
+      <div class="carousel-caption d-none d-md-block">
+        <h5 class="carousel_titles">{titles[1]}</h5>
+      </div>
     </div>
     <div class="carousel-item">
       <img src="{{images[2]}}" class="carousel-img" alt={{images[2]}} id="lesser-img-active2">
@@ -71,37 +84,13 @@
   {%endif%}
   {%endif%}
   <br>
-  <div class="pagenum_header">
-    <div class="page_numbers">
-      {% if prev_page != '/' %}
-      <a class='prev-btns' href="{{prev_page}}">
-        <i class="bi bi-arrow-left-square"></i>
-      </a>
-      {%endif%}
-      {%for page_num in cards.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {%if page_num%}
-      {%if cards.page == page_num %}
-      <a class="btn btn-primary" href="{{url_for('index', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
-      {%else%}
-      <a class="pagenum_button btn btn-outline-primary " href="{{url_for('index', page=page_num)}}">{{page_num}}</a>
-      {%endif%}
-      {%else%}
-      <div class="page_dots">
-        <i class="bi bi-three-dots"></i>
-      </div>
-      {%endif%}
-      {%endfor%}
-      {% if page != total_pgs %}
-      <a class='next-btns' href="{{next_page}}">
-        <i class="bi bi-arrow-right-square"></i>
-      </a>
-      {%endif%}
-    </div>
+  <div class="page-title">
+    <p> Currently Watching </p>
   </div>
   <div class="card-container">
     {%for card in cards.items %}
     <div class="card-item">
-      <div class="toggleEdit">
+      <!-- <div class="toggleEdit">
         <button type="button" class="edit_button" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
             viewBox="0 0 16 16">
@@ -111,12 +100,12 @@
               d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
           </svg>
         </button>
-      </div>
-      <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0">
+      </div> -->
+      <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-tilt-max="4">
         <img src={{card.image}} class="card-image" alt='{{card.title}}'>
       </div>
 
-      <form action="" method="POST" class="editTagForm">
+      <!-- <form action="" method="POST" class="editTagForm">
         <div class="tagTest">
           <div class="tag">
             {%for tag in card.tags %}
@@ -153,13 +142,18 @@
             <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
           </div>
         </div>
-      </form>
+      </form> -->
 
 
       <div class="hearts">
         <div class="heart_buttons">
-          <p class="name"><u>{{card.title}}</u>
-            {%if card.fav == False%}
+          <p class="name">{{card.title}}
+
+
+
+
+
+            <!-- {%if card.fav == False%}
             <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
                 viewBox="0 0 16 16">
@@ -175,14 +169,30 @@
                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
               </svg>
             </button>
-            {%endif%}
+            {%endif%} -->
           </p>
         </div>
       </div>
+      <div class="ep-tracker">
+        <div class="upcountDiv">
+          <p class="ep-on">{{card.current_ep}}</p>
+        </div>
+        <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}', '{{card.title}}')"
+          class="upcount">+</button>
+        <div class="hidden_input1">
+          <input type="hidden" class="currentEp" name="currentEp" value="{{card.current_ep}}">
+        </div>
+        <div class="hidden_input2">
+          <input type="hidden" class="totalEp" name="totalEp" value="{{card.total_eps}}">
+        </div>
 
-      <div class="bottom_row">
-        <p class="status" class="status_watching"> #{{card.status}}</p>
-        <div class="ep-tracker">
+        <p id="divider"> / </p>
+        <p id="ep-total">{{card.total_eps}}</p>
+      </div>
+
+
+      <!-- <div class="bottom_row"> -->
+      <!-- <div class="ep-tracker">
           <div class="upcountDiv">
             <p class="ep-on">{{card.current_ep}}</p>
           </div>
@@ -197,15 +207,12 @@
 
           <p id="divider"> / </p>
           <p id="ep-total">{{card.total_eps}}</p>
-        </div>
-      </div>
-
+        </div> -->
+      <!-- </div> -->
       <div class="see_more">
-        <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
-          <i class="bi bi-arrow-up-left-square"></i>
-        </button>
+        <button class="flip_card_more view_more" onclick="flipCardB('{{counter.count}}')" type="button">
+          <i class="bi bi-three-dots"></i> </button>
       </div>
-
       <div class="see_less">
         <button type="button" class="editButtonB" data-bs-toggle="modal" data-bs-target="#editMedia_{{card.id}}">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
@@ -240,4 +247,29 @@
     {%endfor%}
   </div>
   {%endif%}
+  <div class="page_numbers">
+    {% if prev_page != '/' %}
+    <a class='prev-btns' href="{{prev_page}}">
+      <i class="bi bi-arrow-left-square"></i>
+    </a>
+    {%endif%}
+    {%for page_num in cards.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {%if page_num%}
+    {%if cards.page == page_num %}
+    <a class="btn btn-primary" href="{{url_for('index', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+    {%else%}
+    <a class="pagenum_button btn btn-outline-primary " href="{{url_for('index', page=page_num)}}">{{page_num}}</a>
+    {%endif%}
+    {%else%}
+    <div class="page_dots">
+      <i class="bi bi-three-dots"></i>
+    </div>
+    {%endif%}
+    {%endfor%}
+    {% if page != total_pgs %}
+    <a class='next-btns' href="{{next_page}}">
+      <i class="bi bi-arrow-right-square"></i>
+    </a>
+    {%endif%}
+  </div>
   {%endblock%}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -12,6 +13,9 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -395,13 +399,13 @@
 {%if cards is defined%}
 {%for card in cards.items %}
 <div class="modal fade" id="editMedia_{{card.id}}">
-    <div class="modal-dialog">
+    <div class="modal-dialog odal-dialog-centered">
         <div class="modal-content editMediaModal">
             <div class="modal-header">
                 <div class="addMediaFormHeader">
-                    <div class="editmediaimage">
+                    <!-- <div class="editmediaimage">
                         <img class="edit-img" src="{{card.image}}">
-                    </div>
+                    </div> -->
                     <br>
                     <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1><br>
                 </div>
@@ -420,7 +424,8 @@
                         <div class="col-md">
                             <div class="form-floating mb-2">
                                 <input type="text" class="form-control add-input" autocomplete="off"
-                                    placeholder="add image source (https://...jpg, .png, jpeg)" name="edit_image_form">
+                                    placeholder="add image source (https://...jpg, .png, jpeg)" name="edit_image_form"
+                                    id="edit_image_form">
                                 <label for="edit_image_form" class="form-label labelText"> Image Link</label>
                             </div>
                         </div>
@@ -436,7 +441,7 @@
                                     <option value="Paused">Paused</option>
                                     <option value="Completed">Completed</option>
                                 </select>
-                                <label for="edit_status" class="form-label labelText">Status</label>
+                                <label for="floatingSelect3" class="form-label labelText">Status</label>
                             </div>
                         </div>
                         <div class="col-md">
@@ -455,7 +460,7 @@
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <label class="form-label labelText" for="edit_rating">Rating</label>
+                                <label class="form-label labelText" for="floatingSelect4">Rating</label>
                             </div>
                         </div>
                         <div class="col-md">
@@ -471,7 +476,7 @@
                                     <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
                                     <option value="other">Other</option>
                                 </select>
-                                <label for="edit_type" class="labelText">Type</label>
+                                <label for="floatingSelect5" class="labelText">Type</label>
                             </div>
                         </div>
                         <div class="col-md">
@@ -489,7 +494,7 @@
                                     <option value="Multi">Multi</option>
                                     <option value="other">Other</option>
                                 </select>
-                                <label for="edit_language" class="form-label labelText">Language</label>
+                                <label for="floatingSelect6" class="form-label labelText">Language</label>
                             </div>
                         </div>
                     </div>
@@ -500,10 +505,10 @@
                                 <label for="edit_current_ep">Current Episode </label>
                                 {%if card.current_ep == ""%}
                                 <input type="number" step="1" min="0" class="form-control add-input " autocomplete="off"
-                                    name="edit_current_ep" value="0">
+                                    name="edit_current_ep" value="0" id="edit_current_ep">
                                 {%else%}
                                 <input type="number" step="1" min="0" class="form-control add-input " autocomplete="off"
-                                    name="edit_current_ep" value={{card.current_ep}}>
+                                    name="edit_current_ep" id="edit_current_ep" value={{card.current_ep}}>
                                 {%endif%}
                             </div>
                         </div>
@@ -512,16 +517,18 @@
                                 <label for="edit_total_eps">Total Episode Count</label>
                                 {%if card.total_eps == ""%}
                                 <input type="text" class="form-control add-input" autocomplete="off"
-                                    name="edit_total_eps" aria-describedby="mediaHelp" placeholder="0">
+                                    name="edit_total_eps" aria-describedby="mediaHelp" placeholder="0"
+                                    id="edit_total_eps">
                                 {%else%}
                                 <input type="text" class="form-control add-input" autocomplete="off"
-                                    name="edit_total_eps" aria-describedby="mediaHelp" placeholder={{card.total_eps}}>
+                                    name="edit_total_eps" aria-describedby="mediaHelp" id="edit_total_eps"
+                                    placeholder={{card.total_eps}}>
                                 {%endif%}
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="form-group col-auto">
-                                <label for="release_status">Release Status </label>
+                                <label for="formSelect">Release Status </label>
                                 <select class="form-select edit_releaseStatSelect" id="formSelect"
                                     aria-label="Default select example" name="edit_release_status">
                                     <option selected>{{card.release_status}}</option>
@@ -546,7 +553,7 @@
                         <label for="edit_description" class="form-label"> Description</label>
                         <textarea class="form-control edit_description" name="edit_description"
                             placeholder='{{card.description}}' onkeyup="countEditDesc('{{counter.count}}')" rows="3"
-                            maxlength="850" aria-describedby="descHelpBlock"></textarea>
+                            maxlength="850" aria-describedby="descHelpBlock" id="edit_description"></textarea>
                         <div id="descHelpBlock" class="form-text">
                             <p class="active_desc_count">850</p>
                             <p class="total_desc_count"> out of 850 characters </p>

@@ -443,11 +443,16 @@
 
 @media screen and (min-width: 1920px)  {
     .card-item {
-        grid-template-columns: 500px;
+        grid-template-columns: 296.5px;
+        height: 259px;
     }
     .card-img-container {
-        width: 500px;
-        height: 300px;
+        width: 296px;
+        height: 167px;
+    }
+    .card-item.active {
+        height: 353px;
+
     }
     .nav-item {
         /* gap: 10em; */

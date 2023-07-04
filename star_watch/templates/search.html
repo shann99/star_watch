@@ -70,88 +70,107 @@
         </svg>
       </button>
     </div>
-    <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.25" data-tilt-max="0">
+    <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-tilt-max="4">
       <img src={{card.image}} class="card-image" alt='{{card.title}}'>
     </div>
-
-    <form action="" method="POST" class="editTagForm">
-      <div class="tagTest">
-        <div class="tag">
-          {%for tag in card.tags %}
-          <span class="tag-name"> {{tag.name}}
-            <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
-              <span class="material-symbols-outlined expand_extra">chevron_right</span>
-            </button>
-            <button type="button" class="expand_edit"
-              onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i
-                class="bi bi-pencil-square"></i></button>
-            <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i
-                class="bi bi-trash"></i></button>
-          </span>
-          <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
-          <input type="hidden" class="updateTagCounter" name="updateTagCounter" value="{{counter.count}}">
-          <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
-          <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}">
-          {% set counter.tag = counter.tag + 1 %}
-          {%endfor%}
-          <div class="divtag">
-            <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><i
-                class="bi bi-plus-circle-fill"></i></button>
-            <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><i
-                class="bi bi-x-circle-fill"></i></button>
+    <!-- <form action="" method="POST" class="editTagForm">
+        <div class="tagTest">
+          <div class="tag">
+            {%for tag in card.tags %}
+            <span class="tag-name"> {{tag.name}}
+              <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+                <span class="material-symbols-outlined expand_extra">chevron_right</span>
+              </button>
+              <button type="button" class="expand_edit"
+                onclick="edit_tag('{{tag.id}}', '{{counter.count}}', '{{counter.tag}}')"> <i
+                  class="bi bi-pencil-square"></i></button>
+              <button type="button" class="expand_delete" onclick="delete_tag('{{tag.id}}', '{{counter.count}}')"><i
+                  class="bi bi-trash"></i></button>
+            </span>
+            <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
+            <input type="hidden" class="updateTagCounter" name="updateTagCounter" value="{{counter.count}}">
+            <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
+            <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}">
+            {% set counter.tag = counter.tag + 1 %}
+            {%endfor%}
+            <div class="divtag">
+              <button class="plus_tag_button" onclick="openTag('{{counter.count}}')" type="button"><i
+                  class="bi bi-plus-circle-fill"></i></button>
+              <button class="cancel_tag_button" onclick="closeTag('{{counter.count}}')" type="button"><i
+                  class="bi bi-x-circle-fill"></i></button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
-    <form action="" method="POST" class="tagForm">
-      <div class="addTagWrapper">
-        <div class="addTagForm">
-          <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
-          <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
-          <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
+      </form>
+      <form action="" method="POST" class="tagForm">
+        <div class="addTagWrapper">
+          <div class="addTagForm">
+            <input type="hidden" class="tagCount" name="tagCount" value="{{counter.count}}">
+            <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
+            <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag" name="add_tag">
+          </div>
         </div>
-      </div>
-    </form>
+      </form> -->
+
 
     <div class="hearts">
       <div class="heart_buttons">
-        <p class="name"><u>{{card.title}}</u>
-          {%if card.fav == False%}
-          <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
-              viewBox="0 0 16 16">
-              <path
-                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-            </svg>
-          </button>
-          {%else%}
-          <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill"
-              viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-            </svg>
-          </button>
-          {%endif%}
+        <p class="name">{{card.title}}
+
+
+
+
+
+          <!-- {%if card.fav == False%}
+            <button type="submit" onclick="hearted('{{card.id}}', '{{counter.count}}')" class="heart">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart"
+                viewBox="0 0 16 16">
+                <path
+                  d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+              </svg>
+            </button>
+            {%else%}
+            <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.count}}')" class="heart_filled">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+              </svg>
+            </button>
+            {%endif%} -->
         </p>
       </div>
     </div>
-
+    <!-- 
     <div class="bottom_row">
-      {%if card.status == 'Planning'%}
       <p class="status" class="status_planning"> #{{card.status}}</p>
-      {%elif card.status == 'Paused'%}
-      <p class="status" class="status_paused"> #{{card.status}}</p>
-      {%elif card.status == 'Watching'%}
-      <p class="status" class="status_watching"> #{{card.status}}</p>
-      {%else%}
-      <p class="status" class="status_completed"> #{{card.status}}</p>
-      {%endif%}
       <div class="ep-tracker">
         <p class="ep-on">{{card.current_ep}}</p>
         <p id="divider"> / </p>
         <p id="ep-total">{{card.total_eps}}</p>
       </div>
+    </div> -->
+    <!-- <div class="ep-tracker">
+      <div class="upcountDiv">
+        <p class="ep-on">{{card.current_ep}}</p>
+      </div>
+      <button type="button" onclick="upcountFunc('{{card.id}}','{{counter.count}}', '{{card.title}}')"
+        class="upcount">+</button>
+      <div class="hidden_input1">
+        <input type="hidden" class="currentEp" name="currentEp" value="{{card.current_ep}}">
+      </div>
+      <div class="hidden_input2">
+        <input type="hidden" class="totalEp" name="totalEp" value="{{card.total_eps}}">
+      </div>
+
+      <p id="divider"> / </p>
+      <p id="ep-total">{{card.total_eps}}</p>
     </div>
+    <div class="see_more">
+      <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">
+        <i class="bi bi-arrow-up-left-square"></i>
+      </button>
+    </div> -->
 
     <div class="see_more">
       <button class="flip_card_more" onclick="flipCardB('{{counter.count}}')" type="button">

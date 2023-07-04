@@ -1,25 +1,38 @@
 body {
-    background-color:rgb(42 41 41) !important;
+    background-color: rgb(15 16 20) !important;
     margin: -2em 0 0 0em !important;
     padding-bottom: 800px !important; 
+    height: fit-content;
+    
 }
 .page-header {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Bungee Spice', cursive;
     padding-top: 1em;
     text-align: center;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
-    align-content: space-around;
+    align-content: flex-start;
     color: #e5e5e5;
+    justify-content: center;
+    font-size: 50px;
+    padding-left: .5em;
 }
 .page-title {
-    font-family: 'Lexend Deca';
+    font-family: 'Bungee Spice', cursive;
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
     color: #e5e5e5;
+    justify-content: center;
+    font-size: 50px;
+    padding-left: .5em;
 }
 
 .pagenum_button {
@@ -94,4 +107,7 @@ body {
 }
 .chart-container {
     background: #39384bb5; 
+}
+.page_dots{
+    color: white;
 }
