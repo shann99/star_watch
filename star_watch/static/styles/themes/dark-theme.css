@@ -78,14 +78,14 @@ body {
 }
 
 #account-title {
-    font-family: 'Lexend Deca';
+    font-family: 'Bungee Spice', cursive;
     padding-top: 1em;
     padding-bottom: 2em;
     text-align: center;
     color: white;
 }
 .search_text {
-    color: #d9d9d9;
+    color: #8e8787;
 }
 .releasesTitle {
     color: #e5e5e5 ;
@@ -100,13 +100,13 @@ body {
     color: white;
 }
 .tagChartWrapper {
-    background: #39384bb5; 
+    background: #22212bb5; 
 }
 .langChartWrapper {
-    background: #39384bb5; 
+    background: #22212bb5; 
 }
 .chart-container {
-    background: #39384bb5; 
+    background: #22212bb5; 
 }
 .page_dots{
     color: white;

@@ -59,6 +59,25 @@ def index():
         titles.append(value)
 
     page = request.args.get("page", 1, type=int)
+
+    card_ids = []
+    for item in titles:
+        cardId = (
+            Card.query.with_entities(Card.title, Card.id)
+            .filter(Card.title == item)
+            .join(User)
+            .filter(User.id == user.id)
+            .first()
+        )
+        card_ids.append(cardId)
+    # print(card_ids)
+    cards_dict = dict([(key, value) for key, value in card_ids])
+
+    id_list = []
+    for key, value in cards_dict.items():
+        id_list.append(value)
+    print(id_list)
+
     watching_list = (
         Card.query.filter(Card.status == "Watching")
         .join(User)
@@ -110,6 +129,7 @@ def index():
         releases_dates=releases_dates,
         images=images,
         titles=titles,
+        ids=id_list,
         next_page=next_page,
         prev_page=prev_page,
         total_pgs=total_pgs,

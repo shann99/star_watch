@@ -23,6 +23,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Copse&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rampart+One&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Recursive&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,7 +161,7 @@
     <ul>
         <li>
             <form action='/search' method="GET">
-                <input type="text" id="search_box_smaller" autocomplete="off" placeholder="Search..." autofocus
+                <input type="text" id="search_box_smaller" autocomplete="off" placeholder="Search . . ." autofocus
                     name="q"></input>
             </form>
         </li>
@@ -194,7 +215,7 @@
                 <div class="form-group" id="input_search">
                     <div class="input-group">
                         <div class="input-group-text" id="nav_search_icon">&#xF52A;</div>
-                        <input type="text" class="form-control" id="search_box" placeholder="Search..."
+                        <input type="text" class="form-control" id="search_box" placeholder="Search . . ."
                             onkeyup="countSearchBox()" autocomplete="off" name="q">
                         <div id="nav_search_clear">
                             <button type="button" class="input-group-text" id="nav_search_clear_btn">&#xF659;</button>
@@ -394,24 +415,121 @@
     </div>
 </div> -->
 {%endif%}
-{%set counter = namespace(count=0)%}
 {%if user.is_authenticated%}
 {%if cards is defined%}
+<!--  media info modal -->
+{%set counter = namespace(tag=0, item=0)%}
 {%for card in cards.items %}
-<div class="modal fade" id="editMedia_{{card.id}}">
-    <div class="modal-dialog odal-dialog-centered">
-        <div class="modal-content editMediaModal">
-            <div class="modal-header">
-                <div class="addMediaFormHeader">
-                    <!-- <div class="editmediaimage">
-                        <img class="edit-img" src="{{card.image}}">
-                    </div> -->
-                    <br>
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{card.title}} </h1><br>
+<div class="modal fade" id="mediaInfo_{{card.id}}" tabindex="-1" aria-labelledby="mediaInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content mediaInfoDiv">
+            <div class="modal-header border-0 ">
+                <div class="mediaInfoImageParentDiv">
+                    <img src="{{card.image}}" class="mediaInfoImage">
                 </div>
             </div>
-
+            <div class="modal-body mediaInfoBackground border-0">
+                <div class="mediaInfoTitleGrid">
+                    <h3 class="mediaInfoTitle"> {{card.title}}</h3>
+                    <button type="button" class="mediaInfoEdit" data-bs-target="#editMedia_{{card.id}}"
+                        data-bs-toggle="modal"><i class="bi bi-pencil-square"></i></button>
+                </div>
+                <div class="mediaInfoFavorites">
+                    <div class="favorites">
+                        {%if card.fav == False%}
+                        <button type="submit" class="favButton" onclick="hearted('{{card.id}}', '{{counter.item}}')">
+                            Add to Favorites <i class="bi bi-heart heartButton"></i>
+                        </button>
+                        {%else%}
+                        <button type="submit" onclick="unhearted('{{card.id}}', '{{counter.item}}')"
+                            class="unfavButton">
+                            Added to Favorites <i class="bi bi-heart-fill heartedButton"></i>
+                        </button>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="mediaInfoTopGrid">
+                    {% if card.release_date == none %}
+                    <p class="mediaInfoReleaseDate"> N/A</p>
+                    {%else%}
+                    <p class="mediaInfoReleaseDate"> {{card.release_date.strftime("%Y")}}</p>
+                    {%endif%}
+                    {% if card.total_eps == "?" %}
+                    <p class="mediaInfoEpisodes"> N/A Episodes</p>
+                    {%elif card.total_eps |int > 1 %}
+                    <p class="mediaInfoEpisodes"> {{card.total_eps}} Episodes </p>
+                    {%else%}
+                    <p class="mediaInfoEpisodes"> Movie </p>
+                    {%endif%}
+                    {% if (card.rating == "?" or card.rating == "Choose a Rating" or card.rating == "Rating") %}
+                    {%else%}
+                    <p class="mediaInfoRating"> Rating: {{card.rating}} / 10 </p>
+                    {%endif%}
+                </div>
+                <p class="mediaInfoDescription"> {{card.description}}</p>
+                <p class="mediaInfoLanguage"> Language(s): {{card.language}} </p>
+                <p class="mediaInfoGenreTitle"> Genres </p>
+                <form action="" method="POST" class="editTagForm">
+                    <div class="tagTest">
+                        <div class="tag">
+                            {%for tag in card.tags %}
+                            <span class="tag-name"> {{tag.name}}
+                                <button type="button" class="expand_more" onclick="expandMoreTag('{{counter.tag}}')">
+                                    <span class="material-symbols-outlined expand_extra">chevron_right</span>
+                                </button>
+                                <button type="button" class="expand_edit"
+                                    onclick="edit_tag('{{tag.id}}', '{{counter.item}}', '{{counter.tag}}')"> <i
+                                        class="bi bi-pencil-square"></i></button>
+                                <button type="button" class="expand_delete"
+                                    onclick="delete_tag('{{tag.id}}', '{{counter.item}}')"><i
+                                        class="bi bi-trash"></i></button>
+                            </span>
+                            <input type="hidden" class="updateTagId" name="updateTagID" value="{{tag.id}}">
+                            <input type="hidden" class="updateTagCounter" name="updateTagCounter"
+                                value="{{counter.item}}">
+                            <input type="hidden" class="updateTagNum" name="updateTagNum" value="{{counter.tag}}">
+                            <input type="hidden" class="input_tag_name" name="tag_update" placeholder="{{tag.name}}">
+                            {% set counter.tag = counter.tag + 1 %}
+                            {%endfor%}
+                            <div class="divtag">
+                                <button class="plus_tag_button" onclick="openTag('{{counter.item}}')" type="button"><i
+                                        class="bi bi-plus-circle-fill"></i></button>
+                                <button class="cancel_tag_button" onclick="closeTag('{{counter.item}}')"
+                                    type="button"><i class="bi bi-x-circle-fill"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="" method="POST" class="tagForm">
+                    <div class="addTagWrapper">
+                        <div class="addTagForm">
+                            <input type="hidden" class="tagCount" name="tagCount" value="{{counter.item}}">
+                            <input type="hidden" class="cardID" name="cardID" value="{{card.id}}">
+                            <input type="text" class="addTagInput" autofocus placeholder="add tag" id="newTag"
+                                name="add_tag">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% set counter.item = counter.item + 1 %}
+{%endfor%}
+{%set counter = namespace(count=0)%}
+{%for card in cards.items %}
+<div class="modal fade" id="editMedia_{{card.id}}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content editMediaModal">
+            <div class="modal-header border-0">
+                <div class="addMediaFormHeader">
+                    <div class="editmediaimage">
+                        <img class="edit-img" src="{{card.image}}">
+                    </div>
+                </div>
+            </div>
             <div class="modal-body">
+                <h3 class="editMediaTitle">{{card.title}} </h3><br>
                 <form action="/edit/card/{{card.id}}" method="POST">
                     <div class="row g-2">
                         <div class="col-md">
@@ -502,7 +620,7 @@
                     <div class="row g-2">
                         <div class="col-md modalCurrentEp">
                             <div class="form-group col-auto inputCurrentEp">
-                                <label for="edit_current_ep">Current Episode </label>
+                                <label for="edit_current_ep" class="editMediaFormText">Current Episode </label>
                                 {%if card.current_ep == ""%}
                                 <input type="number" step="1" min="0" class="form-control add-input " autocomplete="off"
                                     name="edit_current_ep" value="0" id="edit_current_ep">
@@ -514,7 +632,7 @@
                         </div>
                         <div class="col-md">
                             <div class="form-group col-auto">
-                                <label for="edit_total_eps">Total Episode Count</label>
+                                <label for="edit_total_eps" class="editMediaFormText">Total Episode Count</label>
                                 {%if card.total_eps == ""%}
                                 <input type="text" class="form-control add-input" autocomplete="off"
                                     name="edit_total_eps" aria-describedby="mediaHelp" placeholder="0"
@@ -528,7 +646,7 @@
                         </div>
                         <div class="col-md">
                             <div class="form-group col-auto">
-                                <label for="formSelect">Release Status </label>
+                                <label for="formSelect" class="editMediaFormText">Release Status </label>
                                 <select class="form-select edit_releaseStatSelect" id="formSelect"
                                     aria-label="Default select example" name="edit_release_status">
                                     <option selected>{{card.release_status}}</option>
@@ -550,7 +668,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_description" class="form-label"> Description</label>
+                        <label for="edit_description" class="form-label editMediaFormText"> Description</label>
                         <textarea class="form-control edit_description" name="edit_description"
                             placeholder='{{card.description}}' onkeyup="countEditDesc('{{counter.count}}')" rows="3"
                             maxlength="850" aria-describedby="descHelpBlock" id="edit_description"></textarea>
@@ -586,11 +704,12 @@
         </div>
     </div>
 </div>
+
 {%endfor%}
+
 {%endif%}
 <input type="hidden" id="toggleIndicators" value="{{user.alert}}">
 <input type="hidden" id="user_info" value="{{user.id}}">
-
 {%endif%}
 <section class="content">
     {% block body %}

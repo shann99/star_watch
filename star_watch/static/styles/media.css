@@ -226,6 +226,7 @@
     }
     .card-item {
         grid-template-columns: 375px;
+        padding-left: 2em;
     }
     .card-img-container {
         width: 375px;
@@ -276,7 +277,11 @@
     }
     .card-container {
         grid-template-columns: auto;
+        row-gap: 3em;
     }
+    .ep-tracker {
+        margin-left: 11.7em;
+    } 
     .nav {
         justify-content: space-between;
         flex-direction: column;
@@ -340,6 +345,8 @@
     }
     .card-container {
         grid-template-columns: auto auto;
+        row-gap: 4em;
+
     }
     .card-item {
         grid-template-columns: 425px;
@@ -390,55 +397,35 @@
 } 
 
 @media screen and (min-width: 1440px) and (max-width:1919px) {
-    .tag {
-        margin-top: -0.4em;
+    .card-container {
+        grid-template-columns: auto auto auto;
+        padding-left: 4em;
     }
-    .tagForm {
-        margin-top: -0.8em;
-    }
-    #name {
-        font-size: 18.5px;
-    }
+   
     .card-item {
         grid-template-columns: 390px;
-        height: 451px;
+        height: 300px;
     }
     .card-img-container {
         width: 390px;
         height: 240px;
     }
+    
+    .ep-tracker {
+        margin-top: -0.5em;
+    }
+    
     .login-nav {
-        margin-left: -5em;
+        margin-left: -10em;
     }
     .nav-item {
         margin-left: 8em;
     }
-    .nav-menu {
-        margin-left: -8em;
-    }
-    .heart_filled.animate::before {
-        left: 27%;
-    }
-    .heart_filled.animate::after {
-        left: 27%;
-    }
-    .toggleEdit {
-        margin-left: 94%;
-    }
-    .editButtonB {
-        margin-left: 93%;
-    }
+   
     .fav-container {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto auto auto;
     }
-    .card-item.active {
-        grid-template-columns: 390px;
-        height: 451px;
-    }
-    .card-item.unactive {
-        animation: flipA 0.5s;
-        height: 451px;
-    }
+   
 }
 
 @media screen and (min-width: 1920px)  {

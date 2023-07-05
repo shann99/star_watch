@@ -1,107 +1,131 @@
 {%extends "base.html" %}
 {%block header%}
- <title>Settings</title>
- {%endblock%}
+<title>Settings</title>
+{%endblock%}
 {%block body %}
-<div class="modal fade"  id="confirmAccountDeletion"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+<div class="modal fade" id="confirmAccountDeletion" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content  check_acc_delete">
             <div class="modal-body">
-                <h4 class = "delete_text"> Are you sure you'd like to delete your account? </h4>
+                <h4 class="delete_text"> Are you sure you'd like to delete your account? </h4>
                 <br>
                 <h5>This will permanently delete all of your account data. This action cannot be reversed. </h5>
                 <br>
-                <form action="{{url_for('delete_account')}}" method="POST"><button type="submit" id="confirm_acc_delete" class="btn btn-info">Yes, delete my account</button></form>
-                <button id="cancel_delete" class="btn btn-secondary" type="button" data-bs-dismiss="modal">No, go back</button>
+                <form action="{{url_for('delete_account')}}" method="POST"><button type="submit" id="confirm_acc_delete"
+                        class="btn btn-info">Yes, delete my account</button></form>
+                <button id="cancel_delete" class="btn btn-secondary" type="button" data-bs-dismiss="modal">No, go
+                    back</button>
             </div>
         </div>
     </div>
 </div>
-<div id = "account-title">
+<div id="account-title">
     <h2> Account Settings </h2>
-</div> 
+</div>
 <div id="accountForm">
     <!-- <h3> Account </h3> -->
     <br>
     <h5> Appearance </h5>
     <br>
-    <div id="mode">     
+    <div id="mode">
         <div class="dropdown">
-            {%if user.mode=="system"%}       
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
-            <a id="theme_title">System <i class="bi bi-check-all checkoff"></i></a>
+            {%if user.mode=="system"%}
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" id="dropdown_theme">
+                <a id="theme_title">System <i class="bi bi-check-all checkoff"></i></a>
             </button>
             <ul class="dropdown-menu" id="appearance_dropdown">
-                <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
-                <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
-                <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
+                <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i
+                            class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+                <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i
+                            class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+                <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half"
+                            id="system_icon"></i><a> System </a></button> </li>
             </ul>
-         
-        {%endif%}
-        {%if user.mode=="dark"%}       
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
-            <a id="theme_title">Dark <i class="bi bi-check-all checkoff"></i></a>
-        </button>
-        <ul class="dropdown-menu" id="appearance_dropdown">
-            <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
-            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
-            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
-        </ul>
-        {%endif%}
-        {%if user.mode=="light"%}       
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdown_theme">
-        <a id="theme_title">Light <i class="bi bi-check-all checkoff"></i></a>
-        </button>
-        <ul class="dropdown-menu" id="appearance_dropdown">
-            <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
-            <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
-            <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half" id="system_icon"></i><a> System </a></button> </li>
-        </ul> 
-        {%endif%}
-    </div>   
-</div>    
 
-    <br> 
+            {%endif%}
+            {%if user.mode=="dark"%}
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" id="dropdown_theme">
+                <a id="theme_title">Dark <i class="bi bi-check-all checkoff"></i></a>
+            </button>
+            <ul class="dropdown-menu" id="appearance_dropdown">
+                <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i
+                            class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+                <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i
+                            class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+                <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half"
+                            id="system_icon"></i><a> System </a></button> </li>
+            </ul>
+            {%endif%}
+            {%if user.mode=="light"%}
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false" id="dropdown_theme">
+                <a id="theme_title">Light <i class="bi bi-check-all checkoff"></i></a>
+            </button>
+            <ul class="dropdown-menu" id="appearance_dropdown">
+                <li> <button id="light_mode" onclick="switch_modes_light('{{user.id}}')"><i
+                            class="bi bi-sun-fill"></i><a>Light</a> </button> </li>
+                <li><button id="dark_mode" onclick="switch_modes_dark('{{user.id}}')"><i
+                            class="bi bi-moon-stars-fill"></i><a> Dark</a></button> </li>
+                <li><button id="system_mode" onclick="system_mode('{{user.id}}')"><i class="bi bi-droplet-half"
+                            id="system_icon"></i><a> System </a></button> </li>
+            </ul>
+            {%endif%}
+        </div>
+    </div>
+
+    <br>
     <hr>
-    <form method="POST"  action="">
+    <form method="POST" action="">
         <br>
         <h5> Update Profile Picture </h5>
         <div class="change_profile">
-            <img class = "change_profile_pic" src={{user.profile_pic}} alt="profile pic">
+            <img class="change_profile_pic" src={{user.profile_pic}} alt="profile pic">
             <br><br><br>
             <div class="mb-3">
                 <label for="update_profile_pic" id="signup-text" class="form-label"> Change Profile Picture</label>
-                <input type="text" class="form-control account-input" autocomplete="off"  placeholder="image source (https://...jpg, .png, etc.)" name = "update_profile_pic">
-            </div>        
+                <input type="text" class="form-control account-input" autocomplete="off"
+                    placeholder="image source (https://...jpg, .png, etc.)" name="update_profile_pic"
+                    id="update_profile_pic">
+            </div>
         </div>
         <hr>
-        <h5> Name </h5> <br> 
+        <h5> Name </h5> <br>
         <div class="mb-3">
             <label for="update_name" id="signup-text" class="form-label">Change Name</label>
-            <input type="text" class="form-control account-input" autocomplete="off" placeholder="{{user.name}}" name = "update_name">
+            <input type="text" class="form-control account-input" autocomplete="off" placeholder="{{user.name}}"
+                name="update_name" id="update_name">
         </div>
         <hr>
         <h5> Email </h5> <br>
         <div class="mb-3">
             <label for="update_email" id="signup-text" class="form-label">Update Email</label>
-            <input type="email" class="form-control account-input" autocomplete="off" name = "update_email">
+            <input type="email" class="form-control account-input" autocomplete="off" name="update_email"
+                id="update_email">
         </div>
         <hr>
         <h5> Change Password </h5> <br>
         <div class="mb-3">
             <label for="update_password" id="signup-text" class="form-label">New Password</label>
-            <input type="password" class="form-control account-input" autocomplete="off"   placeholder="new password" minlength="8" maxlength="20" name = "update_password">
+            <input type="password" class="form-control account-input" autocomplete="off" placeholder="new password"
+                minlength="8" maxlength="20" name="update_password" id="update_password">
         </div>
         <div class="mb-3">
             <label for="update_password_confirm" id="signup-text" class="form-label">Confirm New Password</label>
-            <input type="password" class="form-control account-input" autocomplete="off" placeholder="confirm new password" minlength="8" maxlength="20" name = "update_password_confirm">
+            <input type="password" class="form-control account-input" autocomplete="off"
+                placeholder="confirm new password" minlength="8" maxlength="20" name="update_password_confirm"
+                id="update_password_confirm">
         </div>
         <button type="submit" id="del_acc_button" class="btn btn-primary">Update</button>
         <br> <br> <br>
         <hr>
         <h5> Delete Account</h5> <br>
-        <p> <i class="bi bi-exclamation-triangle-fill"></i> Once you delete your account, there's no going back! </p> <br>
-        <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmAccountDeletion">Delete Account</button>
+        <p> <i class="bi bi-exclamation-triangle-fill"></i> Once you delete your account, there's no going back! </p>
+        <br>
+        <button type="button" id="delete_acc_button" aria-label="delete" class="btn btn-danger" data-bs-toggle="modal"
+            data-bs-target="#confirmAccountDeletion">Delete Account</button>
     </form>
 </div>
 

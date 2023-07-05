@@ -38,27 +38,22 @@ if (themes) {
     });
 }
 
-const heart = document.getElementsByClassName('heart');
-const filled = document.getElementsByClassName('heart_filled');
-const hearts = document.getElementsByClassName('hearts');
+const heart = document.getElementsByClassName('favButton');
+const filled = document.getElementsByClassName('unfavButton');
+const hearts = document.getElementsByClassName('mediaInfoFavorites');
 var card_id = '{{card.id}}';
 var card_fav = "{{card.fav}}";
-var heartItem = "{{counter.count}}";
+var heartItem = "{{counter.item}}";
 function hearted(card_id, heartItem) {
+    console.log(heartItem)
     $(document).ready(function() {
         $.ajax({
             type: "POST",
             url: "/fav",
             data: {"card_id": card_id, "card_fav": true},
             success: function() {
-                $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
-                test =  $(".hearts").find(".heart_filled");
-                // setTimeout( () => {
-                //     $(hearts[heartItem]).find(".heart_filled").toggleClass('animate');
-                // }, 40)
-                // setTimeout(() => {
-                //     $(hearts[heartItem]).find(".heart_filled").removeClass('animate');  
-                // }, 500)
+                $(hearts[heartItem]).load(' .favorites:eq('+ heartItem +')');
+                
             }
         });
     });
@@ -70,7 +65,7 @@ function unhearted(card_id, heartItem) {
             url: "/unfav",
             data: {"card_id": card_id, "card_fav": false},
             success: function() {
-                $(hearts[heartItem]).load(' .heart_buttons:eq('+ heartItem +')');
+                $(hearts[heartItem]).load(' .favorites:eq('+ heartItem +')');
             }
         });
     });
@@ -257,108 +252,108 @@ modal.addEventListener('shown.bs.modal', () => {
     nav_search_box.focus();
 });
 
-carouselbgImg = document.getElementById("myCarousel");
-if (carouselbgImg) {
-    var img_src0 = document.getElementById('img-active0').src;
-    var img0 = `url(${img_src0})`;
-    var img_src1 = document.getElementById("img-active1").src;
-    var img1 = `url(${img_src1})`;
-    var img_src2 = document.getElementById("img-active2").src;
-    var img2 = `url(${img_src2})`;
-    var img_src3 = document.getElementById("img-active3").src;
-    var img3 = `url(${img_src3})`;
-    var img_src4 = document.getElementById("img-active4").src;
-    var img4 = `url(${img_src4})`;
+// carouselbgImg = document.getElementById("myCarousel");
+// if (carouselbgImg) {
+//     var img_src0 = document.getElementById('img-active0').src;
+//     var img0 = `url(${img_src0})`;
+//     var img_src1 = document.getElementById("img-active1").src;
+//     var img1 = `url(${img_src1})`;
+//     var img_src2 = document.getElementById("img-active2").src;
+//     var img2 = `url(${img_src2})`;
+//     var img_src3 = document.getElementById("img-active3").src;
+//     var img3 = `url(${img_src3})`;
+//     var img_src4 = document.getElementById("img-active4").src;
+//     var img4 = `url(${img_src4})`;
 
-    carouselbgImg.style.backgroundImage=img0;
+//     carouselbgImg.style.backgroundImage=img0;
 
-    carouselbgImg.addEventListener('slide.bs.carousel', event => {
-        setTimeout(function(){
-            var src = $('.active').find('img').attr('src'); 
-            if (event.direction == 'left') {
-                switch(src) {
-                    case img_src0:
-                        carouselbgImg.style.backgroundImage=img1;
-                        break;
-                    case img_src1:
-                        carouselbgImg.style.backgroundImage=img2;
-                        break;
-                    case img_src2:
-                        carouselbgImg.style.backgroundImage=img3;
-                        break;
-                    case img_src3:
-                        carouselbgImg.style.backgroundImage=img4;
-                        break;
-                    case img_src4:
-                        carouselbgImg.style.backgroundImage=img0;        
-                        break;
-                }
-            }
-            else {
-                switch(src) {
-                    case img_src0:
-                        carouselbgImg.style.backgroundImage=img4;
-                        break;
-                    case img_src4:
-                        carouselbgImg.style.backgroundImage=img3;
-                        break;
-                    case img_src3:
-                        carouselbgImg.style.backgroundImage=img2;
-                        break;
-                    case img_src2:
-                        carouselbgImg.style.backgroundImage=img1;
-                        break;
-                    case img_src1:
-                        carouselbgImg.style.backgroundImage=img0;        
-                        break;
-                }
-            }
-        }, 70);
-    });
-}
-carouselbgImg1 = document.getElementById("myCarousel1");
-if (carouselbgImg1) {
-    var lesser_img_src0 = document.getElementById('lesser-img-active0').src;
-    var lesser_img0 = `url(${lesser_img_src0})`;
-    var lesser_img_src1 = document.getElementById("lesser-img-active1").src;
-    var lesser_img1 = `url(${lesser_img_src1})`;
-    var lesser_img_src2 = document.getElementById("lesser-img-active2").src;
-    var lesser_img2 = `url(${lesser_img_src2})`;
+//     carouselbgImg.addEventListener('slide.bs.carousel', event => {
+//         setTimeout(function(){
+//             var src = $('.active').find('img').attr('src'); 
+//             if (event.direction == 'left') {
+//                 switch(src) {
+//                     case img_src0:
+//                         carouselbgImg.style.backgroundImage=img1;
+//                         break;
+//                     case img_src1:
+//                         carouselbgImg.style.backgroundImage=img2;
+//                         break;
+//                     case img_src2:
+//                         carouselbgImg.style.backgroundImage=img3;
+//                         break;
+//                     case img_src3:
+//                         carouselbgImg.style.backgroundImage=img4;
+//                         break;
+//                     case img_src4:
+//                         carouselbgImg.style.backgroundImage=img0;        
+//                         break;
+//                 }
+//             }
+//             else {
+//                 switch(src) {
+//                     case img_src0:
+//                         carouselbgImg.style.backgroundImage=img4;
+//                         break;
+//                     case img_src4:
+//                         carouselbgImg.style.backgroundImage=img3;
+//                         break;
+//                     case img_src3:
+//                         carouselbgImg.style.backgroundImage=img2;
+//                         break;
+//                     case img_src2:
+//                         carouselbgImg.style.backgroundImage=img1;
+//                         break;
+//                     case img_src1:
+//                         carouselbgImg.style.backgroundImage=img0;        
+//                         break;
+//                 }
+//             }
+//         }, 70);
+//     });
+// }
+// carouselbgImg1 = document.getElementById("myCarousel1");
+// if (carouselbgImg1) {
+//     var lesser_img_src0 = document.getElementById('lesser-img-active0').src;
+//     var lesser_img0 = `url(${lesser_img_src0})`;
+//     var lesser_img_src1 = document.getElementById("lesser-img-active1").src;
+//     var lesser_img1 = `url(${lesser_img_src1})`;
+//     var lesser_img_src2 = document.getElementById("lesser-img-active2").src;
+//     var lesser_img2 = `url(${lesser_img_src2})`;
 
-    carouselbgImg1.style.backgroundImage=lesser_img0;
+//     carouselbgImg1.style.backgroundImage=lesser_img0;
 
-    carouselbgImg1.addEventListener('slide.bs.carousel', event => {
-        setTimeout(function(){
-            var src = $('.active').find('img').attr('src'); 
-            if (event.direction == 'left') {
-                switch(src) {
-                    case lesser_img_src0:
-                        carouselbgImg1.style.backgroundImage=lesser_img1;
-                        break;
-                    case lesser_img_src1:
-                        carouselbgImg1.style.backgroundImage=lesser_img2;
-                        break;
-                    case lesser_img_src2:
-                        carouselbgImg1.style.backgroundImage=lesser_img0;
-                        break;
-                }
-            }
-            else {
-                switch(src) {
-                    case lesser_img_src0:
-                        carouselbgImg1.style.backgroundImage=lesser_img2;
-                        break;
-                    case lesser_img_src2:
-                        carouselbgImg1.style.backgroundImage=lesser_img1;
-                        break;
-                    case lesser_img_src1:
-                        carouselbgImg1.style.backgroundImage=lesser_img0;        
-                        break;
-                }
-            }
-        }, 70);
-    });
-}
+//     carouselbgImg1.addEventListener('slide.bs.carousel', event => {
+//         setTimeout(function(){
+//             var src = $('.active').find('img').attr('src'); 
+//             if (event.direction == 'left') {
+//                 switch(src) {
+//                     case lesser_img_src0:
+//                         carouselbgImg1.style.backgroundImage=lesser_img1;
+//                         break;
+//                     case lesser_img_src1:
+//                         carouselbgImg1.style.backgroundImage=lesser_img2;
+//                         break;
+//                     case lesser_img_src2:
+//                         carouselbgImg1.style.backgroundImage=lesser_img0;
+//                         break;
+//                 }
+//             }
+//             else {
+//                 switch(src) {
+//                     case lesser_img_src0:
+//                         carouselbgImg1.style.backgroundImage=lesser_img2;
+//                         break;
+//                     case lesser_img_src2:
+//                         carouselbgImg1.style.backgroundImage=lesser_img1;
+//                         break;
+//                     case lesser_img_src1:
+//                         carouselbgImg1.style.backgroundImage=lesser_img0;        
+//                         break;
+//                 }
+//             }
+//         }, 70);
+//     });
+// }
 var tagCounterId = "{{counter.tag}}";
 const expand_tag = document.getElementsByClassName("expand_more");
 const expand_exta = document.getElementsByClassName("expand_extra");
