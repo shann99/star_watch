@@ -24,18 +24,13 @@ it will definitely get tedious to go through multiple pages to find a show or mo
 
 ## Images:
 
-![Example of Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_light.png)
+![Example of Home Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/images/Screenshot%202023-07-04%20at%208.42.28%20PM.png?token=GHSAT0AAAAAAB3KNSQJJ7BZGSOZLGYGIAKAZFEXVQA)
 <br/><br/>
 
-![Dark Mode Planning Page](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/planning_page_dark.png)
+![Home Page Continued](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/images/Screenshot%202023-07-04%20at%208.42.38%20PM.png?token=GHSAT0AAAAAAB3KNSQI7ZZ676B3XLJAEBE2ZFEXWOQ)
 <br/><br/><br/>
 
 Edit Modal
-![Edit modal](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/edit_modal.png)
+![Edit modal](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/images/Screenshot%202023-07-04%20at%208.42.46%20PM.png?token=GHSAT0AAAAAAB3KNSQIXO3YNV5PY5ZHOKP6ZFEXWZQ)
 <br/> Clicking on the edit button on a card will open up a modal dedicated to that card for you to edit. 
-<br/><br/>
-Sample Account Statistics
-![Sample Stats](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/stats_list_count.png)
-<br/><br/>
-![2nd sample stats](https://raw.githubusercontent.com/shann99/star_watch/master/star_watch/static/star_watch_images/stats_tags.png)
-See more pictures of the website [here!](https://github.com/shann99/star_watch/tree/master/star_watch/static/star_watch_images)
+
