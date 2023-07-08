@@ -304,7 +304,29 @@
     object-position: 50% 23%;
     box-shadow: 1px 2px 4px black;
 }
-
+.toggleEdit {
+    grid-area: image;
+    position: absolute;
+    z-index: 1; 
+    width: 0%;
+    margin-left: 95%;
+    margin-top: -0.24em; 
+}
+.edit_button {
+    height: 1%;
+    cursor: pointer;
+    background-color: transparent;
+    border: transparent;
+    display:none;
+    color: white;
+}
+.edit_button:hover {
+    color: #fd7070;
+    transition: all 0.3s ease-out;
+}
+.card-item:hover .edit_button {
+    display:block;
+}
 .tag {
     margin-top: -0.5em;
     display:flex;
@@ -533,7 +555,7 @@
     float:right;
 }
 .header-name {
-    font-family: 'Monoton', cursive;
+    font-family: 'Bungee Shade', cursive;
     font-size: 40px;
     margin-left: 0.5em;
     float:left;
@@ -1877,7 +1899,7 @@
     /* justify-content: center; */
     float:left;
     margin-left: 2em;
-    font-family: 'Bungee Shade';
+    font-family: 'Lexend Deca';
     padding-top: 1em;
     margin-bottom:1em;
 }

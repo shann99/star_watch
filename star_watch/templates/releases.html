@@ -3,13 +3,16 @@
 <h1>{%block title%}Releases{%endblock%}</h1>
 {%endblock%}
 {%block body%}
+<div class="page-header">
+    <p> Release Schedule</p>
+</div>
 {%if releases == 0%}
 <h3 class="no_media"> There doesn't seem to be anything on your list that has not been released already or is currently
     releasing. </h3>
 {%else%}
-<br>
 {%if currentcount != 0%}
-<h3 class="releasesTitle" id="currentlyReleasing"><u>Currently Releasing</u></h3>
+<h3 class="releasesTitle" id="currentlyReleasing">Currently Releasing</h3>
+<br><br><br>
 <div id="releases-containerA">
     <div id="currentreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
     {%for item in currentRel %}
@@ -36,13 +39,11 @@
     </div>
     {%endfor%}
     <div id="currentreleasesMoreRight"><i class="bi bi-chevron-right"></i></div>
-
 </div>
 {%endif%}
 <br><br>
 {%if schedcount != 0%}
-<h3 class="releasesTitle" id="scheduledReleased"><u>Scheduled Release</u></h3>
-<br>
+<h3 class="releasesTitle" id="scheduledReleased">Scheduled Release</h3>
 <br><br><br>
 <div id="releases-containerB">
     <div id="schedreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
