@@ -11,7 +11,7 @@ from star_watch.models import Card, Tags, User
 scheduler = APScheduler()
 
 
-@scheduler.task("cron", hour=13, minute=35)
+@scheduler.task("cron", hour=9, minute=35)
 def dateChecker():
     with app.app_context():
         # user=current_user
@@ -30,7 +30,7 @@ def dateChecker():
             .order_by(Card.title.asc())
         )
         dates_list = (
-            Card.query.with_entities(Card.release_information)
+            Card.query.with_entities(Card.release_date)
             .join(User)
             .filter(User.id == user.id)
             .all()
@@ -38,34 +38,38 @@ def dateChecker():
         dates = [date[0] for date in dates_list]
         releases_dates = []
         for item in dates:
-            if item != None and item != "" and item.startswith("Weekly") is False:
-                datetime_object = datetime.strptime(item, "%Y-%m-%d")
-                releases_dates.append(datetime_object.date())
+            if item != None and item != "":
+                releases_dates.append(item)
+
         today = date.today()
 
-        weekdays = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-        ]
         weekly_releasing = []
-        for item in dates:
-            for weekday in weekdays:
-                if item != None and item != "" and weekday in item:
-                    weekly_releasing.append(weekday)
+
+        weekly = (
+            Card.query.with_entities(Card.release_weekly, Card.release_status)
+            .join(User)
+            .filter(User.id == user.id)
+            .all()
+        )
+        item_dict = dict([(key, value) for key, value in weekly])
+        item_dict = {
+            key: value
+            for key, value in item_dict.items()
+            if value != "Scheduled Release"
+        }
+        for key, value in item_dict.items():
+            if key != None and key != "":
+                weekly_releasing.append(key)
 
         counter = 0
         for dated in releases_dates:
-            if dated == today:
+            if dated.strftime("%Y-%m-%d") == today.strftime("%Y-%m-%d"):
                 counter += 1
 
         for releasing in weekly_releasing:
             if releasing == today.strftime("%A"):
                 counter += 1
+
         user.alert = counter
         db.session.commit()
 

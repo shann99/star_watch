@@ -8,13 +8,10 @@
     releasing. </h3>
 {%else%}
 <br>
+{%if currentcount != 0%}
 <h3 class="releasesTitle" id="currentlyReleasing"><u>Currently Releasing</u></h3>
-<br><br>
-<div id="currentreleasesArrowsDiv">
-    <div id="currentreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
-    <div id="currentreleasesMoreRight"><i class="bi bi-chevron-right"></i></div>
-</div>
 <div id="releases-containerA">
+    <div id="currentreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
     {%for item in currentRel %}
     <div class="releases-item">
         <div class="releasesEdit">
@@ -31,25 +28,24 @@
         </div>
         <div class="info_release">
             <p class="lower_row">
-                {{item.release_status}}
-                {%if item.release_information is not none and item.release_information != "" %}
-                : {{item.release_information}}
+                {%if item.release_weekly is not none and item.release_weekly != "" %}
+                On {{item.release_weekly}}s
                 {%endif%}
             </p>
         </div>
     </div>
     {%endfor%}
-</div>
+    <div id="currentreleasesMoreRight"><i class="bi bi-chevron-right"></i></div>
 
+</div>
+{%endif%}
 <br><br>
+{%if schedcount != 0%}
 <h3 class="releasesTitle" id="scheduledReleased"><u>Scheduled Release</u></h3>
 <br>
-<br><br>
-<div id="schedreleasesArrowsDiv">
-    <div id="schedreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
-    <div id="schedreleasesMoreRight"><i class="bi bi-chevron-right"></i></div>
-</div>
+<br><br><br>
 <div id="releases-containerB">
+    <div id="schedreleasesMoreLeft"><i class="bi bi-chevron-left"></i></div>
     {%for item in scheduled %}
     <div class="releases-item">
         <div class="releasesEdit">
@@ -66,28 +62,23 @@
         </div>
         <div class="info_release">
             <p class="lower_row">
-                {%if item.release_information is not none and item.release_information != ""%}
-                {%for date in releases_dates%}
-                {%if date.strftime("%Y-%m-%d") == item.release_information%}
-                {{date.strftime("%b %-d, %Y")}}
-                {%endif%}
-                {%endfor%}
+                {%if item.release_date is not none and item.release_date != ""%}
+                {{item.release_date.strftime("%b %-d, %Y")}}
                 {%endif%}
             </p>
         </div>
     </div>
     {%endfor%}
+    <div id="schedreleasesMoreRight"><i class="bi bi-chevron-right"></i></div>
 </div>
-
-
+{%endif%}
 <br><br>
-<h3 class="releasesTitle" id="Unreleased"><u>Not Yet Released</u></h3>
-<br><br>
-<div id="unreleasedArrowsDiv">
+{%if unrelcount != 0%}
+<h3 class="releasesTitle" id="Unreleased">Not Yet Released</h3>
+<br><br><br>
+<div id="releases-containerC">
     <div id="unreleasedMoreLeft"><i class="bi bi-chevron-left"></i></div>
     <div id="unreleasedMoreRight"><i class="bi bi-chevron-right"></i></div>
-</div>
-<div id="releases-containerC">
     {%for item in unreleased %}
     <div class="releases-item">
         <div class="releasesEdit">
@@ -104,9 +95,8 @@
         </div>
         <div class="info_release">
             <p class="lower_row">
+                {%if item.release_status is not none and item.release_status != "" %}
                 {{item.release_status}}
-                {%if item.release_information is not none and item.release_information != "" %}
-                : {{item.release_information}}
                 {%endif%}
             </p>
 
@@ -114,6 +104,6 @@
     </div>
     {%endfor%}
 </div>
-
+{%endif%}
 {%endif%}
 {%endblock%}

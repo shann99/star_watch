@@ -70,13 +70,11 @@ def index():
             .first()
         )
         card_ids.append(cardId)
-    # print(card_ids)
     cards_dict = dict([(key, value) for key, value in card_ids])
 
     id_list = []
     for key, value in cards_dict.items():
         id_list.append(value)
-    print(id_list)
 
     watching_list = (
         Card.query.filter(Card.status == "Watching")
@@ -148,7 +146,7 @@ def planning():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=20)
+        .paginate(page=page, per_page=15)
     )
 
     prev_page = url_for("planning", page=planning_list.prev_num)
@@ -208,7 +206,7 @@ def paused():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=20)
+        .paginate(page=page, per_page=15)
     )
 
     prev_page = url_for("paused", page=paused_list.prev_num)
@@ -269,7 +267,7 @@ def completed():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.date_edited.desc())
-        .paginate(page=page, per_page=20)
+        .paginate(page=page, per_page=15)
     )
 
     prev_page = url_for("completed", page=completed_list.prev_num)
@@ -513,7 +511,7 @@ def favorites():
         .join(User)
         .filter(User.id == user.id)
         .order_by(Card.title.asc())
-        .paginate(page=page, per_page=15)
+        .paginate(page=page, per_page=16)
     )
 
     prev_page = url_for("favorites", page=favorites_list.prev_num)
@@ -624,7 +622,7 @@ def releases():
     )
 
     dates_list = (
-        Card.query.with_entities(Card.release_information)
+        Card.query.with_entities(Card.release_date)
         .join(User)
         .filter(User.id == user.id)
         .all()
@@ -632,25 +630,23 @@ def releases():
     dates = [date[0] for date in dates_list]
     releases_dates = []
     for item in dates:
-        if item != None and item != "" and item.startswith("Weekly") is False:
-            datetime_object = datetime.strptime(item, "%Y-%m-%d")
-            releases_dates.append(datetime_object.date())
+        if item != None and item != "":
+            releases_dates.append(item)
+
     today = date.today()
 
-    weekdays = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ]
     weekly_releasing = []
-    for item in dates:
-        for weekday in weekdays:
-            if item != None and item != "" and weekday in item:
-                weekly_releasing.append(weekday)
+    weekly = (
+        Card.query.with_entities(Card.release_weekly, Card.release_status)
+        .join(User)
+        .filter(User.id == user.id)
+        .all()
+    )
+    days = [day[0] for day in weekly]
+
+    for item in days:
+        if item != None and item != "":
+            weekly_releasing.append(item)
 
     return render_template(
         "releases.html",
@@ -1332,7 +1328,7 @@ def search():
             .join(User)
             .filter(User.id == user.id)
             .order_by(Card.title.asc())
-            .paginate(page=page, per_page=9)
+            .paginate(page=page, per_page=15)
         )
         search_amt = (
             Card.query.filter(

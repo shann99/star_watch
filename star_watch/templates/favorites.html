@@ -14,7 +14,7 @@
 <div class="fav-container">
   {%for card in cards %}
   <div class="fav-item">
-    <div class="fav-img-container">
+    <div class="fav-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-tilt-max="4">
       <img src={{card.image}} class="card-image" alt="{{card.title}}">
     </div>
     <div class="hearts">
@@ -22,9 +22,14 @@
         <p id="name">{{card.title}}</p>
       </div>
     </div>
+    <div class="see_more">
+      <button class="view_more" type="button" data-bs-toggle="modal" data-bs-target="#mediaInfo_{{card.id}}">
+        <i class="bi bi-three-dots"></i> </button>
+    </div>
   </div>
   {%endfor%}
 </div>
+<br><br>
 <div class="pagenum_header">
   <div class="page_numbers">
     {% if prev_page != '/favorites' %}

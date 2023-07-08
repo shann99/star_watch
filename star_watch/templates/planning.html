@@ -5,7 +5,6 @@
 {%block body%}
 <div class="page-header">
   <p> Planning List</p>
-  <br>
   {%set counter = namespace(value=0)%}
   {%for card in user.cards %}
   {%if card.status == 'Planning' %}
@@ -45,6 +44,7 @@
   {% set counter.count = counter.count + 1 %}
   {%endfor%}
 </div>
+<br><br>
 <div class="page_numbers">
   {% if prev_page != '/planning' %}
   <a class='prev-btns' href="{{prev_page}}">

@@ -590,16 +590,15 @@ $(document).ready(function() {
 });
 const containerRA_Right = document.getElementById("currentreleasesMoreRight");
 const containerRA_Left = document.getElementById("currentreleasesMoreLeft");
-const containerRA_Div = document.getElementById("currentreleasesArrowsDiv");
 const releaseContainerA = document.getElementById("releases-containerA");
 
 var scrollAmount = 0;
 var scrollMin = 0
-if (containerRA_Div) {
+if (releaseContainerA) {
     containerRA_Left.onclick = function () {
         releaseContainerA.scrollTo({
             top: 0,
-            left: scrollAmount -= 1200,
+            left: scrollAmount -= 600,
             behavior: 'smooth'
         });
     };
@@ -607,7 +606,7 @@ if (containerRA_Div) {
     containerRA_Right.onclick = function () {
         releaseContainerA.scrollTo({
             top: 0,
-            left: scrollAmount += 1200,
+            left: scrollAmount += 600,
             behavior: 'smooth'
         });
     };
@@ -617,14 +616,13 @@ if (containerRA_Div) {
 
 const containerRB_Right = document.getElementById("schedreleasesMoreRight");
 const containerRB_Left = document.getElementById("schedreleasesMoreLeft");
-const containerRB_Div = document.getElementById("schedreleasesArrowsDiv");
 const releaseContainerB = document.getElementById("releases-containerB");
 
-if(containerRB_Div) {
+if(releaseContainerB) {
     containerRB_Left.onclick = function () {
         releaseContainerB.scrollTo({
             top: 0,
-            left: scrollAmount -= 1200,
+            left: scrollAmount -= 600,
             behavior: 'smooth'
         });
     };
@@ -632,7 +630,7 @@ if(containerRB_Div) {
     containerRB_Right.onclick = function () {
         releaseContainerB.scrollTo({
             top: 0,
-            left: scrollAmount += 1200,
+            left: scrollAmount += 600,
             behavior: 'smooth'
         });
     };
@@ -640,14 +638,13 @@ if(containerRB_Div) {
 
 const containerRC_Right = document.getElementById("unreleasedMoreRight");
 const containerRC_Left = document.getElementById("unreleasedMoreLeft");
-const containerRC_Div = document.getElementById("unreleasedArrowsDiv");
 const releaseContainerC = document.getElementById("releases-containerC");
 
-if (containerRC_Div) {
+if (releaseContainerC) {
     containerRC_Left.onclick = function () {
         releaseContainerC.scrollTo({
             top: 0,
-            left: scrollAmount -= 1200,
+            left: scrollAmount -= 600,
             behavior: 'smooth'
         });
     };
@@ -655,7 +652,7 @@ if (containerRC_Div) {
     containerRC_Right.onclick = function () {
         releaseContainerC.scrollTo({
             top: 0,
-            left: scrollAmount += 1200,
+            left: scrollAmount += 600,
             behavior: 'smooth'
         });
     };  
