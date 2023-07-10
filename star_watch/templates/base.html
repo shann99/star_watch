@@ -91,23 +91,27 @@
                         </div>
                         <div class="offcanvas-body">
                             {%for item in scheduled %}
+                            {%if item.release_date is not none%}
                             {%if item.release_date.strftime("%Y-%m-%d") == today.strftime("%Y-%m-%d")%}
-                            <p class="updates_header"> Released Today </p>
                             <div class="updates-item">
-                                <img src={{item.image}} class="update_image">
+                                <div class="imgparentdiv">
+                                    <img src={{item.image}} class="update_image">
+                                </div>
                                 <div class="update_title">
-                                    <p id="scheduled_today">{{item.title}} releases today </p>
+                                    <p id="scheduled_today">{{item.title}} aired a new episode </p>
                                 </div>
                             </div>
+                            {%endif%}
                             {%endif%}
                             {%endfor%}
 
                             {%for item in currentRel %}
                             {%if item.release_weekly == today.strftime("%A")%}
-                            <p class="updates_header"> Currently Releasing</p>
                             <div class="updates-item">
                                 <div class="updates_grid">
-                                    <img src={{item.image}} class="update_image">
+                                    <div class="imgparentdiv">
+                                        <img src={{item.image}} class="update_image">
+                                    </div>
                                     <div class="update_title">
                                         <p id="update_today">{{item.title}} aired a new episode</p>
                                     </div>
@@ -190,6 +194,7 @@
 {%endfor%}
 {%endif%}
 {%endwith%}
+<!-- <-- search bar -->
 <form action='/search' method="GET" class="modal fade" id="exampleModal" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal_bg">
@@ -209,9 +214,7 @@
         </div>
     </div>
 </form>
-
 <!-- add new media section -->
-<!-- Modal -->
 <div class="modal fade" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -219,13 +222,6 @@
                 <form id="searchaddmediaform">
                     <div class="modal-body">
                         <div class="input-group mb-3" id="search_media">
-                            <!-- <div class="col-sm-3">
-                                    <select class="form-select" id="autoSizingSelect" name="search_type">
-                                        <option selected>Choose Search Type</option>
-                                        <option value="general">General</option>
-                                        <option value="anime">Anime</option>
-                                    </select>
-                                </div> -->
                             <input type="text" class="form-control" placeholder="Search for media to add"
                                 aria-label="search" id="add_term" aria-describedby="basic-addon1">
                             <span class="input-group-text" id="search_new"><i class="bi bi-search"></i></span>
@@ -233,171 +229,22 @@
                     </div>
                 </form>
             </div>
-            <!-- <section id="searchresults_div"> -->
-            <!-- <div class="modal-footer" id="search_results"> -->
+
             <h3 class="div_title" id="tv_title">TV Shows</h3>
             <div id="tv_results"></div>
             <h3 class="div_title" id="movie_title">Movies</h3>
             <div id="movie_results"></div>
             <h3 class="div_title" id="anime_title">Anime</h3>
             <div id="anime_results"></div>
-            <!-- </div> -->
-            <!-- </section> -->
-        </div>
-    </div>
-</div>
+            <hr class="hr-modal">
 
-<!-- add media form -->
-{% if user.is_authenticated%}
-<!-- <div class="modal fade" id="addmediaForm">
-    <div class="modal-dialog modal-dialog-centered ">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form method="POST"  action="/add_media" id="mediaFormNew">
-                    <div class="addMediaFormHeader">
-                        <h1 class="addmediaHeader"> Add New Media</h1>
-                    </div> 
-                    <br> 
-                    <br>
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control"  autocomplete="off" placeholder="ex. Naruto" name = "add_title" required>
-                                <label for="add_title" class="form-label > Title</label>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control add-input" autocomplete="off" placeholder="add image source (https://...jpg, .png, jpeg)" name = "add_image_form">    
-                                <label for="add_image_form"  class="form-label" > Image Link</label>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div class="form-floating">
-                                <select class="form-select add-input" aria-label="Default select example" name = "status">
-                                    <option selected value="Planning">Planning</option>
-                                    <option value="Watching">Watching</option>
-                                    <option value="Paused">Paused</option>
-                                    <option value="Completed">Completed</option>
-                                </select>
-                                <label for="status" class="form-label labelText">Status</label>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-floating">
-                                <select class="form-select add-input" name="rating" aria-label="Default select example">
-                                    <option selected>Choose a Rating</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>                  
-                                <label for="rating" class="form-label labelText">Rating</label>
-                            </div>
-                        </div>
-                    </div> 
-                    <br><br>
-                    <div class="row g-2">
-                        <div class="col-md">
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect1"  aria-label="Default select example" name = "type">
-                                    <option selected>Media Type</option>
-                                    <option value="Show">Show</option>
-                                    <option value="Movie">Movie</option>
-                                    <option value="Anime">Anime</option>
-                                    <option value="Donghua">Donghua</option>
-                                    <option value="Animation/Cartoon">Animation/Cartoon</option>
-                                    <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
-                                    <option value="other">Other</option>
-                                </select>
-                                <label for="type" class="form-label">Type</label>
-                            </div>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect2"  aria-label="Default select example" name = "language">
-                                    <option selected >Select Language</option>
-                                    <option value="English">English</option>
-                                    <option value="Japanese">Japanese</option>
-                                    <option value="Korean">Korean</option>
-                                    <option value="Chinese">Chinese</option>
-                                    <option value="German">German</option>
-                                    <option value="Swedish">Swedish</option>
-                                    <option value="Thai">Thai</option>
-                                    <option value="Multi">Multi</option>
-                                    <option value="other">Other</option>
-                                </select>  
-                                <label for="language"  class="form-label labelText">Language</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6 ">
-                            <div class="currentEpLabelDiv">
-                                <label for="current_ep"  class="form-label add-form-text">What episode are you currently on?</label>
-                                <div class="currentEpDiv">
-                                </div>
-                            </div>
-                            <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off" name = "current_ep">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="totalEpLabelDiv">
-                                <label for="total_eps"  class="form-label add-form-text">Total Episodes</label>
-                                <div class="totalEpDiv">
-                                    <span id="totalEpHelp">
-                                        <i class="bi bi-question-circle"></i>
-                                    </span>
-                                    <p id="totalEpText"> Defaults to ? when left blank</p>
-                                </div>
-                            </div>
-                            <input type="text"  class="form-control add-input" autocomplete="off" name = "total_eps" aria-describedby="mediaHelp">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-md">
-                        <div class="form-group col-auto">
-                            <div class="release_info">
-                                <label for="release_status">Release Status <i class="bi bi-info-circle release_symbol"></i></label>
-                                <span class="release_info_text"> Defaults to Released if nothing is selected. Not yet released means there is no known release date. Scheduled 
-                                    Release means that the release date is known. When prompted only enter in the date of the release (ex. April, 11, 2023 or 4/11/2023).
-                                </span>
-                            </div>
-                            <select class="form-select" id="releaseStatSelect"  aria-label="Default select example" name = "release_status">
-                                <option selected >Select Release Status</option>
-                                <option value="Released">Released</option>
-                                <option value="Not yet released">Not yet released</option>
-                                <option value="Currently Releasing">Currently Releasing </option>
-                                <option value="Scheduled Release">Scheduled Release </option>
-                            </select>  
-                            <br>
-                            <input type="hidden" class="form-control add-input" id="release_input" autocomplete="off"  name = "release_information" aria-describedby="mediaHelp">
-                        </div> 
-                    </div>
-                    <br>
-                    <div class="form-floating">
-                        <textarea class="form-control" style="height: 100px" name="description" id="add_description" onkeyup="countAddDesc()" placeholder="leave blank if you do not want to provide a description" maxlength="850" aria-describedby="mediaHelp"></textarea>
-                        <label for="description" class="form-label labelText">Description</label>
-                        <div id="mediaDescHelp" class="form-text">
-                            <p id="add_desc_count">850</p>
-                            <p id="add_desc_total"> out of 850 characters </p>
-                        </div>
-                    </div>
-                    <button type="submit" id= "add_media_button" class="btn btn-primary" >Add Media</button>
-                </form>
+            <div class="modal-footer searchaddmediafooter border-0">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#addmediaForm" id="media_button"> Add Media
+                    Manually</button>
             </div>
         </div>
     </div>
-</div> -->
-{%endif%}
+</div>
 {%if user.is_authenticated%}
 {%if cards is defined%}
 <!--  media info modal -->
@@ -406,7 +253,7 @@
 <div class="modal fade" id="mediaInfo_{{card.id}}" tabindex="-1" aria-labelledby="mediaInfoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content mediaInfoDiv">
-            <div class="modal-header border-0 ">
+            <div class="modal-header border-0">
                 <div class="mediaInfoImageParentDiv">
                     <img src="{{card.image}}" class="mediaInfoImage">
                 </div>
@@ -441,8 +288,10 @@
                     <p class="mediaInfoEpisodes"> N/A Episodes</p>
                     {%elif card.total_eps |int > 1 %}
                     <p class="mediaInfoEpisodes"> {{card.total_eps}} Episodes </p>
-                    {%else%}
+                    {%elif card.total_eps |int == 1 %}
                     <p class="mediaInfoEpisodes"> Movie </p>
+                    {%else%}
+                    <p class="mediaInfoEpisodes"> Unknown </p>
                     {%endif%}
                     {% if (card.rating == "?" or card.rating == "Choose a Rating" or card.rating == "Rating") %}
                     {%else%}
@@ -535,7 +384,7 @@
                     <div class="row g-2">
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select" aria-label="Default select example" id="floatingSelect3"
+                                <select class="form-select" aria-label="Default select example" id="edit_status"
                                     name="edit_status">
                                     <option selected>{{card.status}}</option>
                                     <option value="Planning">Planning</option>
@@ -543,12 +392,12 @@
                                     <option value="Paused">Paused</option>
                                     <option value="Completed">Completed</option>
                                 </select>
-                                <label for="floatingSelect3" class="form-label labelText">Status</label>
+                                <label for="edit_status" class="form-label labelText">Status</label>
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select add-input" id="floatingSelect4" name="edit_rating"
+                                <select class="form-select add-input" id="edit_rating" name="edit_rating"
                                     aria-label="Default select example">
                                     <option selected>{{card.rating}}</option>
                                     <option value="1">1</option>
@@ -562,13 +411,13 @@
                                     <option value="9">9</option>
                                     <option value="10">10</option>
                                 </select>
-                                <label class="form-label labelText" for="floatingSelect4">Rating</label>
+                                <label class="form-label labelText" for="edit_rating">Rating</label>
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
-                                <select class="form-select add-input" aria-label="Default select example"
-                                    id="floatingSelect5" name="edit_type">
+                                <select class="form-select add-input" aria-label="Default select example" id="edit_type"
+                                    name="edit_type">
                                     <option selected>{{card.media_type}}</option>
                                     <option value="Show">Show</option>
                                     <option value="Movie">Movie</option>
@@ -578,13 +427,13 @@
                                     <option value="Drama">Drama (ex. K-Drama, J-Drama, etc.)</option>
                                     <option value="other">Other</option>
                                 </select>
-                                <label for="floatingSelect5" class="labelText">Type</label>
+                                <label for="edit_type" class="labelText">Type</label>
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="form-floating">
                                 <select class="form-select add-input" aria-label="Default select example"
-                                    id="floatingSelect6" name="edit_language">
+                                    id="edit_language" name="edit_language">
                                     <option selected>{{card.language}}</option>
                                     <option value="English">English</option>
                                     <option value="Japanese">Japanese</option>
@@ -596,7 +445,7 @@
                                     <option value="Multi">Multi</option>
                                     <option value="other">Other</option>
                                 </select>
-                                <label for="floatingSelect6" class="form-label labelText">Language</label>
+                                <label for="edit_language" class="form-label labelText">Language</label>
                             </div>
                         </div>
                     </div>
@@ -630,8 +479,8 @@
                         </div>
                         <div class="col-md">
                             <div class="form-group col-auto">
-                                <label for="formSelect" class="editMediaFormText">Release Status </label>
-                                <select class="form-select edit_releaseStatSelect" id="formSelect"
+                                <label for="edit_release_status" class="editMediaFormText">Release Status </label>
+                                <select class="form-select edit_releaseStatSelect" id="edit_release_status"
                                     aria-label="Default select example" name="edit_release_status">
                                     <option selected>{{card.release_status}}</option>
                                     <option value="Released">Released</option>
@@ -639,18 +488,35 @@
                                     <option value="Currently Releasing">Currently Releasing </option>
                                     <option value="Scheduled Release">Scheduled Release </option>
                                 </select>
-                                <br>
-                                {% if card.release_information != "" or card.release_information is not none %}
-                                <input type="hidden" class="form-control add-input editReleaseInput" autocomplete="off"
-                                    name="edit_release_information" placeholder="{{card.release_information}}"
-                                    aria-describedby="mediaHelp">
-                                {% else %}
-                                <input type="hidden" class="form-control add-input editReleaseInput" autocomplete="off"
-                                    name="edit_release_information" placeholder="" aria-describedby="mediaHelp">
-                                {%endif%}
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <div class="row g-2">
+                        <div class="col-md editReleaseDateDiv">
+                            <label for="editRelease" class="form-label labelText editReleaseDateLabel">Select
+                                Release Date</label>
+                            <input type="date" class="editReleaseDate" name="editReleaseDate" id="editRelease">
+                        </div>
+                        <div class="col-md editReleaseWeeklyDiv">
+                            <div class="form-floating" class="editReleaseWeeklySubDiv">
+                                <select class="form-select add-input" aria-label="Default select example"
+                                    name="editReleaseWeekly" id="editReleaseWeeklySelect">
+                                    <option selected>{{card.release_weekly}}</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                                <label for="editReleaseWeeklySelect" class="form-label labelText">Weekly Release
+                                    Day</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <div class="mb-3">
                         <label for="edit_description" class="form-label editMediaFormText"> Description</label>
                         <textarea class="form-control edit_description" name="edit_description"
@@ -690,19 +556,198 @@
 </div>
 
 {%endfor%}
-
 {%endif%}
+
 <input type="hidden" id="toggleIndicators" value="{{user.alert}}">
 <input type="hidden" id="user_info" value="{{user.id}}">
 {%endif%}
 <section class="content">
     {% block body %}
-    {% endblock %}
+    {% endblock %}<!-- add media form -->
+
     <!-- add media button -->
     {% if user.is_authenticated%}
     <div class="add-item">
         <button class="add-item-image" data-bs-toggle="modal" data-bs-target="#addMediaModal">
             <i class="bi bi-plus-square-fill add_plus"></i> </button>
+    </div>
+    {%endif%}
+    {% if user.is_authenticated%}
+    <div class="modal fade" id="addmediaForm">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="POST" action="/add_media" id="mediaFormNew">
+                        <div class="addMediaFormHeader">
+                            <h1 class="addmediaHeader"> Add New Media</h1>
+                        </div>
+                        <br>
+                        <h3 class="addmediaTitles"> Media Information </h3>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" autocomplete="off" placeholder="ex. Naruto"
+                                        name="add_title" id="add_title" required>
+                                    <label for="add_title" class="form-label"> Title</label>
+                                </div>
+                            </div>
+                            <div class=" col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control add-input" autocomplete="off"
+                                        placeholder="add image source (https://...jpg, .png, jpeg)"
+                                        name="add_image_form" id="add_image_form">
+                                    <label for="add_image_form" class="form-label"> Image Link</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" style="height: 65px" name="description" id="add_description"
+                                onkeyup="countAddDesc()"
+                                placeholder="leave blank if you do not want to provide a description" maxlength="850"
+                                aria-describedby="mediaHelp"></textarea>
+                            <label for="add_description" class="form-label labelText">Description</label>
+                            <div id="mediaDescHelp" class="form-text">
+                                <p id="add_desc_count">850</p>
+                                <p id="add_desc_total"> out of 850 characters </p>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 ">
+                                <div class="currentEpLabelDiv">
+                                    <label for="mediaCurrentEps" class="form-label add-form-text">Current
+                                        Episode</label>
+                                </div>
+                                <input type="number" step="1" min="0" class="form-control add-input" autocomplete="off"
+                                    name="current_ep" id="mediaCurrentEps">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="totalEpLabelDiv">
+                                    <label for="mediaTotalEps" class="form-label add-form-text">Total Episodes</label>
+                                </div>
+                                <input type="text" class="form-control add-input" autocomplete="off" name="total_eps"
+                                    aria-describedby="mediaHelp" id="mediaTotalEps">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <select class="form-select" id="mediaType" aria-label="Default select example"
+                                        name="type">
+                                        <option selected>Media Type</option>
+                                        <option value="Show">Show</option>
+                                        <option value="Movie">Movie</option>
+                                        <option value="Anime">Anime</option>
+                                        <option value="Donghua">Donghua</option>
+                                        <option value="Animation/Cartoon">Animation/Cartoon</option>
+                                        <option value="Drama">Drama (ex. kdrama, jdrama, etc.)</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <label for="mediaType" class="form-label">Type</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <select class="form-select" id="mediaLanguage" aria-label="Default select example"
+                                        name="language">
+                                        <option selected>Select Language</option>
+                                        <option value="English">English</option>
+                                        <option value="Japanese">Japanese</option>
+                                        <option value="Korean">Korean</option>
+                                        <option value="Chinese">Chinese</option>
+                                        <option value="German">German</option>
+                                        <option value="Swedish">Swedish</option>
+                                        <option value="Thai">Thai</option>
+                                        <option value="Multi">Multi</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <label for="mediaLanguage" class="form-label labelText">Language</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <h3 class="addmediaTitles"> Release Information </h3>
+                        <div class="col-md">
+                            <div class="form-floating col-auto">
+                                <select class="form-select" id="releaseStatSelect" aria-label="Default select example"
+                                    name="release_status">
+                                    <option selected>Released</option>
+                                    <option value="Released">Released</option>
+                                    <option value="Not yet released">Not yet released</option>
+                                    <option value="Currently Releasing">Currently Releasing </option>
+                                    <option value="Scheduled Release">Scheduled Release </option>
+                                </select>
+                                <label for="releaseStatSelect" class="form-label labelText">Release Status</label>
+                                <br>
+                                <input type="hidden" class="form-control add-input" id="release_input"
+                                    autocomplete="off" name="release_information" aria-describedby="mediaHelp">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row g-2">
+                            <div class="col-md" id="addReleaseDateDiv">
+                                <label for="addReleaseDate" class="form-label labelText" id="addReleaseDateLabel">Select
+                                    Release Date</label>
+                                <input type="date" id="addReleaseDate" name="addReleaseDate">
+                            </div>
+                            <div class="col-md" id="addReleaseWeeklyDiv">
+                                <div class="form-floating" id="addReleaseWeekly">
+                                    <select class="form-select add-input" aria-label="Default select example"
+                                        name="addReleaseWeekly" id="releaseWeekly">
+                                        <option selected value="">Select Weekly Release Day</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                        <option value="Sunday">Sunday</option>
+                                    </select>
+                                    <label for="releaseWeekly" class="form-label labelText">Weekly Release
+                                        Day</label>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="addmediaTitles"> Personal Stats </h3>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <select class="form-select add-input" aria-label="Default select example"
+                                        name="status" id="add_status">
+                                        <option selected value="Planning">Planning</option>
+                                        <option value="Watching">Watching</option>
+                                        <option value="Paused">Paused</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                    <label for="add_status" class="form-label labelText">Status</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <select class="form-select add-input" name="rating"
+                                        aria-label="Default select example" id="add_rating">
+                                        <option selected>Choose a Rating</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <label for="add_rating" class="form-label labelText">Rating</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" id="add_media_button" class="btn btn-primary">Add Media</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     {%endif%}
     <script src="https://code.jquery.com/jquery-3.6.3.js"

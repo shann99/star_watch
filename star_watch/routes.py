@@ -35,6 +35,7 @@ from star_watch.models import Card, Tags, User
 @login_required
 def index():
     user = current_user
+
     # querying images where watch status equals watching
     item_list = (
         Card.query.with_entities(Card.image, Card.title)
@@ -44,6 +45,7 @@ def index():
         .all()
     )
     # retrieving the image itself without the extra parenthesis and commas from the query list
+
     item_dict = dict([(key, value) for key, value in item_list])
     item_dict = {
         key: value for key, value in item_dict.items() if key != "/background.jpg"
@@ -715,7 +717,7 @@ def add_media():
         if request.form.get("total_eps") != "":
             total_eps = request.form.get("total_eps")
         else:
-            total_eps = "?"
+            total_eps = 0
         if request.form.get("type") != "":
             media_type = request.form.get("type")
         else:
@@ -724,18 +726,23 @@ def add_media():
             language = request.form.get("language")
         else:
             language = "unknown"
-        if (
-            request.form.get("release_status") != ""
-            or request.form.get("release_status") != "Select Release Status"
-        ):
+        if request.form.get("release_status") != "":
             release_status = request.form.get("release_status")
         else:
             release_status = "Released"
-        if request.form.get("release_information") != "":
-            release_information = request.form.get("release_information")
-
+        if (
+            request.form.get("addReleaseWeekly") != ""
+            or request.form.get("addReleaseWeekly")
+            != "Select Weekly Select Weekly Release Day Day"
+        ):
+            release_weekly = request.form.get("addReleaseWeekly")
         else:
-            release_information = ""
+            release_weekly = None
+        if request.form.get("addReleaseDate") != "":
+            release_date = request.form.get("addReleaseDate")
+            release_date = datetime.strptime(release_date, "%Y-%m-%d")
+        else:
+            release_date = "None"
         description = request.form.get("description")
         rating = request.form.get("rating")
         status = request.form.get("status")
@@ -751,7 +758,8 @@ def add_media():
             rating=rating,
             fav=fav,
             release_status=release_status,
-            release_information=release_information,
+            release_weekly=release_weekly,
+            release_date=release_date,
             media_type=media_type,
             language=language,
             user=current_user,
@@ -819,7 +827,6 @@ def add_from_search():
                     medium
                     color
                 }
-                bannerImage
                 genres
                 status
                 countryOfOrigin
@@ -859,10 +866,7 @@ def add_from_search():
             else:
                 description = "No description available"
             totalEps = anilist_returned["data"]["Media"]["episodes"]
-            if anilist_returned["data"]["Media"]["bannerImage"] != None:
-                image = anilist_returned["data"]["Media"]["bannerImage"]
-            else:
-                image = anilist_returned["data"]["Media"]["coverImage"]["extraLarge"]
+            image = anilist_returned["data"]["Media"]["coverImage"]["extraLarge"]
             if (
                 anilist_returned["data"]["Media"]["startDate"]["month"] != None
                 and anilist_returned["data"]["Media"]["startDate"]["day"] != None
@@ -945,11 +949,13 @@ def add_from_search():
 
         elif source == "tvmaze":
             tvmaze_id = request.form.get("apiId")
-            tvmaze_url = "https://api.tvmaze.com/lookup/shows?thetvdb="
-            tvmaze_response = requests.get(tvmaze_url + tvmaze_id)
+            print(tvmaze_id)
+            tvmaze_url = f"https://api.tvmaze.com/shows/{tvmaze_id}?embed=episodes"
+            tvmaze_response = requests.get(tvmaze_url)
             tvmaze_returned = tvmaze_response.json()
             title = tvmaze_returned["name"]
-            image = tvmaze_returned["image"]["original"]
+            print(title)
+            tvmaze_img = tvmaze_returned["image"]["original"]
             if tvmaze_returned["summary"] != None:
                 description = html.fromstring(tvmaze_returned["summary"]).text_content()
             else:
@@ -988,7 +994,7 @@ def add_from_search():
 
             card = Card(
                 title=title,
-                image=image,
+                image=tvmaze_img,
                 current_ep=0,
                 total_eps="?",
                 status="Planning",
@@ -1099,8 +1105,18 @@ def editMedia(card_id):
             card.release_status = request.form.get("edit_release_status")
             if request.form.get("edit_release_status") == "Released":
                 card.release_information = ""
-        if request.form.get("edit_release_information") != "":
-            card.release_information = request.form.get("edit_release_information")
+        if (
+            request.form.get("editReleaseDate") != card.release_date
+            and request.form.get("editReleaseDate") != ""
+        ):
+            release_date = request.form.get("editReleaseDate")
+            card.release_date = datetime.strptime(release_date, "%Y-%m-%d")
+        if (
+            request.form.get("editReleaseWeekly") != ""
+            or request.form.get("editReleaseWeekly") != None
+            or request.form.get("editReleaseWeekly") != card.release_weekly
+        ):
+            card.release_weekly = request.form.get("editReleaseWeekly")
         if request.form.get("edit_status") != card.status:
             card.status = request.form.get("edit_status")
             card.date_edited = datetime.now(timezone.utc)
@@ -1119,24 +1135,20 @@ def editMedia(card_id):
         today = date.today()
 
         if (
-            request.form.get("edit_release_information") != ""
-            and request.form.get("edit_release_information").startswith("Weekly")
-            is False
+            request.form.get("editReleaseDate") != card.release_date
+            and request.form.get("editReleaseDate") != ""
         ):
             date_obj = datetime.strptime(
-                request.form.get("edit_release_information"), "%Y-%m-%d"
+                request.form.get("editReleaseDate"), "%Y-%m-%d"
             )
             if date_obj.date() == today:
                 dateChecker()
-
-        if request.form.get("edit_release_information") != "" and request.form.get(
-            "edit_release_information"
-        ).startswith("Weekly"):
-            for weekday in weekdays:
-                if weekday in request.form.get(
-                    "edit_release_information"
-                ) and weekday == today.strftime("%A"):
-                    dateChecker()
+        if (
+            request.form.get("editReleaseWeekly") != ""
+            or request.form.get("editReleaseWeekly") != None
+        ):
+            if request.form.get("editReleaseWeekly") == today.strftime("%A"):
+                dateChecker()
 
         flash(f"{card.title} was updated!", category="success")
         return redirect(request.referrer)

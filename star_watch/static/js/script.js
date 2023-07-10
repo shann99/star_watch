@@ -137,7 +137,7 @@ function switch_modes_light(user_id) {
             url: "/light-mode",
             data: {"user_id": user_id},
             success: function() {
-                site_theme.href = "themes/light-theme.css"; 
+                site_theme.href = "styles/themes/light-theme.css"; 
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -150,7 +150,7 @@ function switch_modes_dark(user_id) {
             url: "/dark-mode",
             data: {"user_id": user_id},
             success: function() {    
-                site_theme.href = "themes/dark-theme.css";
+                site_theme.href = "styles/themes/dark-theme.css";
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -163,7 +163,7 @@ function system_mode(user_id) {
             url: "/system-mode",
             data: {"user_id": user_id},
             success: function() {    
-                site_theme.href = "themes/system-theme.css";                
+                site_theme.href = "styles/themes/system-theme.css";                
                 $(theme_name).load(' #theme_title');
             }
         });
@@ -500,93 +500,58 @@ const desc_title = document.getElementsByClassName("desc-title");
 const card = document.getElementsByClassName("card-item");
 const edit_button = document.getElementsByClassName("toggleEdit");
 
-function flipCardB(item) {
-    card[item].classList.toggle("active"); 
-    card[item].classList.remove("unactive");
-    setTimeout(() => {
-        cardIMG[item].style.display="none";
-        tagDiv[item].style.display="none";
-        heartsDiv[item].style.display="none";
-        stats[item].style.display="none";
-        edit_button[item].style.display="none";
-        seemore[item].style.display="none";
-        editTagForm[item].style.display='none';
-    }, 132)
-    setTimeout( () => {
-        less[item].style.display="grid";
-        rating[item].style.display="inline";
-        desc[item].style.display="inline";
-        desc_title[item].style.display="inline";
-    }, 150)
-   
-}
-function flipCardA(item) {
-    card[item].classList.toggle("unactive");
-    card[item].classList.remove("active");
-    setTimeout(() => {
-        less[item].style.display="none";
-        rating[item].style.display="none";
-        desc[item].style.display="none";
-        desc_title[item].style.display="none";
-    }, 135)
     
-    setTimeout( () => {    
-        cardIMG[item].style.display="inline";
-        tagDiv[item].style.display="inline";
-        heartsDiv[item].style.display="inline";
-        stats[item].style.display="inline";
-        edit_button[item].style.display="inline";
-        seemore[item].style.display="inline";
-        editTagForm[item].style.display='inline';
-        addTag[item].style.display="none";
-    }, 150)
-    
-}
 const releaseStatInput = document.getElementById("release_input");
+const addReleaseDateDiv = document.getElementById("addReleaseDateDiv");
+const addReleaseWeeklyDiv = document.getElementById("addReleaseWeeklyDiv");
 $(document).ready(function() {
     $("#releaseStatSelect").on('change', function(){
         if ($(this).val() == "Currently Releasing") {
-            releaseStatInput.placeholder="Enter the release schedule (ex. Weekly on Wednesdays)";
-            releaseStatInput.setAttribute('type','text');
+            addReleaseDateDiv.style.display='flex';
+            addReleaseWeeklyDiv.style.display='block';
         }
         else if (($(this).val() == "Scheduled Release")) {
-            releaseStatInput.placeholder="Enter the release date (ex. April 11, 2023)";
-            releaseStatInput.setAttribute('type','date');
+            addReleaseDateDiv.style.display='flex';
+            addReleaseWeeklyDiv.style.display='none';
+        }
+        else if (($(this).val() == "Released")) {
+            addReleaseDateDiv.style.display='flex';
+            addReleaseWeeklyDiv.style.display='none';
         }
         else {
-            releaseStatInput.setAttribute('type','hidden');
+            addReleaseWeeklyDiv.style.display='none';
+            addReleaseDateDiv.style.display='none';
+
         }
     });   
 });
-
-const editreleaseStatInput = document.getElementsByClassName("editReleaseInput");
+const editReleaseDateDiv = document.getElementsByClassName("editReleaseDateDiv");
+const editReleaseWeeklyDiv = document.getElementsByClassName("editReleaseWeeklyDiv");
 const editReleaseStatClass = document.getElementsByClassName("edit_releaseStatSelect");
 $(document).ready(function() {
     for(let i = 0; i < editReleaseStatClass.length; i++){
             editReleaseStatClass[i].addEventListener("click", function() {
                 $(editReleaseStatClass[i]).on('change', function(){
-                if ($(editReleaseStatClass[i]).val() == "Currently Releasing") {                    
-                    editreleaseStatInput[i].setAttribute('type','text');
-
-                    if (editreleaseStatInput[i].placeholder == "") {
-                        editreleaseStatInput[i].placeholder = "Enter the release schedule (ex. Weekly on Wednesdays)";
+                    console.log($(editReleaseStatClass[i]).val());
+                    if ($(editReleaseStatClass[i]).val() == "Currently Releasing") {       
+                        editReleaseDateDiv[i].style.display="flex";
+                        editReleaseWeeklyDiv[i].style.display="block";
                     }
-                }
-                else if (($(editReleaseStatClass[i]).val() == "Scheduled Release")) {
-                    if (editreleaseStatInput[i].placeholder == "") {
-                        editreleaseStatInput[i].placeholder = "Enter the release date (ex. April 11, 2023)";
+                    else if (($(editReleaseStatClass[i]).val() == "Scheduled Release")) {
+                        editReleaseDateDiv[i].style.display="flex";
+                        editReleaseWeeklyDiv[i].style.display="none";
                     }
-                    editreleaseStatInput[i].setAttribute('type','date');
-                }
-                else {
-                    editreleaseStatInput[i].setAttribute('type','hidden');
-                }
+                    else if (($(editReleaseStatClass[i]).val() == "Released")) {
+                        editReleaseDateDiv[i].style.display="flex";
+                        editReleaseWeeklyDiv[i].style.display="none";
+                    }
+                    else {
+                        editReleaseDateDiv[i].style.display="none";
+                        editReleaseWeeklyDiv[i].style.display="none";
+                    }
             }); 
         })
-    
-    
     }
-      
 });
 const containerRA_Right = document.getElementById("currentreleasesMoreRight");
 const containerRA_Left = document.getElementById("currentreleasesMoreLeft");
@@ -734,5 +699,3 @@ update_read.addEventListener("click", (event) => {
         });
     })
 });
-   
-

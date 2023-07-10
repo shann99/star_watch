@@ -1,40 +1,28 @@
 body {
-    background-color: rgb(190 194 221);
+    background-color:rgb(190 170 234);
     margin: -2em 0 0 0em;
     padding-bottom: 800px; 
 }
-.page-title {
-    font-family: 'Lexend Deca';
-    padding-top: 1em;
-    padding-bottom: 1em;
-    text-align: center;
-}
-.page-header {
-    font-family: 'Poppins', sans-serif;
-    padding-top: 1em;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    align-content: space-around;
-    flex-direction: column;
+
+.page-header, .page-title {
+    color: #27114c;
 }
 
 .pagenum_button {
-    color:white;
-    background-color: #fa003227;
-    border:none;
+    color: white;
+    background-color: #9862b0;
+    border:none !important;
 }
 #currentpage_btn {
-    color:white;
-    border:none;
-    background-color: #fa003152;
+    color:white !important;
+    border:none !important;
+    background-color: #6827a9 !important;
+    /* #dd8092 */
 }
 .pagenum_button:hover {
-    color: white;
-    background-color: #fa003152;
+    color: white !important;
+    background-color: #a37fc6;
 }
-
 .pagenum_button:focus, .pagenum_button:active {
     outline: none !important;
     box-shadow: none !important;
@@ -44,22 +32,22 @@ body {
     box-shadow: none !important;
  }
  .prev-btns {
-    color: #f39eaec4;
+    color:#ad8db9c4;
     margin-top: 0.1em;
     transform: scale(0.7);
 
 }
 .next-btns {
-    color: #f39eaec4; 
+    color: #ad8db9c4; 
     margin-top: 0.1em;
     transform: scale(0.7);
 
 }
 .prev-btns:hover {
-    color: #fd0d4666;
+    color: #e6b8f7c4;
 }
 .next-btns:hover{
-    color: #fd0d4666;
+    color: #e6b8f7c4;
 }
 #account-title {
     font-family: 'Lexend Deca';
@@ -79,4 +67,20 @@ body {
 }
 .chart-container {
     background: #c2c1e1b5; 
+}
+
+.add_plus {
+    color: #985fa1 !important;
+}
+
+#currentreleasesMoreLeft, #currentreleasesMoreRight, 
+#unreleasedMoreRight, #unreleasedMoreLeft, #schedreleasesMoreLeft,
+#schedreleasesMoreRight {
+    color: #554168;
+}
+#releases-containerA, #releases-containerB, #releases-containerC {
+    background-color: #635669a1;
+}
+.name, .ep-tracker {
+    color: #010202;
 }

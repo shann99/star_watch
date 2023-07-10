@@ -6,11 +6,12 @@
 <div class="page-title">
   <h2> Favorites </h2>
 </div>
-<h5 class="fav_count"> Total: {{fav_count}} </h5>
 {%if fav_count == 0%}
-<h3 class="no_media"> There doesn't seem to be anything on your favorites list. </h3>
-<h5 class="no_media"> Click on the heart button after adding a new media to add it to your favorites </h5>
-{%else%}
+<div class="page-title">
+  <h3 class="no_media"> There doesn't seem to be anything on your favorites list. </h3>
+  <h5 class="no_media"> Click on the heart button after adding a new media to add it to your favorites </h5>
+</div>
+{%else%} <h5 class="fav_count"> Total: {{fav_count}} </h5>
 <div class="fav-container">
   {%for card in cards %}
   <div class="fav-item">

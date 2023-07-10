@@ -78,7 +78,7 @@
   </div>
   {%endif%}
   {%endfor%}
-  {% if page != total_pgs %}
+  {% if (total_pgs != 0 and page != total_pgs) %}
   <a class='next-btns' href="{{next_page}}">
     <i class="bi bi-arrow-right-square"></i>
   </a>
