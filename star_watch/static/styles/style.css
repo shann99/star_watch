@@ -1411,9 +1411,7 @@
     background-color:transparent;
     visibility: hidden;
 }
-/* body.search_active > *:not(#nav_search) {
-    filter:blur(9px);
-} */
+
 #search_button {
     background-color: transparent;
     border:none;
@@ -1597,7 +1595,6 @@
 }
 .input_tag_name {
     padding: 3px 8px;
-    /* display: none ; */
     z-index:3;
     border: 1px solid #fbc6d1;
     border-radius: 50px;
@@ -2189,7 +2186,7 @@ article span {
 }
 .mediaInfoTopGrid {
     display: grid;
-    grid-template-columns: 50px 90px 140px auto;
+    grid-template-columns: 32px 90px 120px auto;
     grid-template-areas:
     "release_date media_eps media_status media_rating";
     margin-left: 4px;
@@ -2203,6 +2200,7 @@ article span {
 }
 .mediaInfoEpisodes {
     grid-area: media_eps;
+    text-align: center;
 }
 .mediaInfoRating {
     grid-area: media_rating;

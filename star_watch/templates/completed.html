@@ -1,72 +1,78 @@
-{%extends "base.html"%}
-{%block header%}
+{%extends "base.html"%} {%block header%}
 <h1>{%block title%}Completed{%endblock%}</h1>
-{%endblock%}
-{%block body%}
+{%endblock%} {%block body%}
 <div class="page-header">
-  <p> Completed List </p>
-  {%set counter = namespace(value=0)%}
-  {%for card in user.cards %}
-  {%if card.status == 'Completed' %}
-  {% set counter.value = counter.value + 1 %}
-  {%endif%}
-  {%endfor%}
-  {%if counter.value == 0%}
-  <h3 class="no_media"> There doesn't seem to be anything on your completed list. </h3>
-  <h5 class="no_media"> Click on the plus button to add some media to your watch list! </h5>
+  <p>Completed List</p>
+  {%set counter = namespace(value=0)%} {%for card in user.cards %} {%if
+  card.status == 'Completed' %} {% set counter.value = counter.value + 1 %}
+  {%endif%} {%endfor%} {%if counter.value == 0%}
+  <h3 class="no_media">
+    There doesn't seem to be anything on your completed list.
+  </h3>
+  <h5 class="no_media">
+    Click on the plus button to add some media to your watch list!
+  </h5>
   {%endif%}
 </div>
-{%if counter.value > 0%}
-{%set counter = namespace(count=0, tag=0)%}
+{%if counter.value > 0%} {%set counter = namespace(count=0, tag=0)%}
 <div class="card-container">
   {%for card in cards.items %}
   <div class="card-item">
-    <div class="card-img-container" data-tilt data-tilt-glare data-tilt-max-glare="0.2" data-tilt-max="4">
-      <img src={{card.image}} class="card-image" alt='{{card.title}}'>
+    <div
+      class="card-img-container"
+      data-tilt
+      data-tilt-glare
+      data-tilt-max-glare="0.2"
+      data-tilt-max="4"
+    >
+      <img src="{{card.image}}" class="card-image" alt="{{card.title}}" />
     </div>
     <div class="hearts">
       <div class="heart_buttons">
         <p class="name">{{card.title}}</p>
       </div>
     </div>
-    <div class="ep-tracker">
-      <div class="upcountDiv">
-        <p class="ep-on">{{card.current_ep}}</p>
-      </div>
-      <p id="divider"> / </p>
-      <p id="ep-total">{{card.total_eps}}</p>
-    </div>
     <div class="see_more">
-      <button class="view_more" type="button" data-bs-toggle="modal" data-bs-target="#mediaInfo_{{card.id}}">
-        <i class="bi bi-three-dots"></i> </button>
+      <button
+        class="view_more"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#mediaInfo_{{card.id}}"
+      >
+        <i class="bi bi-three-dots"></i>
+      </button>
     </div>
   </div>
-  {% set counter.count = counter.count + 1 %}
-  {%endfor%}
+  {% set counter.count = counter.count + 1 %} {%endfor%}
 </div>
 {%endif%}
-<br><br>
+<br /><br />
 <div class="page_numbers">
   {% if prev_page != '/completed' %}
-  <a class='prev-btns' href="{{prev_page}}">
+  <a class="prev-btns" href="{{prev_page}}">
     <i class="bi bi-arrow-left-square"></i>
   </a>
-  {%endif%}
-  {%for page_num in cards.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-  {%if page_num%}
-  {%if cards.page == page_num %}
-  <a class="btn btn-primary" href="{{url_for('completed', page=page_num)}}" id="currentpage_btn">{{page_num}}</a>
+  {%endif%} {%for page_num in cards.iter_pages(left_edge=1, right_edge=1,
+  left_current=1, right_current=2) %} {%if page_num%} {%if cards.page ==
+  page_num %}
+  <a
+    class="btn btn-primary"
+    href="{{url_for('completed', page=page_num)}}"
+    id="currentpage_btn"
+    >{{page_num}}</a
+  >
   {%else%}
-  <a class="btn btn-outline-primary pagenum_button" href="{{url_for('completed', page=page_num)}}">{{page_num}}</a>
-  {%endif%}
-  {%else%}
+  <a
+    class="btn btn-outline-primary pagenum_button"
+    href="{{url_for('completed', page=page_num)}}"
+    >{{page_num}}</a
+  >
+  {%endif%} {%else%}
   <div class="page_dots">
     <i class="bi bi-three-dots"></i>
   </div>
-  {%endif%}
-  {%endfor%}
-  {% if (total_pgs != 0 and page != total_pgs) %}
-  <a class='next-btns' href="{{next_page}}">
+  {%endif%} {%endfor%} {% if (total_pgs != 0 and page != total_pgs) %}
+  <a class="next-btns" href="{{next_page}}">
     <i class="bi bi-arrow-right-square"></i>
   </a>
   {%endif%}

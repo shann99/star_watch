@@ -13,7 +13,7 @@ from star_watch.models import Card, Tags, User
 scheduler = APScheduler()
 
 
-@scheduler.task("cron", hour=9, minute=15)
+@scheduler.task("cron", hour=13, minute=50)
 def dateChecker():
     with app.app_context():
         # user=current_user
